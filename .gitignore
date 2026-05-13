@@ -1,0 +1,69 @@
+# Node
+node_modules/
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+
+# TypeScript / build
+dist/
+build/
+lib/
+out/
+*.tsbuildinfo
+
+# Logs
+logs
+*.log
+npm-debug.log*
+pnpm-debug.log*
+
+# Runtime data
+pids/
+*.pid
+*.seed
+*.pid.lock
+
+# Environment
+.env
+.env.*.local
+.env.local
+.env.development.local
+.env.test.local
+.env.production.local
+
+# IDEs and editors
+.vscode/
+.idea/
+*.suo
+*.ntvs*
+*.njsproj
+*.sln
+
+# OS generated files
+.DS_Store
+Thumbs.db
+
+# Coverage
+coverage/
+.nyc_output/
+
+# Caches and temp
+.cache/
+.cache-loader/
+.rpt2_cache/
+.rts2_cache_cjs/
+.rts2_cache_es/
+.eslintcache
+.parcel-cache/
+.turbo/
+
+# Next/Vite/Frameworks (optional)
+.next/
+.vercel/
+.firebase/
+
+# TypeScript node caches
+.ts-node/
+tsconfig.tsbuildinfo
+
