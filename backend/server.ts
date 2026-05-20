@@ -1,20 +1,43 @@
-import { connection } from './database/connection.js';
+import cookieParser from 'cookie-parser';
+import cors from 'cors';
+import dotenv from 'dotenv';
+import dotenvExpand from 'dotenv-expand';
+import express, { json } from 'express';
+import http from 'node:http';
+import databaseRoutes from './database/index.js';
 
-const testDatabaseConnection = async (): Promise<void> => {
-  try {
-    const db = await connection;
-    const [rows] = await db.query('SELECT 1 AS connection_ok;');
+const env = dotenv.config();
 
-    console.warn('Database connection succeeded.');
-    console.warn(rows);
+dotenvExpand.expand(env);
 
-    await db.end();
-  }
-  catch (error) {
-    console.error('Database connection failed.');
-    console.error(error);
-    process.exitCode = 1;
-  }
-};
+const serverPort = process.env.PORT ?? '3000';
+const serverUrl = process.env.SERVER_URL ?? `http://localhost:${serverPort}`;
+const clientUrl = process.env.CLIENT_URL ?? 'http://localhost:4200';
 
-void testDatabaseConnection();
+const app = express();
+const api = express.Router();
+
+app.use(cookieParser());
+
+app.use(cors({
+  origin: clientUrl,
+  credentials: true,
+}));
+
+api.use(json());
+api.use('/database', databaseRoutes);
+
+app.use('/api', api);
+
+app.get('/', (_req, res) => {
+  res.json({
+    message: 'Backend template is running.',
+  });
+});
+
+/* eslint-disable-next-line @typescript-eslint/strict-void-return */
+const server = http.createServer(app);
+
+server.listen(serverPort, () => {
+  console.warn(`Server draait op ${serverUrl}`);
+});
