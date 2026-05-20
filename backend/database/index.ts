@@ -2,6 +2,7 @@ import { Router } from 'express';
 import { connection } from './connection.js';
 
 const internalServerErrorStatus = 500;
+
 const router = Router();
 
 router.get('/test', async (_req, res) => {

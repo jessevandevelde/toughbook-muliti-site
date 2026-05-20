@@ -4,6 +4,8 @@ import dotenv from 'dotenv';
 import dotenvExpand from 'dotenv-expand';
 import express, { json } from 'express';
 import http from 'node:http';
+import cmsRoutes from './cms/index.js';
+import contentRoutes from './content/index.js';
 import databaseRoutes from './database/index.js';
 
 const env = dotenv.config();
@@ -25,6 +27,8 @@ app.use(cors({
 }));
 
 api.use(json());
+api.use('/cms', cmsRoutes);
+api.use('/content', contentRoutes);
 api.use('/database', databaseRoutes);
 
 app.use('/api', api);
