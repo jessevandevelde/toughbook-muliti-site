@@ -18,6 +18,7 @@ const serverUrl = process.env.SERVER_URL ?? `http://localhost:${serverPort}`;
 const allowedOrigins = [
   'http://localhost:4200',
   'http://127.0.0.1:5500',
+  'http://127.0.0.1:3000',
 ];
 
 const app = express();

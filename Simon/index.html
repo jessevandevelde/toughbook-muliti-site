@@ -436,7 +436,7 @@
 // De backend stuurt dan alle website content terug als JSON
 
 const WEBSITE_ID = 4; // Jouw website ID in de database
-const API_URL = `http://localhost:3000/api/content/websites/${WEBSITE_ID}`;
+const API_URL = `http://127.0.0.1:3000/api/content/websites/${WEBSITE_ID}`;
 
 fetch(API_URL)
   .then(response => response.json())
@@ -482,7 +482,7 @@ fetch(API_URL)
     console.error('Fout bij ophalen data:', error);
     document.getElementById('loading').innerHTML = `
       <p style="color:red;">Kon geen verbinding maken met de backend.<br>
-      Zorg dat de backend draait op http://localhost:3000</p>
+      Zorg dat de backend draait op http://127.0.0.1:3000</p>
     `;
   });
 
