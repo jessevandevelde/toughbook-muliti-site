@@ -14,7 +14,11 @@ dotenvExpand.expand(env);
 
 const serverPort = process.env.PORT ?? '3000';
 const serverUrl = process.env.SERVER_URL ?? `http://localhost:${serverPort}`;
-const clientUrl = process.env.CLIENT_URL ?? 'http://localhost:4200';
+
+const allowedOrigins = [
+  'http://localhost:4200',
+  'http://127.0.0.1:5500',
+];
 
 const app = express();
 const api = express.Router();
@@ -22,7 +26,15 @@ const api = express.Router();
 app.use(cookieParser());
 
 app.use(cors({
-  origin: clientUrl,
+  origin: (origin, callback) => {
+    if (!origin || allowedOrigins.includes(origin)) {
+      callback(null, true);
+
+      return;
+    }
+
+    callback(new Error(`Origin not allowed by CORS: ${origin}`));
+  },
   credentials: true,
 }));
 
