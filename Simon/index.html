@@ -3,778 +3,106 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Toughbook 33</title>
+  <title>Toughbook 33 – Enterprise Rugged Laptop</title>
+
+  <!-- Google Fonts -->
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet" />
-  <style>
-    /* ===== RESET ===== */
-    *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
-    html { scroll-behavior: smooth; }
-    body { font-family: 'Inter', sans-serif; background: #f8f9fc; color: #1e293b; overflow-x: hidden; }
 
-    /* ===== LOADING SCHERM ===== */
-    /* Wordt getoond terwijl data wordt opgehaald */
-    #loading {
-      position: fixed; inset: 0; z-index: 999;
-      background: white;
-      display: flex; flex-direction: column;
-      align-items: center; justify-content: center; gap: 20px;
-    }
-    .loader {
-      width: 48px; height: 48px; border-radius: 50%;
-      border: 4px solid #e0e7ff;
-      border-top-color: #4f46e5;
-      animation: spin 0.8s linear infinite;
-    }
-    @keyframes spin { to { transform: rotate(360deg); } }
-    #loading p { color: #64748b; font-size: 15px; }
-
-    /* ===== NAVBAR ===== */
-    nav {
-      position: fixed; top: 0; left: 0; right: 0; z-index: 50;
-      backdrop-filter: blur(20px);
-      background: rgba(255,255,255,0.7);
-      border-bottom: 1px solid rgba(255,255,255,0.2);
-      box-shadow: 0 1px 8px rgba(0,0,0,0.06);
-    }
-    .nav-inner {
-      max-width: 1280px; margin: 0 auto; padding: 0 32px;
-      height: 80px; display: flex; align-items: center; justify-content: space-between;
-    }
-    .nav-logo { display: flex; align-items: center; gap: 10px; text-decoration: none; }
-    .nav-logo-icon {
-      width: 40px; height: 40px; border-radius: 10px;
-      background: linear-gradient(135deg, #6366f1, #9333ea);
-      display: flex; align-items: center; justify-content: center;
-      color: white; font-weight: 800; font-size: 20px;
-    }
-    .nav-logo-text {
-      font-size: 18px; font-weight: 600;
-      background: linear-gradient(90deg, #4f46e5, #9333ea);
-      -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;
-    }
-    .nav-links { display: flex; gap: 40px; list-style: none; }
-    .nav-links a {
-      text-decoration: none; color: #475569;
-      font-size: 15px; font-weight: 500; transition: color 0.2s;
-    }
-    .nav-links a:hover { color: #4f46e5; }
-    .btn-nav {
-      padding: 12px 28px; border-radius: 12px; border: none; cursor: pointer;
-      background: linear-gradient(135deg, #4f46e5, #9333ea);
-      color: white; font-size: 15px; font-weight: 500; font-family: 'Inter', sans-serif;
-      text-decoration: none; transition: all 0.3s;
-      box-shadow: 0 4px 15px rgba(99,102,241,0.3);
-    }
-    .btn-nav:hover { box-shadow: 0 8px 25px rgba(99,102,241,0.5); transform: translateY(-1px); }
-
-    /* ===== HERO ===== */
-    .hero {
-      position: relative; min-height: 100vh;
-      display: flex; align-items: center;
-      padding-top: 80px; overflow: hidden;
-    }
-    .hero-bg {
-      position: absolute; inset: 0;
-      background: linear-gradient(135deg, #eef2ff 0%, #f5f3ff 40%, #fdf2f8 100%);
-      opacity: 0.6;
-    }
-    .hero-glow-1 {
-      position: absolute; top: 80px; right: 40px;
-      width: 500px; height: 500px; border-radius: 50%;
-      background: linear-gradient(135deg, #818cf8, #a855f7);
-      opacity: 0.1; filter: blur(60px);
-      animation: pulse 4s ease-in-out infinite;
-    }
-    .hero-glow-2 {
-      position: absolute; bottom: 80px; left: 40px;
-      width: 400px; height: 400px; border-radius: 50%;
-      background: linear-gradient(135deg, #a855f7, #ec4899);
-      opacity: 0.1; filter: blur(60px);
-      animation: pulse 4s ease-in-out infinite 1s;
-    }
-    @keyframes pulse { 0%,100%{opacity:0.1;} 50%{opacity:0.18;} }
-    .hero-inner {
-      position: relative; max-width: 1280px; margin: 0 auto;
-      padding: 96px 32px 128px; width: 100%;
-      display: grid; grid-template-columns: 1fr 1fr;
-      align-items: center; gap: 64px;
-    }
-    .hero-content { display: flex; flex-direction: column; gap: 40px; }
-    .hero-badge {
-      display: inline-flex; align-items: center; gap: 8px;
-      padding: 10px 20px; border-radius: 50px;
-      background: rgba(255,255,255,0.7); backdrop-filter: blur(8px);
-      border: 1px solid #e0e7ff; box-shadow: 0 1px 6px rgba(0,0,0,0.05);
-      width: fit-content;
-    }
-    .badge-dot {
-      width: 8px; height: 8px; border-radius: 50%; background: #4f46e5;
-      animation: pulse-dot 2s ease-in-out infinite;
-    }
-    @keyframes pulse-dot { 0%,100%{opacity:1;} 50%{opacity:0.4;} }
-    .badge-text { font-size: 14px; font-weight: 500; color: #475569; }
-    .hero-title { font-size: clamp(52px, 7vw, 88px); font-weight: 800; line-height: 1.08; }
-    .gradient-text {
-      background: linear-gradient(90deg, #4f46e5, #9333ea, #ec4899);
-      -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;
-    }
-    .dark-text { color: #0f172a; }
-    .hero-desc { font-size: 18px; color: #64748b; line-height: 1.75; max-width: 480px; }
-    .hero-btns { display: flex; gap: 20px; flex-wrap: wrap; }
-    .btn-primary {
-      display: inline-flex; align-items: center; gap: 8px;
-      padding: 16px 36px; border-radius: 12px; border: none; cursor: pointer;
-      background: linear-gradient(135deg, #4f46e5, #9333ea);
-      color: white; font-size: 16px; font-weight: 500; font-family: 'Inter', sans-serif;
-      text-decoration: none; transition: all 0.3s;
-      box-shadow: 0 4px 20px rgba(99,102,241,0.4);
-    }
-    .btn-primary:hover { box-shadow: 0 8px 30px rgba(99,102,241,0.6); transform: translateY(-2px); }
-    .btn-secondary {
-      display: inline-flex; align-items: center; gap: 8px;
-      padding: 14px 36px; border-radius: 12px; cursor: pointer;
-      background: rgba(255,255,255,0.9); backdrop-filter: blur(8px);
-      color: #4f46e5; font-size: 16px; font-weight: 500; font-family: 'Inter', sans-serif;
-      border: 2px solid #c7d2fe; text-decoration: none; transition: all 0.3s;
-    }
-    .btn-secondary:hover { border-color: #818cf8; background: white; }
-    .hero-stats { display: flex; align-items: center; gap: 40px; padding-top: 24px; }
-    .stat-divider { width: 1px; height: 56px; background: #cbd5e1; }
-    .stat-number {
-      font-size: clamp(24px, 3vw, 34px); font-weight: 800;
-      background: linear-gradient(90deg, #4f46e5, #9333ea);
-      -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;
-    }
-    .stat-label { font-size: 13px; color: #64748b; margin-top: 6px; font-weight: 500; }
-    .hero-image-wrap { position: relative; }
-    .hero-image-glow {
-      position: absolute; inset: 0; border-radius: 24px;
-      background: linear-gradient(135deg, #6366f1, #9333ea);
-      opacity: 0.2; filter: blur(40px); transform: rotate(6deg);
-    }
-    .hero-card {
-      position: relative;
-      background: rgba(255,255,255,0.4); backdrop-filter: blur(8px);
-      border-radius: 24px; padding: 40px;
-      border: 1px solid rgba(255,255,255,0.5);
-      box-shadow: 0 32px 80px rgba(99,102,241,0.15);
-      transition: transform 0.7s;
-    }
-    .hero-card:hover { transform: scale(1.02); }
-    .hero-card img { width: 100%; border-radius: 16px; box-shadow: 0 20px 60px rgba(0,0,0,0.2); }
-    .cert-badge {
-      position: absolute; bottom: -32px; right: -32px;
-      background: rgba(255,255,255,0.8); backdrop-filter: blur(20px);
-      border-radius: 20px; padding: 24px;
-      box-shadow: 0 20px 60px rgba(0,0,0,0.15);
-      border: 1px solid rgba(255,255,255,0.6);
-      display: flex; align-items: center; gap: 16px;
-    }
-    .cert-icon {
-      width: 56px; height: 56px; border-radius: 14px;
-      background: linear-gradient(135deg, #6366f1, #9333ea);
-      display: flex; align-items: center; justify-content: center;
-    }
-    .cert-icon svg { width: 28px; height: 28px; color: white; }
-    .cert-label { font-size: 13px; color: #64748b; font-weight: 500; }
-    .cert-title { font-size: 17px; font-weight: 700; color: #0f172a; }
-
-    /* ===== GEMEENSCHAPPELIJK ===== */
-    section { padding: 128px 32px; }
-    .section-inner { max-width: 1280px; margin: 0 auto; }
-    .section-head { text-align: center; margin-bottom: 80px; }
-    .section-title { font-size: clamp(32px, 5vw, 56px); font-weight: 800; color: #0f172a; margin-bottom: 24px; line-height: 1.1; }
-    .section-desc { font-size: 18px; color: #64748b; max-width: 700px; margin: 0 auto; line-height: 1.75; }
-
-    /* ===== FEATURES ===== */
-    .features { position: relative; }
-    .features-bg { position: absolute; inset: 0; background: linear-gradient(180deg, white 0%, rgba(238,242,255,0.3) 50%, white 100%); }
-    .features-grid { display: grid; grid-template-columns: repeat(4,1fr); gap: 32px; }
-    .feat-card {
-      position: relative;
-      background: rgba(255,255,255,0.8); backdrop-filter: blur(20px);
-      border-radius: 24px; padding: 40px;
-      border: 1px solid rgba(255,255,255,0.6);
-      box-shadow: 0 4px 24px rgba(0,0,0,0.06);
-      transition: all 0.5s; overflow: hidden;
-    }
-    .feat-card:hover { transform: translateY(-12px); box-shadow: 0 24px 60px rgba(99,102,241,0.2); }
-    .feat-card::before {
-      content: ''; position: absolute; top: 0; left: 0; right: 0; height: 6px;
-      background: linear-gradient(90deg, #6366f1, #9333ea);
-      border-radius: 24px 24px 0 0; opacity: 0; transition: opacity 0.5s;
-    }
-    .feat-card:hover::before { opacity: 1; }
-    .feat-icon {
-      width: 64px; height: 64px; border-radius: 18px;
-      display: flex; align-items: center; justify-content: center;
-      margin-bottom: 32px; box-shadow: 0 8px 24px rgba(0,0,0,0.15);
-      transition: transform 0.5s;
-    }
-    .feat-card:hover .feat-icon { transform: scale(1.1) rotate(6deg); }
-    .feat-icon svg { width: 32px; height: 32px; color: white; }
-    .icon-1 { background: linear-gradient(135deg, #6366f1, #9333ea); }
-    .icon-2 { background: linear-gradient(135deg, #a855f7, #ec4899); }
-    .icon-3 { background: linear-gradient(135deg, #f43f5e, #e11d48); }
-    .icon-4 { background: linear-gradient(135deg, #6366f1, #3b82f6); }
-    .feat-title { font-size: 18px; font-weight: 700; color: #0f172a; margin-bottom: 16px; }
-    .feat-text { font-size: 15px; color: #64748b; line-height: 1.65; }
-    .trusted-banner { margin-top: 80px; text-align: center; }
-    .trusted-pill {
-      display: inline-flex; align-items: center; gap: 12px;
-      padding: 16px 32px; border-radius: 50px;
-      background: rgba(255,255,255,0.7); backdrop-filter: blur(8px);
-      border: 1px solid #e0e7ff; box-shadow: 0 2px 8px rgba(0,0,0,0.05);
-      font-size: 15px; font-weight: 500; color: #475569;
-    }
-
-    /* ===== SPECS ===== */
-    .specs { position: relative; }
-    .specs-bg { position: absolute; inset: 0; background: linear-gradient(180deg, rgba(238,242,255,0.3) 0%, white 50%, rgba(245,243,255,0.3) 100%); }
-    .specs-grid { display: grid; grid-template-columns: repeat(3,1fr); gap: 32px; }
-    .spec-card {
-      background: rgba(255,255,255,0.8); backdrop-filter: blur(20px);
-      border-radius: 24px; padding: 40px;
-      border: 1px solid rgba(255,255,255,0.6);
-      box-shadow: 0 4px 24px rgba(0,0,0,0.06);
-      transition: all 0.5s;
-    }
-    .spec-card:hover { transform: translateY(-4px); box-shadow: 0 16px 40px rgba(99,102,241,0.1); }
-    .spec-header { display: flex; align-items: center; gap: 16px; margin-bottom: 32px; }
-    .spec-icon {
-      width: 56px; height: 56px; border-radius: 16px;
-      background: linear-gradient(135deg, #6366f1, #9333ea);
-      display: flex; align-items: center; justify-content: center;
-      box-shadow: 0 4px 16px rgba(99,102,241,0.3);
-    }
-    .spec-icon svg { width: 28px; height: 28px; color: white; }
-    .spec-title { font-size: 18px; font-weight: 700; color: #0f172a; }
-    .spec-rows { display: flex; flex-direction: column; gap: 20px; }
-    .spec-row { display: flex; justify-content: space-between; align-items: flex-start; gap: 16px; }
-    .spec-label { font-size: 15px; color: #64748b; font-weight: 500; }
-    .spec-value { font-size: 15px; font-weight: 600; color: #0f172a; text-align: right; }
-    .specs-stats {
-      margin-top: 80px;
-      background: linear-gradient(135deg, rgba(99,102,241,0.1), rgba(168,85,247,0.1));
-      border-radius: 24px; padding: 48px;
-      border: 1px solid rgba(165,180,252,0.5);
-    }
-    .specs-stats-grid { display: grid; grid-template-columns: repeat(3,1fr); gap: 48px; text-align: center; }
-    .stat-big {
-      font-size: clamp(32px, 4vw, 48px); font-weight: 800; margin-bottom: 12px;
-      background: linear-gradient(90deg, #4f46e5, #9333ea);
-      -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;
-    }
-    .stat-desc { font-size: 17px; font-weight: 500; color: #334155; }
-
-    /* ===== DOWNLOADS ===== */
-    .downloads { position: relative; }
-    .downloads-bg { position: absolute; inset: 0; background: linear-gradient(180deg, white 0%, rgba(238,242,255,0.3) 50%, rgba(245,243,255,0.3) 100%); }
-    .downloads-grid { display: grid; grid-template-columns: repeat(3,1fr); gap: 40px; max-width: 1100px; margin: 0 auto; }
-    .dl-card {
-      position: relative;
-      background: rgba(255,255,255,0.8); backdrop-filter: blur(20px);
-      border-radius: 24px; padding: 40px;
-      border: 1px solid rgba(255,255,255,0.6);
-      box-shadow: 0 4px 24px rgba(0,0,0,0.06);
-      transition: all 0.5s; overflow: hidden;
-    }
-    .dl-card:hover { transform: translateY(-12px); box-shadow: 0 24px 60px rgba(99,102,241,0.2); }
-    .dl-icon {
-      width: 72px; height: 72px; border-radius: 18px;
-      display: flex; align-items: center; justify-content: center;
-      margin-bottom: 32px; box-shadow: 0 8px 24px rgba(0,0,0,0.15);
-      transition: transform 0.5s;
-    }
-    .dl-card:hover .dl-icon { transform: scale(1.1) rotate(6deg); }
-    .dl-icon svg { width: 36px; height: 36px; color: white; }
-    .dl-icon-1 { background: linear-gradient(135deg, #6366f1, #9333ea); }
-    .dl-icon-2 { background: linear-gradient(135deg, #a855f7, #ec4899); }
-    .dl-icon-3 { background: linear-gradient(135deg, #f43f5e, #e11d48); }
-    .dl-title { font-size: 22px; font-weight: 700; color: #0f172a; margin-bottom: 16px; }
-    .dl-desc { font-size: 15px; color: #64748b; margin-bottom: 32px; line-height: 1.65; }
-    .dl-meta { display: flex; justify-content: space-between; font-size: 13px; color: #94a3b8; font-weight: 500; margin-bottom: 32px; }
-    .btn-download {
-      width: 100%; padding: 16px; border-radius: 12px; border: none; cursor: pointer;
-      background: linear-gradient(135deg, #4f46e5, #9333ea);
-      color: white; font-size: 15px; font-weight: 500; font-family: 'Inter', sans-serif;
-      display: flex; align-items: center; justify-content: center; gap: 8px;
-      transition: all 0.3s; box-shadow: 0 4px 16px rgba(99,102,241,0.3);
-    }
-    .btn-download:hover { box-shadow: 0 8px 24px rgba(99,102,241,0.5); }
-    .dl-info-box {
-      text-align: center;
-      background: rgba(255,255,255,0.7); backdrop-filter: blur(20px);
-      border-radius: 24px; padding: 48px;
-      border: 1px solid rgba(255,255,255,0.6);
-      max-width: 900px; margin: 80px auto 0;
-    }
-    .dl-info-title { font-size: 28px; font-weight: 700; color: #0f172a; margin-bottom: 20px; }
-    .dl-info-text { font-size: 17px; color: #64748b; margin-bottom: 32px; line-height: 1.7; }
-    .btn-touch {
-      padding: 16px 40px; border-radius: 12px; border: none; cursor: pointer;
-      background: linear-gradient(135deg, #4f46e5, #9333ea);
-      color: white; font-size: 16px; font-weight: 500; font-family: 'Inter', sans-serif;
-      transition: all 0.3s; box-shadow: 0 4px 20px rgba(99,102,241,0.4);
-    }
-    .btn-touch:hover { box-shadow: 0 8px 30px rgba(99,102,241,0.6); transform: translateY(-2px); }
-
-    /* ===== CTA ===== */
-    .cta { position: relative; padding: 128px 32px; overflow: hidden; }
-    .cta-bg { position: absolute; inset: 0; background: linear-gradient(135deg, #4338ca, #7c3aed, #db2777); }
-    .cta-blur-1 { position: absolute; top: 40px; left: 40px; width: 500px; height: 500px; border-radius: 50%; background: rgba(255,255,255,0.1); filter: blur(60px); }
-    .cta-blur-2 { position: absolute; bottom: 40px; right: 40px; width: 500px; height: 500px; border-radius: 50%; background: rgba(255,255,255,0.1); filter: blur(60px); }
-    .cta-card {
-      position: relative; max-width: 1280px; margin: 0 auto;
-      background: rgba(255,255,255,0.1); backdrop-filter: blur(20px);
-      border-radius: 40px; border: 1px solid rgba(255,255,255,0.2);
-      box-shadow: 0 32px 80px rgba(0,0,0,0.2); overflow: hidden;
-    }
-    .cta-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 64px; align-items: center; padding: 80px; }
-    .cta-content { display: flex; flex-direction: column; gap: 32px; }
-    .cta-tag {
-      display: inline-flex; align-items: center; gap: 10px;
-      padding: 10px 20px; border-radius: 50px;
-      background: rgba(255,255,255,0.2); border: 1px solid rgba(255,255,255,0.3);
-      width: fit-content; font-size: 13px; color: white; font-weight: 500;
-    }
-    .cta-title { font-size: clamp(32px, 5vw, 56px); font-weight: 800; color: white; line-height: 1.08; }
-    .cta-desc { font-size: 18px; color: rgba(255,255,255,0.9); line-height: 1.75; }
-    .cta-btns { display: flex; gap: 20px; flex-wrap: wrap; }
-    .btn-cta-white {
-      display: inline-flex; align-items: center; gap: 8px;
-      padding: 18px 40px; border-radius: 12px; border: none; cursor: pointer;
-      background: white; color: #4f46e5;
-      font-size: 17px; font-weight: 600; font-family: 'Inter', sans-serif;
-      text-decoration: none; transition: all 0.3s;
-    }
-    .btn-cta-white:hover { box-shadow: 0 12px 36px rgba(0,0,0,0.2); transform: translateY(-2px); }
-    .btn-cta-ghost {
-      display: inline-flex; align-items: center; gap: 8px;
-      padding: 16px 40px; border-radius: 12px; cursor: pointer;
-      background: rgba(255,255,255,0.1); color: white;
-      font-size: 17px; font-weight: 500; font-family: 'Inter', sans-serif;
-      border: 2px solid rgba(255,255,255,0.3); text-decoration: none; transition: all 0.3s;
-    }
-    .btn-cta-ghost:hover { background: rgba(255,255,255,0.2); }
-    .cta-features { display: flex; flex-direction: column; gap: 24px; }
-    .cta-feat {
-      display: flex; align-items: center; gap: 20px; padding: 20px; border-radius: 20px;
-      background: rgba(255,255,255,0.1); border: 1px solid rgba(255,255,255,0.2);
-    }
-    .cta-feat-icon {
-      width: 56px; height: 56px; border-radius: 14px;
-      background: rgba(255,255,255,0.2); flex-shrink: 0;
-      display: flex; align-items: center; justify-content: center;
-    }
-    .cta-feat-icon svg { width: 28px; height: 28px; color: white; }
-    .cta-feat-title { font-size: 17px; font-weight: 600; color: white; }
-    .cta-feat-sub { font-size: 13px; color: rgba(255,255,255,0.7); margin-top: 2px; }
-
-    /* ===== FOOTER ===== */
-    footer {
-      position: relative; overflow: hidden;
-      background: linear-gradient(180deg, #0f172a, #020617);
-      padding: 80px 32px 40px;
-    }
-    .footer-glow-1 { position: absolute; top: 0; left: 0; width: 500px; height: 500px; border-radius: 50%; background: rgba(99,102,241,0.1); filter: blur(80px); }
-    .footer-glow-2 { position: absolute; bottom: 0; right: 0; width: 500px; height: 500px; border-radius: 50%; background: rgba(168,85,247,0.1); filter: blur(80px); }
-    .footer-inner { position: relative; max-width: 1280px; margin: 0 auto; }
-    .footer-top { display: grid; grid-template-columns: 2fr 1fr 1fr 1fr; gap: 64px; padding-bottom: 64px; border-bottom: 1px solid rgba(255,255,255,0.08); }
-    .footer-logo { display: flex; align-items: center; gap: 12px; margin-bottom: 28px; }
-    .footer-logo-icon { width: 48px; height: 48px; border-radius: 14px; background: linear-gradient(135deg, #6366f1, #9333ea); display: flex; align-items: center; justify-content: center; color: white; font-weight: 800; font-size: 22px; }
-    .footer-logo-text { font-size: 19px; font-weight: 700; color: white; }
-    .footer-desc { font-size: 15px; color: #64748b; line-height: 1.7; margin-bottom: 28px; }
-    .footer-socials { display: flex; gap: 10px; }
-    .social-btn { width: 44px; height: 44px; border-radius: 12px; background: rgba(255,255,255,0.1); display: flex; align-items: center; justify-content: center; color: white; text-decoration: none; transition: all 0.3s; }
-    .social-btn:hover { background: rgba(255,255,255,0.2); transform: scale(1.1); }
-    .social-btn svg { width: 20px; height: 20px; }
-    .footer-col-title { font-size: 15px; font-weight: 700; color: white; margin-bottom: 28px; }
-    .footer-links { list-style: none; display: flex; flex-direction: column; gap: 14px; }
-    .footer-links a { font-size: 15px; color: #64748b; text-decoration: none; transition: color 0.2s; }
-    .footer-links a:hover { color: white; }
-    .footer-contact-item { display: flex; align-items: flex-start; gap: 10px; }
-    .footer-contact-item svg { width: 18px; height: 18px; color: #818cf8; flex-shrink: 0; margin-top: 1px; }
-    .footer-bottom { display: flex; justify-content: space-between; align-items: center; padding-top: 40px; flex-wrap: wrap; gap: 16px; }
-    .footer-copy { font-size: 14px; color: #64748b; }
-    .footer-bottom-links { display: flex; gap: 32px; }
-    .footer-bottom-links a { font-size: 14px; color: #64748b; text-decoration: none; transition: color 0.2s; }
-    .footer-bottom-links a:hover { color: white; }
-
-    /* ===== ANIMATIES ===== */
-    .fade-up { opacity: 0; transform: translateY(32px); transition: opacity 0.6s ease, transform 0.6s ease; }
-    .fade-up.show { opacity: 1; transform: translateY(0); }
-    .d1{transition-delay:0.05s;} .d2{transition-delay:0.15s;} .d3{transition-delay:0.25s;} .d4{transition-delay:0.35s;}
-
-    /* ===== RESPONSIVE ===== */
-    @media(max-width:1024px){ .features-grid{grid-template-columns:repeat(2,1fr);} .specs-grid{grid-template-columns:repeat(2,1fr);} .cta-grid{grid-template-columns:1fr;} .cta-features{display:none;} .footer-top{grid-template-columns:1fr 1fr;} }
-    @media(max-width:768px){ section{padding:80px 24px;} .nav-links,.btn-nav{display:none;} .hero-inner{grid-template-columns:1fr;padding:60px 24px 80px;} .hero-image-wrap{display:none;} .hero-title{font-size:44px;} .features-grid,.specs-grid,.downloads-grid{grid-template-columns:1fr;} .specs-stats-grid{grid-template-columns:1fr;} .footer-top{grid-template-columns:1fr;} .cta-grid{padding:40px 24px;} }
-  </style>
+  <!-- Onze eigen CSS -->
+  <link rel="stylesheet" href="/Simon/assets/style.css" />
 </head>
 <body>
 
-<!-- Laadscherm — verdwijnt als de data klaar is -->
-<div id="loading">
-  <div class="loader"></div>
-  <p>Website wordt geladen...</p>
-</div>
+  <!-- Laadscherm — verdwijnt als data klaar is -->
+  <div id="loading">
+    <div class="loader"></div>
+    <p>Website wordt geladen...</p>
+  </div>
 
-<!-- Alle secties worden hier gevuld door JavaScript -->
-<nav id="navbar" style="display:none"></nav>
-<section id="hero" class="hero" style="display:none"></section>
-<section id="features" class="features" style="display:none"></section>
-<section id="specifications" class="specs" style="display:none"></section>
-<section id="downloads" class="downloads" style="display:none"></section>
-<section id="cta" class="cta" style="display:none"></section>
-<footer id="footer" style="display:none"></footer>
+  <!-- Navbar — wordt gevuld door JavaScript -->
+  <nav id="navbar" style="display:none;"></nav>
 
-<script>
-// ============================================
-// STAP 1: Data ophalen van de backend
-// ============================================
-// fetch() stuurt een verzoek naar de backend API
-// De backend stuurt dan alle website content terug als JSON
+  <!-- Hero sectie -->
+  <section id="hero" class="hero" style="display:none;"></section>
 
-const WEBSITE_ID = 4; // Jouw website ID in de database
-const API_URL = `http://127.0.0.1:3000/api/content/websites/${WEBSITE_ID}`;
+  <!-- Features sectie -->
+  <section id="features" class="features" style="display:none;"></section>
 
-fetch(API_URL)
-  .then(response => response.json())
-  .then(data => {
-    // data.website.blocks = alle secties van de pagina
-    const blocks = data.website.blocks;
+  <!-- Specificaties sectie -->
+  <section id="specifications" class="specs" style="display:none;"></section>
 
-    // Loop door alle blokken en bouw elke sectie op
-    blocks.forEach(block => {
-      // Zet fields array om naar handig object
-      // Van: [{fieldName: 'title', fieldValue: 'Hallo'}]
-      // Naar: {title: 'Hallo'}
-      const fields = {};
-      block.fields.forEach(f => fields[f.fieldName] = f.fieldValue);
-
-      // Zet items array om naar handig formaat
-      const items = block.items.map(item => {
-        const itemFields = {};
-        item.fields.forEach(f => itemFields[f.fieldName] = f.fieldValue);
-        return { ...item, ...itemFields };
-      });
-
-      // Bouw de juiste sectie op basis van het blok type
-      switch(block.blockTypeName) {
-        case 'navbar_block':      buildNavbar(fields, items); break;
-        case 'hero_block':        buildHero(fields); break;
-        case 'features_block':    buildFeatures(fields, items); break;
-        case 'specifications_block': buildSpecs(fields, items); break;
-        case 'downloads_block':   buildDownloads(fields, items); break;
-        case 'cta_block':         buildCTA(fields, items); break;
-        case 'footer_block':      buildFooter(fields, items); break;
-      }
-    });
-
-    // Laadscherm verbergen en pagina tonen
-    document.getElementById('loading').style.display = 'none';
-
-    // Scroll animaties starten
-    startScrollAnimations();
-  })
-  .catch(error => {
-    // Als er iets fout gaat, toon een foutmelding
-    console.error('Fout bij ophalen data:', error);
-    document.getElementById('loading').innerHTML = `
-      <p style="color:red;">Kon geen verbinding maken met de backend.<br>
-      Zorg dat de backend draait op http://127.0.0.1:3000</p>
-    `;
-  });
-
-// ============================================
-// STAP 2: Bouwfuncties voor elke sectie
-// ============================================
-
-function buildNavbar(fields, items) {
-  const nav = document.getElementById('navbar');
-  const links = items
-    .filter(i => i.itemType === 'nav_link')
-    .map(i => `<li><a href="${i.url}">${i.text}</a></li>`)
-    .join('');
-
-  nav.innerHTML = `
-    <div class="nav-inner">
-      <a href="#" class="nav-logo">
-        <div class="nav-logo-icon">P</div>
-        <span class="nav-logo-text">${fields.logo_text}</span>
-      </a>
-      <ul class="nav-links">${links}</ul>
-      <a href="${fields.button_url}" class="btn-nav">${fields.button_text}</a>
-    </div>`;
-  nav.style.display = 'block';
-}
-
-function buildHero(fields) {
-  const hero = document.getElementById('hero');
-  hero.innerHTML = `
-    <div class="hero-bg"></div>
-    <div class="hero-glow-1"></div>
-    <div class="hero-glow-2"></div>
-    <div class="hero-inner">
-      <div class="hero-content fade-up">
-        <div class="hero-badge">
-          <span class="badge-dot"></span>
-          <span class="badge-text">${fields.badge_text}</span>
-        </div>
-        <h1 class="hero-title">
-          <span class="gradient-text">${fields.title_line_1}</span><br>
-          <span class="dark-text">${fields.title_line_2} ${fields.title_line_3}</span>
-        </h1>
-        <p class="hero-desc">${fields.subtitle}</p>
-        <div class="hero-btns">
-          <a href="${fields.primary_button_url}" class="btn-primary">
-            <span>${fields.primary_button_text}</span>
-            <svg width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M13 7l5 5m0 0l-5 5m5-5H6"/></svg>
-          </a>
-          <a href="${fields.secondary_button_url}" class="btn-secondary">
-            <svg width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><polygon points="10,8 16,12 10,16" fill="currentColor" stroke="none"/></svg>
-            <span>${fields.secondary_button_text}</span>
-          </a>
-        </div>
-        <div class="hero-stats">
-          <div><div class="stat-number">${fields.stat_1_value}</div><div class="stat-label">${fields.stat_1_label}</div></div>
-          <div class="stat-divider"></div>
-          <div><div class="stat-number">${fields.stat_2_value}</div><div class="stat-label">${fields.stat_2_label}</div></div>
-          <div class="stat-divider"></div>
-          <div><div class="stat-number">${fields.stat_3_value}</div><div class="stat-label">${fields.stat_3_label}</div></div>
-        </div>
-      </div>
-      <div class="hero-image-wrap fade-up d2">
-        <div class="hero-image-glow"></div>
-        <div class="hero-card">
-          <img src="https://images.unsplash.com/photo-1770048792336-e2ca27785b12?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&w=800&q=80" alt="Panasonic Toughbook 33" />
-          <div class="cert-badge">
-            <div class="cert-icon">
-              <svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24" style="width:28px;height:28px;color:white"><path stroke-linecap="round" stroke-linejoin="round" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z"/></svg>
-            </div>
-            <div>
-              <div class="cert-label">${fields.card_label}</div>
-              <div class="cert-title">${fields.card_text}</div>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>`;
-  hero.style.display = 'flex';
-}
-
-function buildFeatures(fields, items) {
-  const iconColors = ['icon-1','icon-2','icon-3','icon-4'];
-  const iconSVGs = {
-    shield: `<svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z"/></svg>`,
-    monitor: `<svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><rect x="2" y="3" width="20" height="14" rx="2"/><line x1="8" y1="21" x2="16" y2="21"/><line x1="12" y1="17" x2="12" y2="21"/></svg>`,
-    battery: `<svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><rect x="6" y="7" width="12" height="11" rx="2"/><path d="M9 7V5a1 1 0 011-1h4a1 1 0 011 1v2"/></svg>`,
-    zap: `<svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><polygon points="13,2 3,14 12,14 11,22 21,10 12,10"/></svg>`,
-  };
-
-  const cards = items.map((item, i) => `
-    <div class="feat-card fade-up d${i+1}">
-      <div class="feat-icon ${iconColors[i] || 'icon-1'}">${iconSVGs[item.icon] || iconSVGs.shield}</div>
-      <h3 class="feat-title">${item.title}</h3>
-      <p class="feat-text">${item.description}</p>
-    </div>`).join('');
-
-  const section = document.getElementById('features');
-  section.innerHTML = `
-    <div class="features-bg"></div>
-    <div class="section-inner" style="position:relative;">
+  <!-- Gallery sectie — HTML staat hier vast, JS vult de afbeeldingen -->
+  <section id="gallery-section" class="gallery" style="display:none;">
+    <div class="section-inner">
       <div class="section-head fade-up">
-        <h2 class="section-title">${fields.title.replace('Extreme', '<span class="gradient-text">Extreme</span>')}</h2>
-        <p class="section-desc">${fields.subtitle}</p>
+        <h2 class="section-title">Product <span class="gradient-text">Gallery</span></h2>
+        <p class="section-desc">Explore the Toughbook 33 in detail from every angle.</p>
       </div>
-      <div class="features-grid">${cards}</div>
-      <div class="trusted-banner fade-up">
-        <div class="trusted-pill">✓ ${fields.bottom_badge_text}</div>
-      </div>
-    </div>`;
-  section.style.display = 'block';
-}
 
-function buildSpecs(fields, items) {
-  const iconSVGs = {
-    cpu: `<svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24" style="width:28px;height:28px;color:white"><rect x="4" y="4" width="16" height="16" rx="2"/><rect x="9" y="9" width="6" height="6"/></svg>`,
-    'hard-drive': `<svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24" style="width:28px;height:28px;color:white"><ellipse cx="12" cy="5" rx="9" ry="3"/><path d="M21 12c0 1.66-4 3-9 3s-9-1.34-9-3"/><path d="M3 5v14c0 1.66 4 3 9 3s9-1.34 9-3V5"/></svg>`,
-    monitor: `<svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24" style="width:28px;height:28px;color:white"><rect x="2" y="3" width="20" height="14" rx="2"/><line x1="8" y1="21" x2="16" y2="21"/><line x1="12" y1="17" x2="12" y2="21"/></svg>`,
-    wifi: `<svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24" style="width:28px;height:28px;color:white"><path d="M5 12.55a11 11 0 0114.08 0"/><path d="M1.42 9a16 16 0 0121.16 0"/><path d="M8.53 16.11a6 6 0 016.95 0"/><line x1="12" y1="20" x2="12" y2="20.01"/></svg>`,
-    battery: `<svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24" style="width:28px;height:28px;color:white"><rect x="6" y="7" width="12" height="11" rx="2"/><path d="M9 7V5a1 1 0 011-1h4a1 1 0 011 1v2"/></svg>`,
-    shield: `<svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24" style="width:28px;height:28px;color:white"><path stroke-linecap="round" stroke-linejoin="round" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z"/></svg>`,
-  };
+      <!-- Hoofdslider -->
+      <div class="gallery-main fade-up">
+        <div class="gallery-img-wrap">
+          <img id="galleryMainImg" src="" alt="Toughbook Gallery" />
+          <div class="gallery-overlay">
+            <div class="gallery-title" id="galleryTitle"></div>
+            <div class="gallery-desc" id="galleryDesc"></div>
+          </div>
 
-  const cards = items.map((item, i) => `
-    <div class="spec-card fade-up d${(i%3)+1}">
-      <div class="spec-header">
-        <div class="spec-icon">${iconSVGs[item.icon] || iconSVGs.shield}</div>
-        <span class="spec-title">${item.title}</span>
-      </div>
-      <div class="spec-rows">
-        <div class="spec-row"><span class="spec-label">${item.row_1_label}</span><span class="spec-value">${item.row_1_value}</span></div>
-        <div class="spec-row"><span class="spec-label">${item.row_2_label}</span><span class="spec-value">${item.row_2_value}</span></div>
-        <div class="spec-row"><span class="spec-label">${item.row_3_label}</span><span class="spec-value">${item.row_3_value}</span></div>
-      </div>
-    </div>`).join('');
+          <!-- Pijlknoppen -->
+          <button class="gallery-btn gallery-prev" onclick="changeSlide(-1)">
+            <svg fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24" width="26" height="26">
+              <path stroke-linecap="round" stroke-linejoin="round" d="M15 19l-7-7 7-7"/>
+            </svg>
+          </button>
+          <button class="gallery-btn gallery-next" onclick="changeSlide(1)">
+            <svg fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24" width="26" height="26">
+              <path stroke-linecap="round" stroke-linejoin="round" d="M9 5l7 7-7 7"/>
+            </svg>
+          </button>
 
-  const section = document.getElementById('specifications');
-  section.innerHTML = `
-    <div class="specs-bg"></div>
-    <div class="section-inner" style="position:relative;">
-      <div class="section-head fade-up">
-        <h2 class="section-title">${fields.title.replace('Specifications', '<span class="gradient-text">Specifications</span>')}</h2>
-        <p class="section-desc">${fields.subtitle}</p>
-      </div>
-      <div class="specs-grid">${cards}</div>
-      <div class="specs-stats fade-up">
-        <div class="specs-stats-grid">
-          <div><div class="stat-big">${fields.bottom_stat_1_value}</div><div class="stat-desc">${fields.bottom_stat_1_label}</div></div>
-          <div><div class="stat-big">${fields.bottom_stat_2_value}</div><div class="stat-desc">${fields.bottom_stat_2_label}</div></div>
-          <div><div class="stat-big">${fields.bottom_stat_3_value}</div><div class="stat-desc">${fields.bottom_stat_3_label}</div></div>
-        </div>
-      </div>
-    </div>`;
-  section.style.display = 'block';
-}
-
-function buildDownloads(fields, items) {
-  const iconColors = ['dl-icon-1','dl-icon-2','dl-icon-3'];
-  const cards = items.map((item, i) => `
-    <div class="dl-card fade-up d${i+1}">
-      <div class="dl-icon ${iconColors[i]}">
-        <svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8z"/><polyline points="14,2 14,8 20,8"/></svg>
-      </div>
-      <div class="dl-title">${item.title}</div>
-      <div class="dl-desc">${item.description}</div>
-      <div class="dl-meta"><span>${item.file_type}</span><span>${item.file_size}</span></div>
-      <button class="btn-download" onclick="window.location='${item.url}'">
-        <svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24" width="20" height="20"><path d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4"/><polyline points="7,10 12,15 17,10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
-        ${item.button_text}
-      </button>
-    </div>`).join('');
-
-  const section = document.getElementById('downloads');
-  section.innerHTML = `
-    <div class="downloads-bg"></div>
-    <div class="section-inner" style="position:relative;">
-      <div class="section-head fade-up">
-        <h2 class="section-title">${fields.title.replace('Documentation', '<span class="gradient-text">Documentation</span>')}</h2>
-        <p class="section-desc">${fields.subtitle}</p>
-      </div>
-      <div class="downloads-grid">${cards}</div>
-      <div class="dl-info-box fade-up">
-        <div class="dl-info-title">${fields.cta_title}</div>
-        <div class="dl-info-text">${fields.cta_text}</div>
-        <button class="btn-touch" onclick="window.location='${fields.cta_button_url}'">${fields.cta_button_text}</button>
-      </div>
-    </div>`;
-  section.style.display = 'block';
-}
-
-function buildCTA(fields, items) {
-  const benefits = items.map(item => `
-    <div class="cta-feat">
-      <div class="cta-feat-icon">
-        <svg fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7"/></svg>
-      </div>
-      <div>
-        <div class="cta-feat-title">${item.title}</div>
-        <div class="cta-feat-sub">${item.description}</div>
-      </div>
-    </div>`).join('');
-
-  const section = document.getElementById('cta');
-  section.innerHTML = `
-    <div class="cta-bg"></div>
-    <div class="cta-blur-1"></div>
-    <div class="cta-blur-2"></div>
-    <div class="cta-card fade-up">
-      <div class="cta-grid">
-        <div class="cta-content">
-          <div class="cta-tag">⚡ ${fields.badge_text}</div>
-          <h2 class="cta-title">${fields.title}</h2>
-          <p class="cta-desc">${fields.subtitle}</p>
-          <div class="cta-btns">
-            <a href="${fields.primary_button_url}" class="btn-cta-white">
-              ${fields.primary_button_text}
-              <svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24" width="24" height="24"><path stroke-linecap="round" stroke-linejoin="round" d="M13 7l5 5m0 0l-5 5m5-5H6"/></svg>
-            </a>
-            <a href="${fields.secondary_button_url}" class="btn-cta-ghost">
-              <svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24" width="24" height="24"><path stroke-linecap="round" stroke-linejoin="round" d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z"/></svg>
-              ${fields.secondary_button_text}
-            </a>
+          <!-- Dots -->
+          <div class="gallery-dots">
+            <button class="gallery-dot active" onclick="goSlide(0)"></button>
+            <button class="gallery-dot" onclick="goSlide(1)"></button>
+            <button class="gallery-dot" onclick="goSlide(2)"></button>
+            <button class="gallery-dot" onclick="goSlide(3)"></button>
           </div>
         </div>
-        <div class="cta-features">${benefits}</div>
       </div>
-    </div>`;
-  section.style.display = 'block';
-}
 
-function buildFooter(fields, items) {
-  const navLinks = items.filter(i => i.itemType === 'nav_link')
-    .map(i => `<li><a href="${i.url}">${i.text}</a></li>`).join('');
-  const productLinks = items.filter(i => i.itemType === 'product_link')
-    .map(i => `<li><a href="${i.url}">${i.text}</a></li>`).join('');
-
-  const footer = document.getElementById('footer');
-  footer.innerHTML = `
-    <div class="footer-glow-1"></div>
-    <div class="footer-glow-2"></div>
-    <div class="footer-inner">
-      <div class="footer-top">
-        <div>
-          <div class="footer-logo">
-            <div class="footer-logo-icon">P</div>
-            <span class="footer-logo-text">${fields.logo_text}</span>
-          </div>
-          <p class="footer-desc">${fields.description}</p>
-          <div class="footer-socials">
-            <a href="#" class="social-btn"><svg fill="currentColor" viewBox="0 0 24 24"><path d="M18 2h-3a5 5 0 00-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 011-1h3z"/></svg></a>
-            <a href="#" class="social-btn"><svg fill="currentColor" viewBox="0 0 24 24"><path d="M23 3a10.9 10.9 0 01-3.14 1.53 4.48 4.48 0 00-7.86 3v1A10.66 10.66 0 013 4s-4 9 5 13a11.64 11.64 0 01-7 2c9 5 20 0 20-11.5a4.5 4.5 0 00-.08-.83A7.72 7.72 0 0023 3z"/></svg></a>
-            <a href="#" class="social-btn"><svg fill="currentColor" viewBox="0 0 24 24"><path d="M16 8a6 6 0 016 6v7h-4v-7a2 2 0 00-2-2 2 2 0 00-2 2v7h-4v-7a6 6 0 016-6zM2 9h4v12H2z"/><circle cx="4" cy="4" r="2"/></svg></a>
-            <a href="#" class="social-btn"><svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><rect x="2" y="2" width="20" height="20" rx="5"/><path d="M16 11.37A4 4 0 1112.63 8 4 4 0 0116 11.37z"/><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"/></svg></a>
-          </div>
+      <!-- Thumbnails -->
+      <div class="gallery-thumbs fade-up">
+        <div class="gallery-thumb active" onclick="goSlide(0)">
+          <img src="./assets/images/Product gallery/Rugged_Panasonic_Toughbook_in_cinematic_lighting.png" alt="Cinematic View" />
+          <div class="gallery-thumb-overlay"></div>
         </div>
-        <div>
-          <div class="footer-col-title">Navigation</div>
-          <ul class="footer-links">${navLinks}</ul>
+        <div class="gallery-thumb" onclick="goSlide(1)">
+          <img src="./assets/images/Product gallery/Rugged_Toughbook_in_stormy_terrain.png" alt="Stormy Terrain" />
+          <div class="gallery-thumb-overlay"></div>
         </div>
-        <div>
-          <div class="footer-col-title">Products</div>
-          <ul class="footer-links">${productLinks}</ul>
+        <div class="gallery-thumb" onclick="goSlide(2)">
+          <img src="./assets/images/Product gallery/Rugged_Toughbook_in_a_snowy_wilderness.png" alt="Arctic Conditions" />
+          <div class="gallery-thumb-overlay"></div>
         </div>
-        <div>
-          <div class="footer-col-title">Contact</div>
-          <ul class="footer-links">
-            <li><div class="footer-contact-item"><svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg><a href="mailto:${fields.contact_email}">${fields.contact_email}</a></div></li>
-            <li><div class="footer-contact-item"><svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z"/></svg><a href="tel:${fields.contact_phone}">${fields.contact_phone}</a></div></li>
-            <li><div class="footer-contact-item"><svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"/><path stroke-linecap="round" stroke-linejoin="round" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"/></svg><span>${fields.contact_location}</span></div></li>
-          </ul>
+        <div class="gallery-thumb" onclick="goSlide(3)">
+          <img src="./assets/images/Product gallery/Robuuste_Panasonic_Toughbook_in_mistige_studiohoek.png" alt="Studio Detail" />
+          <div class="gallery-thumb-overlay"></div>
         </div>
       </div>
-      <div class="footer-bottom">
-        <span class="footer-copy">${fields.copyright}</span>
-        <div class="footer-bottom-links">
-          <a href="${fields.privacy_policy_url}">Privacy Policy</a>
-          <a href="${fields.terms_url}">Terms of Service</a>
-          <a href="${fields.cookies_url}">Cookie Policy</a>
-        </div>
-      </div>
-    </div>`;
-  footer.style.display = 'block';
-}
+    </div>
+  </section>
 
-// ============================================
-// STAP 3: Scroll animaties
-// ============================================
-function startScrollAnimations() {
-  const observer = new IntersectionObserver((entries) => {
-    entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('show'); });
-  }, { threshold: 0.1 });
-  document.querySelectorAll('.fade-up').forEach(el => observer.observe(el));
-}
-</script>
+  <!-- Downloads sectie -->
+  <section id="downloads" class="downloads" style="display:none;"></section>
+
+  <!-- CTA sectie -->
+  <section id="cta" class="cta" style="display:none;"></section>
+
+  <!-- Footer -->
+  <footer id="footer" style="display:none;"></footer>
+
+  <!-- Onze eigen JavaScript — staat onderaan zodat HTML eerst laadt -->
+  <script src="/Simon/assets/main.js"></script>
+
 </body>
 </html>
