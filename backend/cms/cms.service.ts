@@ -18,3 +18,24 @@ export const updateFieldValue = async (
     [fieldValue, id],
   );
 };
+
+export const updateBlockOrder = async (blockIds: number[]): Promise<void> => {
+  const db = await connection;
+
+  await db.beginTransaction();
+
+  try {
+    for (const [index, blockId] of blockIds.entries()) {
+      await db.query(
+        'UPDATE website_blocks SET sort_order = ? WHERE id = ?;',
+        [index + 1, blockId],
+      );
+    }
+
+    await db.commit();
+  }
+  catch (error) {
+    await db.rollback();
+    throw error;
+  }
+};

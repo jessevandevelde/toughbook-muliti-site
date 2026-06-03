@@ -9,3 +9,7 @@ export type {
 export interface FieldValuePayload {
   fieldValue: string
 }
+
+export interface BlockOrderPayload {
+  blockIds: number[]
+}
