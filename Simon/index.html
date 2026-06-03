@@ -106,6 +106,58 @@
     <!-- Downloads sectie -->
     <section id="downloads" class="downloads" aria-label="Downloads" style="display:none;"></section>
 
+    <!-- Offerte formulier -->
+    <section id="offerte" class="quote-form-section fade-up" aria-label="Offerte aanvragen">
+      <div class="section-inner">
+        <div class="section-head">
+          <span class="section-badge">Offerte aanvragen</span>
+          <h2 class="section-title">Vraag een vrijblijvende offerte aan</h2>
+          <p class="section-desc">Vul dit formulier in en wij nemen binnen 24 uur contact op met een passend voorstel.</p>
+        </div>
+
+        <div class="quote-form-grid">
+          <form id="quoteForm" class="quote-form" autocomplete="off">
+            <div class="form-row">
+              <label for="quoteName">Naam</label>
+              <input id="quoteName" name="name" type="text" required placeholder="Je volledige naam" />
+            </div>
+            <div class="form-row">
+              <label for="quoteCompany">Bedrijf</label>
+              <input id="quoteCompany" name="company" type="text" placeholder="Bedrijfsnaam (optioneel)" />
+            </div>
+            <div class="form-row">
+              <label for="quoteEmail">E-mailadres</label>
+              <input id="quoteEmail" name="email" type="email" required placeholder="naam@bedrijf.nl" />
+            </div>
+            <div class="form-row">
+              <label for="quotePhone">Telefoon</label>
+              <input id="quotePhone" name="phone" type="tel" placeholder="06 12 34 56 78" />
+            </div>
+            <div class="form-row form-row-full">
+              <label for="quoteMessage">Bericht</label>
+              <textarea id="quoteMessage" name="message" rows="6" required placeholder="Waar heeft u een offerte voor nodig?"></textarea>
+            </div>
+            <div class="form-footer">
+              <button type="submit" class="btn-submit">Verstuur aanvraag</button>
+              <div id="quoteFormStatus" class="quote-form-status" aria-live="polite"></div>
+            </div>
+          </form>
+
+          <aside class="quote-form-aside">
+            <div class="quote-info-card">
+              <h3>Wat wij van u nodig hebben</h3>
+              <ul>
+                <li>Uw naam en contactgegevens</li>
+                <li>Het gewenste Toughbook model</li>
+                <li>De gebruiksomgeving of special requests</li>
+              </ul>
+              <p>Wij bekijken uw aanvraag en sturen een passend voorstel op maat.</p>
+            </div>
+          </aside>
+        </div>
+      </div>
+    </section>
+
     <!-- CTA sectie -->
     <section id="cta" class="cta" aria-label="Call to action" style="display:none;"></section>
   </main>

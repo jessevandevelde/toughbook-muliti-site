@@ -406,6 +406,39 @@ section { padding: 120px 40px; }
 .cta-feat-title { font-size: 15px; font-weight: 700; color: white; }
 .cta-feat-sub { font-size: 12px; color: rgba(255,255,255,0.65); margin-top: 2px; }
 
+.quote-form-section { padding: 100px 40px; background: #f8f9fc; }
+.quote-form-grid { display: grid; grid-template-columns: 1.2fr 0.8fr; gap: 40px; align-items: start; max-width: 1200px; margin: 0 auto; }
+.quote-form { display: grid; gap: 20px; background: white; border-radius: 28px; padding: 36px; box-shadow: 0 24px 80px rgba(15,23,42,0.08); border: 1px solid rgba(148,163,184,0.18); }
+.form-row { display: grid; gap: 10px; }
+.form-row-full { grid-column: 1 / -1; }
+.form-row label { font-size: 14px; font-weight: 700; color: #0f172a; }
+.form-row input,
+.form-row textarea { width: 100%; background: #f8fafc; border: 1px solid #dbeafe; border-radius: 16px; padding: 16px 18px; font-size: 15px; color: #0f172a; resize: vertical; }
+.form-row input:focus,
+.form-row textarea:focus { outline: none; border-color: #6366f1; box-shadow: 0 0 0 4px rgba(99,102,241,0.12); }
+.form-footer { display: flex; flex-direction: column; gap: 16px; align-items: flex-start; }
+.btn-submit { padding: 16px 26px; border-radius: 14px; border: none; cursor: pointer; background: linear-gradient(135deg, #4f46e5, #7c3aed); color: white; font-size: 15px; font-weight: 700; font-family: 'Inter', sans-serif; transition: all 0.25s; box-shadow: 0 12px 30px rgba(79,70,229,0.24); }
+.btn-submit:hover { transform: translateY(-1px); box-shadow: 0 16px 36px rgba(79,70,229,0.32); }
+.quote-form-status { font-size: 14px; line-height: 1.6; }
+.quote-form-success { color: #166534; }
+.quote-form-error { color: #b91c1c; }
+.quote-form-info { color: #334155; }
+.quote-form-aside { display: flex; align-items: flex-start; }
+.quote-info-card { width: 100%; background: linear-gradient(180deg, #ffffff, #eef2ff); border-radius: 28px; padding: 32px; border: 1px solid #dbeafe; box-shadow: 0 24px 80px rgba(15,23,42,0.06); }
+.quote-info-card h3 { font-size: 24px; font-weight: 800; color: #0f172a; margin-bottom: 18px; }
+.quote-info-card ul { list-style: disc inside; color: #334155; line-height: 1.8; margin-bottom: 20px; }
+.quote-info-card p { color: #475569; line-height: 1.8; }
+
+@media (max-width: 960px) {
+  .quote-form-grid { grid-template-columns: 1fr; }
+}
+
+@media (max-width: 640px) {
+  .quote-form-section { padding: 70px 20px; }
+  .form-row input,
+  .form-row textarea { padding: 14px 16px; }
+}
+
 
 /* ===== 12. FOOTER ===== */
 footer { position: relative; overflow: hidden; background: linear-gradient(180deg, #06070f, #020308); padding: 80px 40px 40px; }

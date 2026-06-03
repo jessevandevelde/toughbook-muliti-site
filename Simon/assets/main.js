@@ -95,6 +95,7 @@ fetch(API_URL)
     startScrollEffects();
     startScrollAnimations();
     initGallery();
+    initQuoteForm();
   })
   .catch(error => {
     console.error('Fout bij ophalen data:', error);
@@ -620,6 +621,60 @@ function changeSlide(direction) {
 function goSlide(index) {
   currentSlide = index;
   updateGallery();
+}
+
+function initQuoteForm() {
+  const form = document.getElementById('quoteForm');
+  if (!form) return;
+
+  const status = document.getElementById('quoteFormStatus');
+  const submitButton = form.querySelector('button[type="submit"]');
+
+  form.addEventListener('submit', async (event) => {
+    event.preventDefault();
+
+    const formData = new FormData(form);
+    const payload = {
+      name: String(formData.get('name') || '').trim(),
+      company: String(formData.get('company') || '').trim(),
+      email: String(formData.get('email') || '').trim(),
+      phone: String(formData.get('phone') || '').trim(),
+      message: String(formData.get('message') || '').trim(),
+    };
+
+    if (!payload.name || !payload.email || !payload.message) {
+      status.textContent = 'Vul alstublieft naam, e-mail en bericht in.';
+      status.className = 'quote-form-status quote-form-error';
+      return;
+    }
+
+    submitButton.disabled = true;
+    status.textContent = 'Verzenden...';
+    status.className = 'quote-form-status quote-form-info';
+
+    try {
+      const response = await fetch(`${API_BASE}/api/contact`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(payload),
+      });
+
+      const data = await response.json();
+      if (!response.ok) {
+        throw new Error(data.error || 'Serverfout');
+      }
+
+      status.textContent = data.message || 'Je aanvraag is verzonden.';
+      status.className = 'quote-form-status quote-form-success';
+      form.reset();
+    } catch (error) {
+      console.error(error);
+      status.textContent = 'Verzenden is mislukt. Probeer het later opnieuw.';
+      status.className = 'quote-form-status quote-form-error';
+    } finally {
+      submitButton.disabled = false;
+    }
+  });
 }
 
 

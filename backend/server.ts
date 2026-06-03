@@ -17,6 +17,7 @@ const serverUrl = process.env.SERVER_URL ?? `http://localhost:${serverPort}`;
 
 const allowedOrigins = [
   'http://localhost:4200',
+  'http://localhost:5500',
   'http://127.0.0.1:5500',
   'http://127.0.0.1:3000',
 ];
@@ -43,6 +44,25 @@ api.use(json());
 api.use('/cms', cmsRoutes);
 api.use('/content', contentRoutes);
 api.use('/database', databaseRoutes);
+
+api.post('/contact', (req, res) => {
+  const { name, company, email, phone, message } = req.body;
+
+  if (!name || !email || !message) {
+    return res.status(400).json({ error: 'Naam, e-mail en bericht zijn verplicht.' });
+  }
+
+  console.log('Nieuwe offerteaanvraag ontvangen:', {
+    name,
+    company,
+    email,
+    phone,
+    message,
+    receivedAt: new Date().toISOString(),
+  });
+
+  return res.status(201).json({ message: 'Offerteaanvraag ontvangen. We nemen snel contact op.' });
+});
 
 app.use('/api', api);
 
