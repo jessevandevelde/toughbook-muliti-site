@@ -451,7 +451,7 @@ if (!isset($img_base64) || $img_base64 === '') {
     </div>
   </div>
   <div class="hero-right">
-    <img src="images/toughbook-hero.jpg" alt="Panasonic Toughbook 40 MK2">
+    <img src="../images/toughbook-hero.jpg" alt="Panasonic Toughbook 40 MK2">
     <div class="hero-price">
       <span class="price-old">&euro; 4.885,00</span>
       <span class="price-new">&euro;&nbsp;4.640,75</span>
@@ -605,19 +605,16 @@ if (!isset($img_base64) || $img_base64 === '') {
   <div class="divider"></div>
   <div class="gallery-grid">
     <div class="gallery-item">
-      <img src="data:image/png;base64,<?php echo $img_base64; ?>" alt="Toughbook 40 MK2 Field">
+      <img src="../images/toughbook-1.jpg" alt="Toughbook 40 MK2 Field">
     </div>
     <div class="gallery-item">
-      <div class="gallery-placeholder">DETAIL // KEYBOARD</div>
+      <img src="../images/toughbook-2.jpg" alt="DETAIL // KEYBOARD">
     </div>
     <div class="gallery-item">
-      <div class="gallery-placeholder">DETAIL // PORTS</div>
+      <img src="../images/toughbook-3.jpg" alt="DETAIL // PORTS">
     </div>
     <div class="gallery-item">
-      <div class="gallery-placeholder">IN USE // OUTDOOR</div>
-    </div>
-    <div class="gallery-item">
-      <div class="gallery-placeholder">DETAIL // DISPLAY</div>
+      <img src="../images/toughbook-4.jpg" alt="IN USE // OUTDOOR">
     </div>
   </div>
 </section>
