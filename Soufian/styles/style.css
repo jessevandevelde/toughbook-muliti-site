@@ -263,15 +263,15 @@
   #gallery { background: var(--black); }
   .gallery-grid {
     display: grid;
-    grid-template-columns: 2fr 1fr 1fr;
-    grid-template-rows: 250px 250px;
+    grid-template-columns: repeat(4, 1fr);
+    grid-template-rows: 250px;
     gap: 4px; margin-top: 2.5rem;
   }
   .gallery-item {
     background: var(--mid);
     overflow: hidden; position: relative;
   }
-  .gallery-item:first-child { grid-row: 1 / 3; }
+  .gallery-item:first-child { grid-row: auto; }
   .gallery-item img {
     width: 100%; height: 100%;
     object-fit: cover;
