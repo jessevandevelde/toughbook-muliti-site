@@ -116,6 +116,9 @@ fetch(API_URL)
 // --- NAVBAR ---
 function buildNavbar(fields, items) {
   const nav = document.getElementById('navbar');
+  const isEnglish = /\/Simon\/en(\/|$)/.test(window.location.pathname);
+  const langHref = isEnglish ? '/Simon/index.html' : '/Simon/en/index.html';
+  const langLabel = isEnglish ? 'NL' : 'EN';
 
   const links = items
     .filter(i => i.itemType === 'nav_link')
@@ -130,6 +133,7 @@ function buildNavbar(fields, items) {
       </a>
       <ul class="nav-links">${links}</ul>
       <div class="nav-right">
+        <a href="${langHref}" class="nav-lang-link">${langLabel}</a>
         <a href="${escUrl(fields.button_url)}" class="btn-nav">${escHtml(fields.button_text)}</a>
         <button class="nav-hamburger" aria-label="Menu openen" aria-expanded="false" aria-controls="navMobile">
           <span></span><span></span><span></span>
@@ -138,6 +142,7 @@ function buildNavbar(fields, items) {
     </div>
     <div class="nav-mobile" id="navMobile" aria-hidden="true">
       <ul class="nav-mobile-links">${links}</ul>
+      <a href="${langHref}" class="btn-nav btn-nav-mobile">${langLabel}</a>
       <a href="${escUrl(fields.button_url)}" class="btn-nav btn-nav-mobile">${escHtml(fields.button_text)}</a>
     </div>
   `;
