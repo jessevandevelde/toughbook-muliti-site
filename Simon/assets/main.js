@@ -12,13 +12,22 @@
 
 // ===== 1. CONFIG & UTILITIES =====
 
-const WEBSITE_ID = 4;
+const RAW_LANG = new URLSearchParams(window.location.search).get('lang');
+const SITE_LANGS = { en: 4, nl: 9 };
+const CURRENT_LANG = SITE_LANGS[RAW_LANG] ? RAW_LANG : 'en';
+const WEBSITE_ID = SITE_LANGS[CURRENT_LANG];
 
 // Werkt zowel lokaal (localhost/127.0.0.1) als in productie (zelfde origin).
 const API_BASE = (window.location.hostname === '127.0.0.1' || window.location.hostname === 'localhost')
   ? 'http://127.0.0.1:3000'
   : '';
 const API_URL = `${API_BASE}/api/content/websites/${WEBSITE_ID}`;
+
+function getLangUrl(lang) {
+  const params = new URLSearchParams(window.location.search);
+  params.set('lang', lang);
+  return `${window.location.pathname}?${params.toString()}`;
+}
 
 // Beschermt tegen XSS: escapet alle tekst die uit de backend komt voor gebruik in innerHTML.
 function escHtml(value) {
@@ -122,6 +131,13 @@ function buildNavbar(fields, items) {
     .map(i => `<li><a href="${escUrl(i.url)}">${escHtml(i.text)}</a></li>`)
     .join('');
 
+  const langSwitcher = `
+      <div class="lang-switcher">
+        <a href="${escUrl(getLangUrl('en'))}" class="lang-button ${CURRENT_LANG === 'en' ? 'active' : ''}">EN</a>
+        <a href="${escUrl(getLangUrl('nl'))}" class="lang-button ${CURRENT_LANG === 'nl' ? 'active' : ''}">NL</a>
+      </div>
+    `;
+
   nav.innerHTML = `
     <div class="nav-inner">
       <a href="#" class="nav-logo">
@@ -130,6 +146,7 @@ function buildNavbar(fields, items) {
       </a>
       <ul class="nav-links">${links}</ul>
       <div class="nav-right">
+        ${langSwitcher}
         <a href="${escUrl(fields.button_url)}" class="btn-nav">${escHtml(fields.button_text)}</a>
         <button class="nav-hamburger" aria-label="Menu openen" aria-expanded="false" aria-controls="navMobile">
           <span></span><span></span><span></span>
@@ -139,6 +156,7 @@ function buildNavbar(fields, items) {
     <div class="nav-mobile" id="navMobile" aria-hidden="true">
       <ul class="nav-mobile-links">${links}</ul>
       <a href="${escUrl(fields.button_url)}" class="btn-nav btn-nav-mobile">${escHtml(fields.button_text)}</a>
+      ${langSwitcher}
     </div>
   `;
   nav.style.display = 'block';
