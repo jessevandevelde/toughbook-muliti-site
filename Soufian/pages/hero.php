@@ -291,7 +291,7 @@ if (!isset($img_base64) || $img_base64 === '') {
 <section id="offerte">
   <div class="offerte-text">
     <h2>KLAAR VOOR DEPLOYMENT?</h2>
-    <p>Vraag een offerte aan of neem contact op met onze rugged specialist.</p>
+    <p>Vraag een offerte aan of neem contact op met onze rugged specialist. Onze rugged specialisten reageren binnen 24 uur.</p>
   </div>
   <a href="mailto:info@toughbook.nl" class="btn-dark">Vraag Offerte Aan &rarr;</a>
 </section>
