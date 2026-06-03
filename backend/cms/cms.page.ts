@@ -15,6 +15,7 @@ export const cmsPage = `<!DOCTYPE html>
         --accent: #2f6b57;
         --accent-strong: #214a3d;
         --accent-soft: #e4f0eb;
+        --ink: #1f2624;
         --warning: #a54734;
         --shadow: 0 18px 40px rgba(25, 48, 40, 0.08);
       }
@@ -110,13 +111,18 @@ export const cmsPage = `<!DOCTYPE html>
         position: sticky;
         top: 1rem;
         z-index: 10;
+        display: grid;
+        gap: 0.8rem;
+        padding: 0.9rem 1rem;
+        margin-bottom: 1rem;
+      }
+
+      .toolbar-main {
         display: flex;
         flex-wrap: wrap;
         align-items: center;
         justify-content: space-between;
         gap: 0.8rem;
-        padding: 0.9rem 1rem;
-        margin-bottom: 1rem;
       }
 
       .toolbar-left {
@@ -131,6 +137,16 @@ export const cmsPage = `<!DOCTYPE html>
         font-size: 0.92rem;
       }
 
+      .website-nav {
+        display: flex;
+        gap: 0.45rem;
+        overflow-x: auto;
+        padding: 0.35rem;
+        border-radius: 16px;
+        background: var(--surface-soft);
+        scrollbar-width: thin;
+      }
+
       .chip {
         display: inline-flex;
         align-items: center;
@@ -142,6 +158,26 @@ export const cmsPage = `<!DOCTYPE html>
         color: var(--accent-strong);
         font-size: 0.88rem;
         font-weight: 600;
+      }
+
+      .nav-button {
+        flex: 0 0 auto;
+        min-height: 2.35rem;
+        border: 1px solid transparent;
+        border-radius: 12px;
+        background: transparent;
+        color: var(--accent-strong);
+        padding: 0 0.75rem;
+        font-size: 0.9rem;
+        box-shadow: none;
+      }
+
+      .nav-button:hover,
+      .nav-button.active {
+        background: #ffffff;
+        border-color: var(--line);
+        color: var(--ink);
+        transform: none;
       }
 
       button {
@@ -184,6 +220,7 @@ export const cmsPage = `<!DOCTYPE html>
 
       .website-card {
         padding: 1rem;
+        scroll-margin-top: 9rem;
       }
 
       .website-top {
@@ -200,6 +237,27 @@ export const cmsPage = `<!DOCTYPE html>
         flex-wrap: wrap;
         gap: 0.5rem;
         margin-top: 0.75rem;
+      }
+
+      .website-actions {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 0.5rem;
+        justify-content: flex-end;
+      }
+
+      .ghost-button {
+        min-height: 2.35rem;
+        border: 1px solid var(--line);
+        background: var(--surface);
+        color: var(--accent-strong);
+        padding: 0 0.85rem;
+        font-size: 0.9rem;
+      }
+
+      .ghost-button:hover {
+        background: var(--accent-soft);
+        color: var(--accent-strong);
       }
 
       .muted-label {
@@ -219,6 +277,28 @@ export const cmsPage = `<!DOCTYPE html>
         background: linear-gradient(180deg, #ffffff 0%, #fbfdfc 100%);
       }
 
+      .block-card.dragging {
+        opacity: 0.62;
+      }
+
+      .drag-handle {
+        display: inline-flex;
+        align-items: center;
+        min-height: 2rem;
+        padding: 0 0.75rem;
+        border: 1px dashed var(--line);
+        border-radius: 999px;
+        background: #ffffff;
+        color: var(--muted);
+        cursor: grab;
+        font-size: 0.82rem;
+        font-weight: 700;
+      }
+
+      .drag-handle:active {
+        cursor: grabbing;
+      }
+
       .block-head,
       .item-head {
         display: flex;
@@ -227,6 +307,10 @@ export const cmsPage = `<!DOCTYPE html>
         gap: 0.75rem;
         align-items: center;
         margin-bottom: 0.85rem;
+      }
+
+      .summary-row .block-head {
+        margin-bottom: 0;
       }
 
       .tag {
@@ -319,18 +403,13 @@ export const cmsPage = `<!DOCTYPE html>
         font-size: 0.95rem;
       }
 
-      details summary {
-        list-style: none;
-        cursor: pointer;
-      }
-
-      details summary::-webkit-details-marker {
-        display: none;
-      }
-
       .collapsible {
         display: grid;
         gap: 0.85rem;
+      }
+
+      .collapsible[hidden] {
+        display: none;
       }
 
       .summary-row {
@@ -343,6 +422,12 @@ export const cmsPage = `<!DOCTYPE html>
       .summary-hint {
         color: var(--muted);
         font-size: 0.9rem;
+      }
+
+      .toggle-button {
+        min-height: 2rem;
+        padding: 0 0.85rem;
+        font-size: 0.86rem;
       }
 
       @media (max-width: 760px) {
@@ -376,12 +461,15 @@ export const cmsPage = `<!DOCTYPE html>
       </section>
 
       <section class="toolbar">
-        <div class="toolbar-left">
-          <button id="reloadButton" type="button">Reload content</button>
-          <span class="chip" id="websiteCount">0 websites</span>
-          <span class="chip" id="blockCount">0 blocks</span>
+        <div class="toolbar-main">
+          <div class="toolbar-left">
+            <button id="reloadButton" type="button">Reload content</button>
+            <span class="chip" id="websiteCount">0 websites</span>
+            <span class="chip" id="blockCount">0 blocks</span>
+          </div>
+          <div class="toolbar-right">Tip: choose a website first, then edit the blocks below.</div>
         </div>
-        <div class="toolbar-right">Tip: open one website at a time and save per field.</div>
+        <nav id="websiteNav" class="website-nav" aria-label="Website navigation"></nav>
       </section>
 
       <div id="status" class="status"></div>
@@ -394,6 +482,9 @@ export const cmsPage = `<!DOCTYPE html>
       const status = document.getElementById('status');
       const websiteCount = document.getElementById('websiteCount');
       const blockCount = document.getElementById('blockCount');
+      const websiteNav = document.getElementById('websiteNav');
+      let draggedBlock = null;
+      let dragSourceList = null;
 
       const setStatus = (message, isError = false) => {
         status.textContent = message;
@@ -408,10 +499,23 @@ export const cmsPage = `<!DOCTYPE html>
           .replaceAll('"', '&quot;');
       };
 
+      const slugify = (value) => {
+        return 'website-' + String(value).toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/(^-|-$)/g, '');
+      };
+
       const updateCounts = (websites) => {
         const totalBlocks = websites.reduce((sum, website) => sum + website.blocks.length, 0);
         websiteCount.textContent = websites.length + (websites.length === 1 ? ' website' : ' websites');
         blockCount.textContent = totalBlocks + (totalBlocks === 1 ? ' block' : ' blocks');
+      };
+
+      const renderWebsiteNav = (websites) => {
+        websiteNav.innerHTML = websites.map((website, index) => {
+          const activeClass = index === 0 ? ' active' : '';
+          const label = escapeHtml(website.name || ('Website #' + website.id));
+
+          return '<button class="nav-button' + activeClass + '" type="button" data-website-target="' + slugify(website.id) + '">' + label + '</button>';
+        }).join('');
       };
 
       const fetchJson = async (url, options) => {
@@ -452,7 +556,7 @@ export const cmsPage = `<!DOCTYPE html>
           ? block.items.map(item => renderItem(item)).join('')
           : '<div class="empty">No items are linked to this block.</div>';
 
-        return '<article class="block-card"><details open><summary class="summary-row"><div><h3>' + escapeHtml(block.blockTypeName) + '</h3><div class="summary-hint">Block #' + block.id + ' on position ' + block.sortOrder + '</div></div><span class="tag">' + block.items.length + ' items</span></summary><div class="collapsible"><div class="field-list">' + blockFields + '</div><div class="item-list">' + items + '</div></div></details></article>';
+        return '<article class="block-card" data-block-id="' + block.id + '"><div class="summary-row"><div><h3>' + escapeHtml(block.blockTypeName) + '</h3><div class="summary-hint">Block #' + block.id + ' on position ' + block.sortOrder + '</div></div><div class="block-head"><span class="drag-handle" draggable="true" data-drag-handle="true">Drag</span><button class="toggle-button" type="button" data-toggle-block="' + block.id + '" aria-expanded="false">Open</button><span class="tag">' + block.items.length + ' items</span></div></div><div class="collapsible" data-block-content="' + block.id + '" hidden><div class="field-list">' + blockFields + '</div><div class="item-list">' + items + '</div></div></article>';
       };
 
       const renderWebsite = (website) => {
@@ -460,11 +564,12 @@ export const cmsPage = `<!DOCTYPE html>
           ? website.blocks.map(block => renderBlock(block)).join('')
           : '<div class="empty">No blocks are linked to this website.</div>';
 
-        return '<section class="website-card"><div class="website-top"><div><h2>' + escapeHtml(website.name) + '</h2><p>' + escapeHtml(website.domain || 'No domain set') + '</p><div class="website-meta"><span class="chip">Website #' + website.id + '</span><span class="chip">' + website.blocks.length + ' blocks</span></div></div></div><div class="block-list">' + blocks + '</div></section>';
+        return '<section class="website-card" id="' + slugify(website.id) + '"><div class="website-top"><div><h2>' + escapeHtml(website.name) + '</h2><p>' + escapeHtml(website.domain || 'No domain set') + '</p><div class="website-meta"><span class="chip">Website #' + website.id + '</span><span class="chip">' + website.blocks.length + ' blocks</span></div></div><div class="website-actions"><button class="ghost-button" type="button" data-website-target="' + slugify(website.id) + '">Focus website</button></div></div><div class="block-list">' + blocks + '</div></section>';
       };
 
       const renderTree = (websites) => {
         updateCounts(websites);
+        renderWebsiteNav(websites);
 
         if (!websites.length) {
           app.innerHTML = '<div class="empty">No websites found.</div>';
@@ -503,6 +608,51 @@ export const cmsPage = `<!DOCTYPE html>
         await loadTree();
       };
 
+      const saveBlockOrder = async (blockList) => {
+        const blockIds = Array.from(blockList.querySelectorAll('[data-block-id]'))
+          .map(block => Number(block.dataset.blockId))
+          .filter(blockId => Number.isInteger(blockId) && blockId > 0);
+
+        if (!blockIds.length) {
+          return;
+        }
+
+        setStatus('Saving block order...');
+        await fetchJson('/api/cms/blocks/order', {
+          method: 'PUT',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify({
+            blockIds,
+          }),
+        });
+
+        setStatus('Block order saved.');
+        await loadTree();
+      };
+
+      const getDragAfterElement = (container, y) => {
+        const draggableElements = Array.from(container.querySelectorAll('.block-card:not(.dragging)'));
+
+        return draggableElements.reduce((closest, child) => {
+          const box = child.getBoundingClientRect();
+          const offset = y - box.top - (box.height / 2);
+
+          if (offset < 0 && offset > closest.offset) {
+            return {
+              offset,
+              element: child,
+            };
+          }
+
+          return closest;
+        }, {
+          offset: Number.NEGATIVE_INFINITY,
+          element: null,
+        }).element;
+      };
+
       reloadButton.addEventListener('click', () => {
         void loadTree();
       });
@@ -514,6 +664,21 @@ export const cmsPage = `<!DOCTYPE html>
           return;
         }
 
+        const blockId = target.dataset.toggleBlock;
+
+        if (blockId) {
+          const content = document.querySelector('[data-block-content="' + blockId + '"]');
+          const isOpen = target.getAttribute('aria-expanded') === 'true';
+
+          if (content) {
+            content.hidden = isOpen;
+          }
+
+          target.setAttribute('aria-expanded', String(!isOpen));
+          target.textContent = isOpen ? 'Open' : 'Close';
+          return;
+        }
+
         const kind = target.dataset.saveKind;
         const id = target.dataset.saveId;
 
@@ -522,6 +687,100 @@ export const cmsPage = `<!DOCTYPE html>
         }
 
         void saveField(kind, id);
+      });
+
+      app.addEventListener('click', event => {
+        const target = event.target;
+
+        if (target instanceof HTMLElement && target.dataset.dragHandle) {
+          event.preventDefault();
+          event.stopPropagation();
+        }
+      });
+
+      app.addEventListener('mousedown', event => {
+        const target = event.target;
+
+        if (target instanceof HTMLElement && target.dataset.dragHandle) {
+          event.stopPropagation();
+        }
+      });
+
+      app.addEventListener('dragstart', event => {
+        const target = event.target;
+
+        if (!(target instanceof HTMLElement) || !target.dataset.dragHandle || !event.dataTransfer) {
+          event.preventDefault();
+          return;
+        }
+
+        draggedBlock = target.closest('[data-block-id]');
+        dragSourceList = draggedBlock?.closest('.block-list') ?? null;
+
+        if (!draggedBlock || !dragSourceList) {
+          event.preventDefault();
+          return;
+        }
+
+        draggedBlock.classList.add('dragging');
+        event.dataTransfer.effectAllowed = 'move';
+        event.dataTransfer.setData('text/plain', draggedBlock.dataset.blockId);
+      });
+
+      app.addEventListener('dragover', event => {
+        if (!draggedBlock) {
+          return;
+        }
+
+        const blockList = event.target instanceof HTMLElement
+          ? event.target.closest('.block-list')
+          : null;
+
+        if (!blockList || blockList !== dragSourceList) {
+          return;
+        }
+
+        event.preventDefault();
+        const afterElement = getDragAfterElement(blockList, event.clientY);
+
+        if (afterElement) {
+          blockList.insertBefore(draggedBlock, afterElement);
+        }
+        else {
+          blockList.appendChild(draggedBlock);
+        }
+      });
+
+      app.addEventListener('drop', event => {
+        if (!draggedBlock || !dragSourceList) {
+          return;
+        }
+
+        event.preventDefault();
+        void saveBlockOrder(dragSourceList);
+      });
+
+      app.addEventListener('dragend', () => {
+        draggedBlock?.classList.remove('dragging');
+        draggedBlock = null;
+        dragSourceList = null;
+      });
+
+      document.addEventListener('click', event => {
+        const target = event.target;
+
+        if (!(target instanceof HTMLButtonElement) || !target.dataset.websiteTarget) {
+          return;
+        }
+
+        document.querySelectorAll('.nav-button').forEach(button => {
+          button.classList.toggle('active', button.dataset.websiteTarget === target.dataset.websiteTarget);
+        });
+
+        document.getElementById(target.dataset.websiteTarget)?.scrollIntoView({
+          behavior: 'smooth',
+          block: 'start',
+        });
       });
 
       const bootstrap = async () => {
