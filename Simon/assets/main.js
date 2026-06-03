@@ -116,12 +116,9 @@ fetch(API_URL)
 // --- NAVBAR ---
 function buildNavbar(fields, items) {
   const nav = document.getElementById('navbar');
-<<<<<<< HEAD
   const isEnglish = /\/Simon\/en(\/|$)/.test(window.location.pathname);
   const langHref = isEnglish ? '/Simon/index.html' : '/Simon/en/index.html';
   const langLabel = isEnglish ? 'NL' : 'EN';
-=======
->>>>>>> main
 
   const links = items
     .filter(i => i.itemType === 'nav_link')
@@ -136,10 +133,7 @@ function buildNavbar(fields, items) {
       </a>
       <ul class="nav-links">${links}</ul>
       <div class="nav-right">
-<<<<<<< HEAD
         <a href="${langHref}" class="nav-lang-link">${langLabel}</a>
-=======
->>>>>>> main
         <a href="${escUrl(fields.button_url)}" class="btn-nav">${escHtml(fields.button_text)}</a>
         <button class="nav-hamburger" aria-label="Menu openen" aria-expanded="false" aria-controls="navMobile">
           <span></span><span></span><span></span>
@@ -148,10 +142,7 @@ function buildNavbar(fields, items) {
     </div>
     <div class="nav-mobile" id="navMobile" aria-hidden="true">
       <ul class="nav-mobile-links">${links}</ul>
-<<<<<<< HEAD
       <a href="${langHref}" class="btn-nav btn-nav-mobile">${langLabel}</a>
-=======
->>>>>>> main
       <a href="${escUrl(fields.button_url)}" class="btn-nav btn-nav-mobile">${escHtml(fields.button_text)}</a>
     </div>
   `;
@@ -168,10 +159,7 @@ function buildNavbar(fields, items) {
     document.body.classList.toggle('menu-open', isOpen);
   });
 
-<<<<<<< HEAD
-=======
   // Sluit menu na klikken op een link
->>>>>>> main
   mobileMenu.querySelectorAll('a').forEach(link => {
     link.addEventListener('click', () => {
       mobileMenu.classList.remove('open');
@@ -554,40 +542,16 @@ function buildFooter(fields, items) {
 // ===== 4. GALLERY SLIDER =====
 
 const GALLERY_SLIDES = [
-<<<<<<< HEAD
   { img: IMAGES.gallery1, title: 'Cinematic View',   desc: 'De Toughbook 33 in dramatisch cinematisch licht — gebouwd voor elke omgeving' },
   { img: IMAGES.gallery2, title: 'Stormy Terrain',   desc: 'Werkt perfect in de zwaarste weersomstandigheden — regen, wind en modder' },
   { img: IMAGES.gallery3, title: 'Arctic Conditions',desc: 'Betrouwbaar tot -29°C — zelfs in besneeuwde en ijzige omstandigheden' },
   { img: IMAGES.gallery4, title: 'Studio Detail',    desc: 'Elk detail van de robuuste behuizing is ontworpen voor maximale duurzaamheid' },
-=======
-  {
-    img:   IMAGES.gallery1,
-    title: 'Cinematic View',
-    desc:  'De Toughbook 33 in dramatisch cinematisch licht — gebouwd voor elke omgeving'
-  },
-  {
-    img:   IMAGES.gallery2,
-    title: 'Stormy Terrain',
-    desc:  'Werkt perfect in de zwaarste weersomstandigheden — regen, wind en modder'
-  },
-  {
-    img:   IMAGES.gallery3,
-    title: 'Arctic Conditions',
-    desc:  'Betrouwbaar tot -29°C — zelfs in besneeuwde en ijzige omstandigheden'
-  },
-  {
-    img:   IMAGES.gallery4,
-    title: 'Studio Detail',
-    desc:  'Elk detail van de robuuste behuizing is ontworpen voor maximale duurzaamheid'
-  },
->>>>>>> main
 ];
 
 let currentSlide = 0;
 let galleryTimer  = null;
 
 function initGallery() {
-<<<<<<< HEAD
   document.getElementById('gallery-section').style.display = 'block';
   updateGallery();
 
@@ -604,42 +568,6 @@ function initGallery() {
 
   startGalleryTimer();
 
-=======
-  // Sectie zichtbaar maken (was altijd display:none)
-  document.getElementById('gallery-section').style.display = 'block';
-
-  updateGallery();
-
-  // Pijlknoppen
-  document.getElementById('galleryPrev').addEventListener('click', () => {
-    changeSlide(-1);
-    resetGalleryTimer();
-  });
-  document.getElementById('galleryNext').addEventListener('click', () => {
-    changeSlide(1);
-    resetGalleryTimer();
-  });
-
-  // Dots en thumbnails via data-slide attribuut
-  document.querySelectorAll('.gallery-dot').forEach(dot => {
-    dot.addEventListener('click', () => {
-      goSlide(Number(dot.dataset.slide));
-      resetGalleryTimer();
-    });
-  });
-
-  document.querySelectorAll('.gallery-thumb').forEach(thumb => {
-    thumb.addEventListener('click', () => {
-      goSlide(Number(thumb.dataset.slide));
-      resetGalleryTimer();
-    });
-  });
-
-  // Auto-play: schuift elke 5 seconden automatisch door
-  startGalleryTimer();
-
-  // Pauzeer bij hover of focus op de slider
->>>>>>> main
   const galleryMain = document.querySelector('.gallery-main');
   galleryMain.addEventListener('mouseenter', () => clearInterval(galleryTimer));
   galleryMain.addEventListener('mouseleave', startGalleryTimer);
@@ -662,10 +590,7 @@ function updateGallery() {
   const desc    = document.getElementById('galleryDesc');
   if (!mainImg) return;
 
-<<<<<<< HEAD
-=======
   // Fade-out → wissel afbeelding → fade-in
->>>>>>> main
   mainImg.style.opacity = '0';
   setTimeout(() => {
     mainImg.src       = GALLERY_SLIDES[currentSlide].img;
@@ -706,24 +631,11 @@ function startScrollEffects() {
   const backToTop   = document.getElementById('backToTop');
 
   window.addEventListener('scroll', () => {
-<<<<<<< HEAD
     const scrollY    = window.scrollY;
     const maxScroll  = document.documentElement.scrollHeight - window.innerHeight;
 
     nav.classList.toggle('scrolled', scrollY > 40);
     progressBar.style.width = (Math.min(scrollY / maxScroll, 1) * 100) + '%';
-=======
-    const scrollY = window.scrollY;
-    const maxScroll = document.documentElement.scrollHeight - window.innerHeight;
-
-    // Navbar: solide achtergrond bij scrollen
-    nav.classList.toggle('scrolled', scrollY > 40);
-
-    // Scroll progress bar bovenaan de pagina
-    progressBar.style.width = (Math.min(scrollY / maxScroll, 1) * 100) + '%';
-
-    // Back-to-top knop: verschijnt na 600px scrollen
->>>>>>> main
     backToTop.classList.toggle('visible', scrollY > 600);
   }, { passive: true });
 
@@ -738,11 +650,7 @@ function startScrollAnimations() {
       entries.forEach(entry => {
         if (entry.isIntersecting) {
           entry.target.classList.add('show');
-<<<<<<< HEAD
           observer.unobserve(entry.target);
-=======
-          observer.unobserve(entry.target); // Stop observeren na animatie (performance)
->>>>>>> main
         }
       });
     },
