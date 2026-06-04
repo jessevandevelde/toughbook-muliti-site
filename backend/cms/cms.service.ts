@@ -36,6 +36,7 @@ export const updateBlockOrder = async (blockIds: number[]): Promise<void> => {
   }
   catch (error) {
     await db.rollback();
+
     throw error;
   }
 };
