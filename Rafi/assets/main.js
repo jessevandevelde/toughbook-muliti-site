@@ -46,10 +46,10 @@
 
   /* Hero gallery */
   const heroImages = [
-    'https://images.unsplash.com/photo-1597237449706-921da64332dd?w=900',
-    'https://images.unsplash.com/photo-1621692123555-37158f20e164?w=900',
-    'https://images.unsplash.com/photo-1653567461945-162426401322?w=900',
-    'https://images.unsplash.com/photo-1584985430144-4cb6ffd43f71?w=900',
+    'assets/images/toughbook2.jpeg',
+    'assets/images/toughbook.jpeg',
+    'assets/images/toughbook3.jpeg',
+    'assets/images/toughbook4.jpeg',
   ];
   function setHeroImg(idx, el) {
     document.getElementById('hero-main-img').src = heroImages[idx];
