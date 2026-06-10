@@ -85,9 +85,24 @@
   }
   document.getElementById('lang-select').addEventListener('change', e => applyLang(e.target.value));
 
+
   /* Form */
   function submitForm(e) {
     e.preventDefault();
     document.getElementById('quote-form').style.display = 'none';
     document.getElementById('form-success').classList.add('visible');
   }
+
+  document.getElementById('specs-dl-btn').addEventListener('click', function(e) {
+    e.preventDefault();
+    const pdfUrl = 'assets/TOUGHBOOK_G2_Series_Specification.pdf'; // Update with your actual PDF path
+    
+    fetch(pdfUrl)
+        .then(response => response.blob())
+        .then(blob => {
+            const link = document.createElement('a');
+            link.href = window.URL.createObjectURL(blob);
+            link.download = 'TOUGHBOOK_G2_Specificaties.pdf';
+            link.click();
+        })
+        .catch(() => alert('Download mislukt. Controleer of het bestand wel bestaat.'));});
