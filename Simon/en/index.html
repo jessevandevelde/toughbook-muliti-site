@@ -53,37 +53,80 @@
                 <path stroke-linecap="round" stroke-linejoin="round" d="M9 5l7 7-7 7"/>
               </svg>
             </button>
-            <div class="gallery-dots" role="tablist" aria-label="Gallery navigation">
-              <button class="gallery-dot active" data-slide="0" role="tab" aria-selected="true" aria-label="Image 1"></button>
-              <button class="gallery-dot" data-slide="1" role="tab" aria-selected="false" aria-label="Image 2"></button>
-              <button class="gallery-dot" data-slide="2" role="tab" aria-selected="false" aria-label="Image 3"></button>
-              <button class="gallery-dot" data-slide="3" role="tab" aria-selected="false" aria-label="Image 4"></button>
-            </div>
+            <!-- Dots — filled dynamically by main-en.js -->
+            <div class="gallery-dots" role="tablist" aria-label="Gallery navigation"></div>
           </div>
         </div>
 
-        <div class="gallery-thumbs fade-up" role="tablist" aria-label="Gallery thumbnails">
-          <button class="gallery-thumb active" data-slide="0" role="tab" aria-selected="true" aria-label="Cinematic View">
-            <img src="../assets/images/Product gallery/Rugged_Panasonic_Toughbook_in_cinematic_lighting.png" alt="Cinematic View" loading="lazy" />
-            <div class="gallery-thumb-overlay" aria-hidden="true"></div>
-          </button>
-          <button class="gallery-thumb" data-slide="1" role="tab" aria-selected="false" aria-label="Stormy Terrain">
-            <img src="../assets/images/Product gallery/Rugged_Toughbook_in_stormy_terrain.png" alt="Stormy Terrain" loading="lazy" />
-            <div class="gallery-thumb-overlay" aria-hidden="true"></div>
-          </button>
-          <button class="gallery-thumb" data-slide="2" role="tab" aria-selected="false" aria-label="Arctic Conditions">
-            <img src="../assets/images/Product gallery/Rugged_Toughbook_in_a_snowy_wilderness.png" alt="Arctic Conditions" loading="lazy" />
-            <div class="gallery-thumb-overlay" aria-hidden="true"></div>
-          </button>
-          <button class="gallery-thumb" data-slide="3" role="tab" aria-selected="false" aria-label="Studio Detail">
-            <img src="../assets/images/Product gallery/Robuuste_Panasonic_Toughbook_in_mistige_studiohoek.png" alt="Studio Detail" loading="lazy" />
-            <div class="gallery-thumb-overlay" aria-hidden="true"></div>
-          </button>
+        <!-- Thumbnails — filled dynamically by main-en.js -->
+        <div class="gallery-thumbs fade-up" role="tablist" aria-label="Gallery thumbnails"></div>
+
+        <!-- Button below gallery -->
+        <div class="gallery-cta fade-up" style="text-align:center; margin-top:2rem;">
+          <a href="#offerte" class="btn-primary" style="display:inline-flex; align-items:center; gap:0.5rem;">
+            <span>Request a Quote</span>
+            <svg width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24" aria-hidden="true">
+              <path stroke-linecap="round" stroke-linejoin="round" d="M13 7l5 5m0 0l-5 5m5-5H6"/>
+            </svg>
+          </a>
         </div>
       </div>
     </section>
 
     <section id="downloads" class="downloads" aria-label="Downloads" style="display:none;"></section>
+
+    <!-- Quote form -->
+    <section id="offerte" class="quote-form-section fade-up" aria-label="Request a quote">
+      <div class="section-inner">
+        <div class="section-head">
+          <span class="section-badge">Request a Quote</span>
+          <h2 class="section-title">Request a no-obligation quote</h2>
+          <p class="section-desc">Fill in this form and we will contact you within 24 hours with a tailored proposal.</p>
+        </div>
+
+        <div class="quote-form-grid">
+          <form id="quoteForm" class="quote-form" autocomplete="off">
+            <div class="form-row">
+              <label for="quoteName">Name</label>
+              <input id="quoteName" name="name" type="text" required placeholder="Your full name" />
+            </div>
+            <div class="form-row">
+              <label for="quoteCompany">Company</label>
+              <input id="quoteCompany" name="company" type="text" placeholder="Company name (optional)" />
+            </div>
+            <div class="form-row">
+              <label for="quoteEmail">Email address</label>
+              <input id="quoteEmail" name="email" type="email" required placeholder="name@company.com" />
+            </div>
+            <div class="form-row">
+              <label for="quotePhone">Phone</label>
+              <input id="quotePhone" name="phone" type="tel" placeholder="+31 6 12 34 56 78" />
+            </div>
+            <div class="form-row form-row-full">
+              <label for="quoteMessage">Message</label>
+              <textarea id="quoteMessage" name="message" rows="6" required placeholder="What do you need a quote for?"></textarea>
+            </div>
+            <div class="form-footer">
+              <button type="submit" class="btn-submit">Send request</button>
+              <div id="quoteFormStatus" class="quote-form-status" aria-live="polite"></div>
+            </div>
+          </form>
+
+          <aside class="quote-form-aside">
+            <div class="quote-info-card">
+              <h3>What we need from you</h3>
+              <ul>
+                <li>Your name and contact details</li>
+                <li>The desired Toughbook model</li>
+                <li>Your use environment or special requests</li>
+              </ul>
+              <p>We review your request and send a customised proposal.</p>
+            </div>
+          </aside>
+        </div>
+      </div>
+    </section>
+
     <section id="cta" class="cta" aria-label="Call to action" style="display:none;"></section>
   </main>
 

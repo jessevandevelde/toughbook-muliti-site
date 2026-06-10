@@ -3,16 +3,16 @@
 // ============================================
 
 const IMAGES = {
-  hero:              '../assets/images/wow/Panasonic_Toughbook_in_moody_studio_shot.png',
-  featureRobust:     '../assets/images/Product gallery/Rugged_Panasonic_Toughbook_close-up.png',
-  featureScreen:     '../assets/images/Product gallery/Robuuste_TOUGHBOOK_in_dramatisch_licht.png',
-  featureBattery:    '../assets/images/Product gallery/Rugged_emergency_vehicle_cockpit_in_rain.png',
-  featurePower:      '../assets/images/Product gallery/Ruw_bouwterrein_met_robuust_apparaat.png',
+  hero:              '../assets/images/wow/Panasonic_Toughbook_in_a_tech_storm.png',
+  featureRobust:     '../assets/images/Product gallery/Ruwe_kracht_in_modderige_omstandigheden.png',
+  featureScreen:     '../assets/images/wow/Futuristisch_tech_lab_met_Toughbook_laptop.png',
+  featureBattery:    '../assets/images/Product gallery/Bouwplaats_in_de_regen_met_tablet.png',
+  featurePower:      '../assets/images/wow/Nachtmissie_met_tactisch_laptop_en_helikopter.png',
   specsExploded:     '../assets/images/wow/Panasonic_Toughbook_uitgelegd_in_lagen.png',
-  gallery1:          '../assets/images/Product gallery/Rugged_Panasonic_Toughbook_in_cinematic_lighting.png',
-  gallery2:          '../assets/images/Product gallery/Rugged_Toughbook_in_stormy_terrain.png',
-  gallery3:          '../assets/images/Product gallery/Rugged_Toughbook_in_a_snowy_wilderness.png',
-  gallery4:          '../assets/images/Product gallery/Robuuste_Panasonic_Toughbook_in_mistige_studiohoek.png',
+  gallery1:          '../assets/images/wow/Panasonic_Toughbook_in_a_tech_storm.png',
+  gallery2:          '../assets/images/wow/Panasonic_Toughbook_in_stormy_terrain.png',
+  gallery3:          '../assets/images/Product gallery/Rugged_Panasonic_Toughbook_in_cinematic_lighting.png',
+  gallery4:          '../assets/images/wow/Nachtmissie_met_tactisch_laptop_en_helikopter.png',
 };
 
 function escHtml(value) {
@@ -161,7 +161,7 @@ const DOWNLOADS_CONTENT = {
       description: 'Complete technical specifications of the TOUGHBOOK 33 MK4 including all configurations.',
       file_type: 'PDF',
       file_size: '2.4 MB',
-      url: '#',
+      url: '../assets/downloads/toughbook33-specificaties.pdf',
       button_text: 'Download',
     },
     {
@@ -169,16 +169,16 @@ const DOWNLOADS_CONTENT = {
       description: 'Overview of all TOUGHBOOK 33 models, configurations and enterprise options.',
       file_type: 'PDF',
       file_size: '5.1 MB',
-      url: '#',
+      url: '../assets/downloads/toughbook33-brochure.pdf',
       button_text: 'Download',
     },
     {
       title: 'CAD files',
-      description: '3D CAD drawings for vehicle and system integration of the TOUGHBOOK 33.',
+      description: 'CAD files are available for registered partners. Contact us to request access.',
       file_type: 'ZIP',
-      file_size: '12.8 MB',
-      url: '#',
-      button_text: 'Download',
+      file_size: 'On request',
+      url: '#offerte',
+      button_text: 'Contact us',
     },
   ],
 };
@@ -244,7 +244,7 @@ function buildNavbar() {
       <ul class="nav-links">${links}</ul>
       <div class="nav-right">
         <a href="${langHref}" class="nav-lang-link">NL</a>
-        <a href="#downloads" class="btn-nav">Brochure</a>
+        <a href="#offerte" class="btn-nav">Request a Quote</a>
         <button class="nav-hamburger" aria-label="Open menu" aria-expanded="false" aria-controls="navMobile">
           <span></span><span></span><span></span>
         </button>
@@ -253,7 +253,7 @@ function buildNavbar() {
     <div class="nav-mobile" id="navMobile" aria-hidden="true">
       <ul class="nav-mobile-links">${links}</ul>
       <a href="${langHref}" class="btn-nav btn-nav-mobile">NL</a>
-      <a href="#downloads" class="btn-nav btn-nav-mobile">Brochure</a>
+      <a href="#offerte" class="btn-nav btn-nav-mobile">Request a Quote</a>
     </div>
   `;
 
@@ -414,7 +414,7 @@ function buildDownloads() {
       <div class="dl-title">${escHtml(item.title)}</div>
       <div class="dl-desc">${escHtml(item.description)}</div>
       <div class="dl-meta"><span>${escHtml(item.file_type)}</span><span>${escHtml(item.file_size)}</span></div>
-      <a href="${escUrl(item.url)}" class="btn-download" download>${DL_BTN_SVG} ${escHtml(item.button_text)}</a>
+      <a href="${escUrl(item.url)}" class="btn-download" ${item.url.startsWith('.') ? 'download' : 'target="_blank" rel="noopener noreferrer"'}>${DL_BTN_SVG} ${escHtml(item.button_text)}</a>
     </div>
   `).join('');
 
@@ -430,7 +430,7 @@ function buildDownloads() {
       <div class="dl-info-box fade-up">
         <div class="dl-info-title">${escHtml(DOWNLOADS_CONTENT.cta_title)}</div>
         <div class="dl-info-text">${escHtml(DOWNLOADS_CONTENT.cta_text)}</div>
-        <button class="btn-touch">${escHtml(DOWNLOADS_CONTENT.cta_button_text)}</button>
+        <a href="#offerte" class="btn-touch">${escHtml(DOWNLOADS_CONTENT.cta_button_text)}</a>
       </div>
     </div>
   `;
@@ -505,27 +505,58 @@ function buildFooter() {
 }
 
 const GALLERY_SLIDES = [
-  { img: IMAGES.gallery1, title: 'Cinematic View', desc: 'The Toughbook 33 in dramatic cinematic lighting, built for extreme environments.' },
-  { img: IMAGES.gallery2, title: 'Stormy Terrain', desc: 'Trusted performance in rain, mud and heavy weather conditions.' },
-  { img: IMAGES.gallery3, title: 'Arctic Conditions', desc: 'Reliable operation down to -29°C for cold climate work.' },
-  { img: IMAGES.gallery4, title: 'Studio Detail', desc: 'Precision-crafted rugged design with premium finish and durability.' },
+  { img: '../assets/images/wow/Panasonic_Toughbook_in_a_tech_storm.png',                           title: 'Tech Storm',        desc: 'The TOUGHBOOK 33 conquers the most powerful technology storms — always connected, always on.' },
+  { img: '../assets/images/wow/Nachtmissie_met_tactisch_laptop_en_helikopter.png',                  title: 'Night Mission',     desc: 'Deployed on night missions and tactical operations — where reliability is non-negotiable.' },
+  { img: '../assets/images/wow/Panasonic_Toughbook_in_stormy_terrain.png',                          title: 'Stormy Terrain',    desc: 'Flawless performance in the harshest weather — rain, wind and mud.' },
+  { img: '../assets/images/wow/Futuristisch_tech_lab_met_Toughbook_laptop.png',                     title: 'Futuristic Lab',    desc: 'At home in the most advanced tech lab — Intel Core i7 vPro with Intel Iris Xe Graphics.' },
+  { img: '../assets/images/wow/Panasonic_Toughbook in_futuristic_setting.png',                      title: 'Future Ready',      desc: 'The TOUGHBOOK 33 MK4 — engineered for tomorrow\'s world, built for today.' },
+  { img: '../assets/images/wow/Panasonic_Toughbook_in_moody_studio_shot.png',                       title: 'Studio Shot',       desc: 'Every detail of the rugged housing is designed for maximum durability and style.' },
+  { img: '../assets/images/Product gallery/Rugged_Panasonic_Toughbook_in_cinematic_lighting.png',   title: 'Cinematic View',    desc: 'The TOUGHBOOK 33 in dramatic cinematic lighting — built for every environment.' },
+  { img: '../assets/images/Product gallery/Rugged_Panasonic_Toughbook_close-up.png',                title: 'Close-up Detail',   desc: 'MIL-STD-810H certified — every component tested under extreme conditions.' },
+  { img: '../assets/images/Product gallery/Robuuste_TOUGHBOOK_in_dramatisch_licht.png',             title: 'Dramatic Light',    desc: '12" QHD display at 1,200 cd/m² brightness — visible in direct sunlight.' },
+  { img: '../assets/images/Product gallery/Robuuste_Panasonic_Toughbook_in_mistige_studiohoek.png', title: 'Misty Studio',      desc: 'Rugged design, refined to every detail — IP65 waterproof and dustproof.' },
+  { img: '../assets/images/Product gallery/Rugged_emergency_vehicle_cockpit_in_rain.png',           title: 'Emergency Vehicle', desc: 'Standard equipment in emergency vehicles — operates in the heaviest downpour.' },
+  { img: '../assets/images/Product gallery/Ruwe_kracht_in_modderige_omstandigheden.png',            title: 'Raw Power',         desc: '150 cm drop resistance — survives falls onto concrete, mud or asphalt.' },
+  { img: '../assets/images/Product gallery/Bouwplaats_in_de_regen_met_tablet.png',                  title: 'Construction Site', desc: 'Hot-swappable battery — zero downtime on the construction site or in the field.' },
+  { img: '../assets/images/Product gallery/Rugged_Toughbook_in_stormy_terrain.png',                 title: 'Stormy Field',      desc: 'Operating range from -29°C to +63°C — ready for every climate on earth.' },
+  { img: '../assets/images/Product gallery/Rugged_Toughbook_in_a_snowy_wilderness.png',             title: 'Arctic Conditions', desc: 'Reliable down to -29°C — even in snowy and icy conditions.' },
+  { img: '../assets/images/Product gallery/Ruw_bouwterrein_met_robuust_apparaat.png',               title: 'Work Site',         desc: 'From office to building site — the TOUGHBOOK 33 adapts to every workplace.' },
+  { img: '../assets/images/Product gallery/Ruw_industrieterrein_met_Panasonic_Toughbook.png',       title: 'Industrial Zone',   desc: 'Trusted by industry and logistics worldwide — built for the toughest tasks.' },
+  { img: '../assets/images/Product gallery/Ruw_ontwerp_met_kleurrijke_verlichting.png',             title: 'Design Detail',     desc: 'Powerful looks, powerful core — Intel Wi-Fi 6E and 5G always connected.' },
 ];
 
 let currentSlide = 0;
 let galleryTimer = null;
 
 function initGallery() {
+  // Build dots dynamically from GALLERY_SLIDES
+  const dotsContainer = document.querySelector('.gallery-dots');
+  dotsContainer.innerHTML = GALLERY_SLIDES.map((_, i) => `
+    <button class="gallery-dot${i === 0 ? ' active' : ''}" data-slide="${i}" role="tab"
+      aria-selected="${i === 0}" aria-label="Image ${i + 1}"></button>
+  `).join('');
+
+  // Build thumbnails dynamically
+  const thumbsContainer = document.querySelector('.gallery-thumbs');
+  thumbsContainer.innerHTML = GALLERY_SLIDES.map((slide, i) => `
+    <button class="gallery-thumb${i === 0 ? ' active' : ''}" data-slide="${i}" role="tab"
+      aria-selected="${i === 0}" aria-label="${slide.title}">
+      <img src="${slide.img}" alt="${slide.title}" loading="lazy" />
+      <div class="gallery-thumb-overlay" aria-hidden="true"></div>
+    </button>
+  `).join('');
+
   document.getElementById('gallery-section').style.display = 'block';
   updateGallery();
 
   document.getElementById('galleryPrev').addEventListener('click', () => { changeSlide(-1); resetGalleryTimer(); });
-  document.getElementById('galleryNext').addEventListener('click', () => { changeSlide(1); resetGalleryTimer(); });
+  document.getElementById('galleryNext').addEventListener('click', () => { changeSlide(1);  resetGalleryTimer(); });
 
-  document.querySelectorAll('.gallery-dot').forEach(dot => {
+  dotsContainer.querySelectorAll('.gallery-dot').forEach(dot => {
     dot.addEventListener('click', () => { goSlide(Number(dot.dataset.slide)); resetGalleryTimer(); });
   });
 
-  document.querySelectorAll('.gallery-thumb').forEach(thumb => {
+  thumbsContainer.querySelectorAll('.gallery-thumb').forEach(thumb => {
     thumb.addEventListener('click', () => { goSlide(Number(thumb.dataset.slide)); resetGalleryTimer(); });
   });
 
@@ -534,8 +565,8 @@ function initGallery() {
   const galleryMain = document.querySelector('.gallery-main');
   galleryMain.addEventListener('mouseenter', () => clearInterval(galleryTimer));
   galleryMain.addEventListener('mouseleave', startGalleryTimer);
-  galleryMain.addEventListener('focusin', () => clearInterval(galleryTimer));
-  galleryMain.addEventListener('focusout', startGalleryTimer);
+  galleryMain.addEventListener('focusin',    () => clearInterval(galleryTimer));
+  galleryMain.addEventListener('focusout',   startGalleryTimer);
 }
 
 function startGalleryTimer() {
@@ -615,6 +646,60 @@ function startScrollAnimations() {
   document.querySelectorAll('.fade-up').forEach(el => observer.observe(el));
 }
 
+function initQuoteForm() {
+  const form = document.getElementById('quoteForm');
+  if (!form) return;
+
+  const status = document.getElementById('quoteFormStatus');
+  const submitButton = form.querySelector('button[type="submit"]');
+
+  form.addEventListener('submit', async (event) => {
+    event.preventDefault();
+
+    const formData = new FormData(form);
+    const payload = {
+      name:    String(formData.get('name')    || '').trim(),
+      company: String(formData.get('company') || '').trim(),
+      email:   String(formData.get('email')   || '').trim(),
+      phone:   String(formData.get('phone')   || '').trim(),
+      message: String(formData.get('message') || '').trim(),
+    };
+
+    if (!payload.name || !payload.email || !payload.message) {
+      status.textContent = 'Please fill in your name, email and message.';
+      status.className = 'quote-form-status quote-form-error';
+      return;
+    }
+
+    submitButton.disabled = true;
+    status.textContent = 'Sending...';
+    status.className = 'quote-form-status quote-form-info';
+
+    try {
+      const response = await fetch(`${API_BASE}/api/contact`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(payload),
+      });
+
+      const data = await response.json();
+      if (!response.ok) {
+        throw new Error(data.error || 'Server error');
+      }
+
+      status.textContent = data.message || 'Your request has been sent.';
+      status.className = 'quote-form-status quote-form-success';
+      form.reset();
+    } catch (error) {
+      console.error(error);
+      status.textContent = 'Sending failed. Please try again later.';
+      status.className = 'quote-form-status quote-form-error';
+    } finally {
+      submitButton.disabled = false;
+    }
+  });
+}
+
 function initPage() {
   buildNavbar();
   buildHero();
@@ -627,6 +712,7 @@ function initPage() {
   startScrollEffects();
   startScrollAnimations();
   initGallery();
+  initQuoteForm();
 }
 
 const DL_ICON_SVG = `<svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24" aria-hidden="true"><path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8z"/><polyline points="14,2 14,8 20,8"/></svg>`;

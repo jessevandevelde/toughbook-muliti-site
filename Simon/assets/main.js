@@ -47,16 +47,16 @@ function gradientWord(safeTitle, word) {
 
 // Lokale afbeeldingen (pad relatief aan index.html)
 const IMAGES = {
-  hero:              'assets/images/wow/Panasonic_Toughbook_in_moody_studio_shot.png',
-  featureRobuust:    'assets/images/Product gallery/Rugged_Panasonic_Toughbook_close-up.png',
-  featureScherm:     'assets/images/Product gallery/Robuuste_TOUGHBOOK_in_dramatisch_licht.png',
-  featureBatterij:   'assets/images/Product gallery/Rugged_emergency_vehicle_cockpit_in_rain.png',
-  featurePrestaties: 'assets/images/Product gallery/Ruw_bouwterrein_met_robuust_apparaat.png',
+  hero:              'assets/images/wow/Panasonic_Toughbook_in_a_tech_storm.png',
+  featureRobuust:    'assets/images/Product gallery/Ruwe_kracht_in_modderige_omstandigheden.png',
+  featureScherm:     'assets/images/wow/Futuristisch_tech_lab_met_Toughbook_laptop.png',
+  featureBatterij:   'assets/images/Product gallery/Bouwplaats_in_de_regen_met_tablet.png',
+  featurePrestaties: 'assets/images/wow/Nachtmissie_met_tactisch_laptop_en_helikopter.png',
   specsExploded:     'assets/images/wow/Panasonic_Toughbook_uitgelegd_in_lagen.png',
-  gallery1: 'assets/images/Product gallery/Rugged_Panasonic_Toughbook_in_cinematic_lighting.png',
-  gallery2: 'assets/images/Product gallery/Rugged_Toughbook_in_stormy_terrain.png',
-  gallery3: 'assets/images/Product gallery/Rugged_Toughbook_in_a_snowy_wilderness.png',
-  gallery4: 'assets/images/Product gallery/Robuuste_Panasonic_Toughbook_in_mistige_studiohoek.png',
+  gallery1: 'assets/images/wow/Panasonic_Toughbook_in_a_tech_storm.png',
+  gallery2: 'assets/images/wow/Panasonic_Toughbook_in_stormy_terrain.png',
+  gallery3: 'assets/images/Product gallery/Rugged_Panasonic_Toughbook_in_cinematic_lighting.png',
+  gallery4: 'assets/images/wow/Nachtmissie_met_tactisch_laptop_en_helikopter.png',
 };
 
 
@@ -381,7 +381,7 @@ function buildDownloads(fields, items) {
         <span>${escHtml(item.file_type)}</span>
         <span>${escHtml(item.file_size)}</span>
       </div>
-      <a href="${escUrl(item.url)}" class="btn-download" download>
+      <a href="${escUrl(item.url)}" class="btn-download" ${item.url.startsWith('/') ? 'download' : 'target="_blank" rel="noopener noreferrer"'}>
         ${DL_BTN_SVG} ${escHtml(item.button_text)}
       </a>
     </div>
@@ -399,7 +399,7 @@ function buildDownloads(fields, items) {
       <div class="dl-info-box fade-up">
         <div class="dl-info-title">${escHtml(fields.cta_title)}</div>
         <div class="dl-info-text">${escHtml(fields.cta_text)}</div>
-        <button class="btn-touch">${escHtml(fields.cta_button_text)}</button>
+        <a href="#offerte" class="btn-touch">${escHtml(fields.cta_button_text)}</a>
       </div>
     </div>
   `;
@@ -543,27 +543,58 @@ function buildFooter(fields, items) {
 // ===== 4. GALLERY SLIDER =====
 
 const GALLERY_SLIDES = [
-  { img: IMAGES.gallery1, title: 'Cinematic View',   desc: 'De Toughbook 33 in dramatisch cinematisch licht — gebouwd voor elke omgeving' },
-  { img: IMAGES.gallery2, title: 'Stormy Terrain',   desc: 'Werkt perfect in de zwaarste weersomstandigheden — regen, wind en modder' },
-  { img: IMAGES.gallery3, title: 'Arctic Conditions',desc: 'Betrouwbaar tot -29°C — zelfs in besneeuwde en ijzige omstandigheden' },
-  { img: IMAGES.gallery4, title: 'Studio Detail',    desc: 'Elk detail van de robuuste behuizing is ontworpen voor maximale duurzaamheid' },
+  { img: 'assets/images/wow/Panasonic_Toughbook_in_a_tech_storm.png',                           title: 'Tech Storm',           desc: 'De TOUGHBOOK 33 trotseert de krachtigste technologische stormen — altijd verbonden, altijd aan.' },
+  { img: 'assets/images/wow/Nachtmissie_met_tactisch_laptop_en_helikopter.png',                  title: 'Night Mission',        desc: 'Ingezet bij nachtmissies en tactische operaties — waar betrouwbaarheid geen optie is.' },
+  { img: 'assets/images/wow/Panasonic_Toughbook_in_stormy_terrain.png',                          title: 'Stormy Terrain',       desc: 'Werkt perfect in de zwaarste weersomstandigheden — regen, wind en modder.' },
+  { img: 'assets/images/wow/Futuristisch_tech_lab_met_Toughbook_laptop.png',                     title: 'Futuristisch Lab',     desc: 'Thuis in het meest geavanceerde tech-lab — Intel Core i7 vPro met Intel Iris Xe Graphics.' },
+  { img: 'assets/images/wow/Panasonic_Toughbook in_futuristic_setting.png',                      title: 'Futuristic Setting',   desc: 'De TOUGHBOOK 33 MK4 — ontworpen voor de wereld van morgen, gebouwd voor vandaag.' },
+  { img: 'assets/images/wow/Panasonic_Toughbook_in_moody_studio_shot.png',                       title: 'Studio Shot',          desc: 'Elk detail van de robuuste behuizing is ontworpen voor maximale duurzaamheid en stijl.' },
+  { img: 'assets/images/Product gallery/Rugged_Panasonic_Toughbook_in_cinematic_lighting.png',   title: 'Cinematic View',       desc: 'De TOUGHBOOK 33 in dramatisch cinematisch licht — gebouwd voor elke omgeving.' },
+  { img: 'assets/images/Product gallery/Rugged_Panasonic_Toughbook_close-up.png',                title: 'Close-up Detail',      desc: 'MIL-STD-810H gecertificeerd — elk onderdeel is getest op extreme omstandigheden.' },
+  { img: 'assets/images/Product gallery/Robuuste_TOUGHBOOK_in_dramatisch_licht.png',             title: 'Dramatisch Licht',     desc: '12" QHD scherm met 1.200 cd/m² helderheid — zichtbaar in direct zonlicht.' },
+  { img: 'assets/images/Product gallery/Robuuste_Panasonic_Toughbook_in_mistige_studiohoek.png', title: 'Misty Studio',         desc: 'Robuust design, verfijnd tot in elk detail — IP65 waterdicht en stofvrij.' },
+  { img: 'assets/images/Product gallery/Rugged_emergency_vehicle_cockpit_in_rain.png',           title: 'Emergency Vehicle',    desc: 'Standaard uitrusting in hulpdienstvoertuigen — werkt in de hevigste regenbuien.' },
+  { img: 'assets/images/Product gallery/Ruwe_kracht_in_modderige_omstandigheden.png',            title: 'Ruwe Kracht',          desc: '150 cm valweerstand — overleeft val op beton, modder of asfalt.' },
+  { img: 'assets/images/Product gallery/Bouwplaats_in_de_regen_met_tablet.png',                  title: 'Bouwplaats',           desc: 'Hot-swappable batterij — nooit stilstand op de bouwplaats of in het veld.' },
+  { img: 'assets/images/Product gallery/Rugged_Toughbook_in_stormy_terrain.png',                 title: 'Stormy Field',         desc: 'Temperatuurbereik van -29°C tot +63°C — klaar voor elk klimaat ter wereld.' },
+  { img: 'assets/images/Product gallery/Rugged_Toughbook_in_a_snowy_wilderness.png',             title: 'Arctic Conditions',    desc: 'Betrouwbaar tot -29°C — zelfs in besneeuwde en ijzige omstandigheden.' },
+  { img: 'assets/images/Product gallery/Ruw_bouwterrein_met_robuust_apparaat.png',               title: 'Bouwterrein',          desc: 'Van kantoor tot bouwterrein — de TOUGHBOOK 33 past zich aan elke werkplek aan.' },
+  { img: 'assets/images/Product gallery/Ruw_industrieterrein_met_Panasonic_Toughbook.png',       title: 'Industrieterrein',     desc: 'Vertrouwd door industrie en logistiek wereldwijd — gebouwd voor de zwaarste taken.' },
+  { img: 'assets/images/Product gallery/Ruw_ontwerp_met_kleurrijke_verlichting.png',             title: 'Design Detail',        desc: 'Krachtig uiterlijk, krachtige inhoud — Intel Wi-Fi 6E en 5G altijd verbonden.' },
 ];
 
 let currentSlide = 0;
 let galleryTimer  = null;
 
 function initGallery() {
+  // Bouw dots dynamisch op basis van GALLERY_SLIDES
+  const dotsContainer = document.querySelector('.gallery-dots');
+  dotsContainer.innerHTML = GALLERY_SLIDES.map((_, i) => `
+    <button class="gallery-dot${i === 0 ? ' active' : ''}" data-slide="${i}" role="tab"
+      aria-selected="${i === 0}" aria-label="Afbeelding ${i + 1}"></button>
+  `).join('');
+
+  // Bouw thumbnails dynamisch op
+  const thumbsContainer = document.querySelector('.gallery-thumbs');
+  thumbsContainer.innerHTML = GALLERY_SLIDES.map((slide, i) => `
+    <button class="gallery-thumb${i === 0 ? ' active' : ''}" data-slide="${i}" role="tab"
+      aria-selected="${i === 0}" aria-label="${slide.title}">
+      <img src="${slide.img}" alt="${slide.title}" loading="lazy" />
+      <div class="gallery-thumb-overlay" aria-hidden="true"></div>
+    </button>
+  `).join('');
+
   document.getElementById('gallery-section').style.display = 'block';
   updateGallery();
 
   document.getElementById('galleryPrev').addEventListener('click', () => { changeSlide(-1); resetGalleryTimer(); });
   document.getElementById('galleryNext').addEventListener('click', () => { changeSlide(1);  resetGalleryTimer(); });
 
-  document.querySelectorAll('.gallery-dot').forEach(dot => {
+  dotsContainer.querySelectorAll('.gallery-dot').forEach(dot => {
     dot.addEventListener('click', () => { goSlide(Number(dot.dataset.slide)); resetGalleryTimer(); });
   });
 
-  document.querySelectorAll('.gallery-thumb').forEach(thumb => {
+  thumbsContainer.querySelectorAll('.gallery-thumb').forEach(thumb => {
     thumb.addEventListener('click', () => { goSlide(Number(thumb.dataset.slide)); resetGalleryTimer(); });
   });
 

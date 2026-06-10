@@ -71,34 +71,22 @@
               </svg>
             </button>
 
-            <!-- Dots -->
-            <div class="gallery-dots" role="tablist" aria-label="Galerij navigatie">
-              <button class="gallery-dot active" data-slide="0" role="tab" aria-selected="true"  aria-label="Afbeelding 1"></button>
-              <button class="gallery-dot"        data-slide="1" role="tab" aria-selected="false" aria-label="Afbeelding 2"></button>
-              <button class="gallery-dot"        data-slide="2" role="tab" aria-selected="false" aria-label="Afbeelding 3"></button>
-              <button class="gallery-dot"        data-slide="3" role="tab" aria-selected="false" aria-label="Afbeelding 4"></button>
-            </div>
+            <!-- Dots — worden dynamisch gevuld door main.js -->
+            <div class="gallery-dots" role="tablist" aria-label="Galerij navigatie"></div>
           </div>
         </div>
 
-        <!-- Thumbnails — event listeners worden in main.js gezet -->
-        <div class="gallery-thumbs fade-up" role="tablist" aria-label="Galerij miniaturen">
-          <button class="gallery-thumb active" data-slide="0" role="tab" aria-selected="true"  aria-label="Cinematic View">
-            <img src="./assets/images/Product gallery/Rugged_Panasonic_Toughbook_in_cinematic_lighting.png" alt="Cinematic View" loading="lazy" />
-            <div class="gallery-thumb-overlay" aria-hidden="true"></div>
-          </button>
-          <button class="gallery-thumb"        data-slide="1" role="tab" aria-selected="false" aria-label="Stormy Terrain">
-            <img src="./assets/images/Product gallery/Rugged_Toughbook_in_stormy_terrain.png" alt="Stormy Terrain" loading="lazy" />
-            <div class="gallery-thumb-overlay" aria-hidden="true"></div>
-          </button>
-          <button class="gallery-thumb"        data-slide="2" role="tab" aria-selected="false" aria-label="Arctic Conditions">
-            <img src="./assets/images/Product gallery/Rugged_Toughbook_in_a_snowy_wilderness.png" alt="Arctic Conditions" loading="lazy" />
-            <div class="gallery-thumb-overlay" aria-hidden="true"></div>
-          </button>
-          <button class="gallery-thumb"        data-slide="3" role="tab" aria-selected="false" aria-label="Studio Detail">
-            <img src="./assets/images/Product gallery/Robuuste_Panasonic_Toughbook_in_mistige_studiohoek.png" alt="Studio Detail" loading="lazy" />
-            <div class="gallery-thumb-overlay" aria-hidden="true"></div>
-          </button>
+        <!-- Thumbnails — worden dynamisch gevuld door main.js -->
+        <div class="gallery-thumbs fade-up" role="tablist" aria-label="Galerij miniaturen"></div>
+
+        <!-- Knop onder de galerij -->
+        <div class="gallery-cta fade-up" style="text-align:center; margin-top:2rem;">
+          <a href="#offerte" class="btn-primary" style="display:inline-flex; align-items:center; gap:0.5rem;">
+            <span>Offerte aanvragen</span>
+            <svg width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24" aria-hidden="true">
+              <path stroke-linecap="round" stroke-linejoin="round" d="M13 7l5 5m0 0l-5 5m5-5H6"/>
+            </svg>
+          </a>
         </div>
       </div>
     </section>
