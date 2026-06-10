@@ -200,19 +200,20 @@ const CTA_CONTENT = {
 
 const FOOTER_CONTENT = {
   logo_text: 'Panasonic Toughbook',
-  description: 'Rugged enterprise laptops built for the toughest work environments.',
-  contact_email: 'info@example.com',
-  contact_phone: '+31 20 123 4567',
-  contact_location: 'Amsterdam, Netherlands',
-  copyright: '© 2026 Toughbook. All rights reserved.',
-  privacy_policy_url: '#',
-  terms_url: '#',
-  cookies_url: '#',
+  description: 'Rugged enterprise laptops for professionals in the most demanding work environments — from emergency services to defence and industry.',
+  contact_email: 'info@nl.panasonic.com',
+  contact_phone: '+31 (0)20 514 6000',
+  contact_location: 'Amstelveen, Netherlands',
+  copyright: '© 2026 Panasonic Connect. All rights reserved.',
+  privacy_policy_url: 'https://eu.connect.panasonic.com/nl/en/privacy-policy',
+  terms_url: 'https://eu.connect.panasonic.com/nl/en/terms-of-use',
+  cookies_url: 'https://eu.connect.panasonic.com/nl/en/cookie-policy',
   nav_links: NAV_LINKS,
-  product_links: [
-    { url: '#features', text: 'Features' },
-    { url: '#specifications', text: 'Specifications' },
-    { url: '#downloads', text: 'Downloads' },
+  support_links: [
+    { url: '#offerte',                                                    text: 'Request a Quote' },
+    { url: '../assets/downloads/toughbook33-brochure.pdf',                text: 'Download Brochure' },
+    { url: '../assets/downloads/toughbook33-specificaties.pdf',           text: 'Specifications Sheet' },
+    { url: 'https://eu.connect.panasonic.com/nl/en/toughbook',            text: 'Panasonic Connect' },
   ],
 };
 
@@ -471,8 +472,13 @@ function buildCTA() {
 }
 
 function buildFooter() {
-  const navLinks = FOOTER_CONTENT.nav_links.map(link => `<li><a href="${escUrl(link.url)}">${escHtml(link.text)}</a></li>`).join('');
-  const productLinks = FOOTER_CONTENT.product_links.map(link => `<li><a href="${escUrl(link.url)}">${escHtml(link.text)}</a></li>`).join('');
+  const navLinks = FOOTER_CONTENT.nav_links.map(link =>
+    `<li><a href="${escUrl(link.url)}">${escHtml(link.text)}</a></li>`
+  ).join('');
+
+  const supportLinks = FOOTER_CONTENT.support_links.map(link =>
+    `<li><a href="${escUrl(link.url)}" ${link.url.startsWith('http') ? 'target="_blank" rel="noopener noreferrer"' : ''}>${escHtml(link.text)}</a></li>`
+  ).join('');
 
   const footer = document.getElementById('footer');
   footer.innerHTML = `
@@ -481,24 +487,60 @@ function buildFooter() {
     <div class="footer-inner">
       <div class="footer-top">
         <div>
-          <div class="footer-logo"><div class="footer-logo-icon">P</div><span class="footer-logo-text">${escHtml(FOOTER_CONTENT.logo_text)}</span></div>
+          <div class="footer-logo">
+            <div class="footer-logo-icon">P</div>
+            <span class="footer-logo-text">${escHtml(FOOTER_CONTENT.logo_text)}</span>
+          </div>
           <p class="footer-desc">${escHtml(FOOTER_CONTENT.description)}</p>
           <div class="footer-socials">
-            <a href="#" class="social-btn" aria-label="Facebook"><svg fill="currentColor" viewBox="0 0 24 24" aria-hidden="true"><path d="M18 2h-3a5 5 0 00-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 011-1h3z"/></svg></a>
-            <a href="#" class="social-btn" aria-label="Twitter / X"><svg fill="currentColor" viewBox="0 0 24 24" aria-hidden="true"><path d="M23 3a10.9 10.9 0 01-3.14 1.53 4.48 4.48 0 00-7.86 3v1A10.66 10.66 0 013 4s-4 9 5 13a11.64 11.64 0 01-7 2c9 5 20 0 20-11.5a4.5 4.5 0 00-.08-.83A7.72 7.72 0 0023 3z"/></svg></a>
-            <a href="#" class="social-btn" aria-label="LinkedIn"><svg fill="currentColor" viewBox="0 0 24 24" aria-hidden="true"><path d="M16 8a6 6 0 016 6v7h-4v-7a2 2 0 00-2-2 2 2 0 00-2 2v7h-4v-7a6 6 0 016-6zM2 9h4v12H2z"/><circle cx="4" cy="4" r="2"/></svg></a>
-            <a href="#" class="social-btn" aria-label="Instagram"><svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24" aria-hidden="true"><rect x="2" y="2" width="20" height="20" rx="5"/><path d="M16 11.37A4 4 0 1112.63 8 4 4 0 0116 11.37z"/><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"/></svg></a>
+            <a href="https://www.linkedin.com/company/panasonic-connect-europe/" target="_blank" rel="noopener noreferrer" class="social-btn" aria-label="LinkedIn">
+              <svg fill="currentColor" viewBox="0 0 24 24" aria-hidden="true"><path d="M16 8a6 6 0 016 6v7h-4v-7a2 2 0 00-2-2 2 2 0 00-2 2v7h-4v-7a6 6 0 016-6zM2 9h4v12H2z"/><circle cx="4" cy="4" r="2"/></svg>
+            </a>
+            <a href="https://www.youtube.com/@PanasonicConnectEurope" target="_blank" rel="noopener noreferrer" class="social-btn" aria-label="YouTube">
+              <svg fill="currentColor" viewBox="0 0 24 24" aria-hidden="true"><path d="M22.54 6.42a2.78 2.78 0 00-1.95-1.96C18.88 4 12 4 12 4s-6.88 0-8.59.46A2.78 2.78 0 001.46 6.42 29 29 0 001 12a29 29 0 00.46 5.58 2.78 2.78 0 001.95 1.96C5.12 20 12 20 12 20s6.88 0 8.59-.46a2.78 2.78 0 001.95-1.96A29 29 0 0023 12a29 29 0 00-.46-5.58z"/><polygon fill="#fff" points="9.75,15.02 15.5,12 9.75,8.98 9.75,15.02"/></svg>
+            </a>
           </div>
         </div>
-        <div><div class="footer-col-title">Navigation</div><ul class="footer-links">${navLinks}</ul></div>
-        <div><div class="footer-col-title">Products</div><ul class="footer-links">${productLinks}</ul></div>
-        <div><div class="footer-col-title">Contact</div><ul class="footer-links">
-          <li><div class="footer-contact-item"><svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24" aria-hidden="true"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg><a href="mailto:${escHtml(FOOTER_CONTENT.contact_email)}">${escHtml(FOOTER_CONTENT.contact_email)}</a></div></li>
-          <li><div class="footer-contact-item"><svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z"/><a href="tel:${escHtml(FOOTER_CONTENT.contact_phone)}">${escHtml(FOOTER_CONTENT.contact_phone)}</a></div></li>
-          <li><div class="footer-contact-item"><svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"/><path stroke-linecap="round" stroke-linejoin="round" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"/></svg><span>${escHtml(FOOTER_CONTENT.contact_location)}</span></div></li>
-        </ul></div>
+        <div>
+          <div class="footer-col-title">Navigation</div>
+          <ul class="footer-links">${navLinks}</ul>
+        </div>
+        <div>
+          <div class="footer-col-title">Support</div>
+          <ul class="footer-links">${supportLinks}</ul>
+        </div>
+        <div>
+          <div class="footer-col-title">Contact</div>
+          <ul class="footer-links">
+            <li>
+              <div class="footer-contact-item">
+                <svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24" aria-hidden="true"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
+                <a href="mailto:${escHtml(FOOTER_CONTENT.contact_email)}">${escHtml(FOOTER_CONTENT.contact_email)}</a>
+              </div>
+            </li>
+            <li>
+              <div class="footer-contact-item">
+                <svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z"/></svg>
+                <a href="tel:${escHtml(FOOTER_CONTENT.contact_phone)}">${escHtml(FOOTER_CONTENT.contact_phone)}</a>
+              </div>
+            </li>
+            <li>
+              <div class="footer-contact-item">
+                <svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"/><path stroke-linecap="round" stroke-linejoin="round" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"/></svg>
+                <span>${escHtml(FOOTER_CONTENT.contact_location)}</span>
+              </div>
+            </li>
+          </ul>
+        </div>
       </div>
-      <div class="footer-bottom"><span class="footer-copy">${escHtml(FOOTER_CONTENT.copyright)}</span><div class="footer-bottom-links"><a href="${escUrl(FOOTER_CONTENT.privacy_policy_url)}">Privacy Policy</a><a href="${escUrl(FOOTER_CONTENT.terms_url)}">Terms of Service</a><a href="${escUrl(FOOTER_CONTENT.cookies_url)}">Cookie Policy</a></div></div>
+      <div class="footer-bottom">
+        <span class="footer-copy">${escHtml(FOOTER_CONTENT.copyright)}</span>
+        <div class="footer-bottom-links">
+          <a href="${escUrl(FOOTER_CONTENT.privacy_policy_url)}" target="_blank" rel="noopener noreferrer">Privacy Policy</a>
+          <a href="${escUrl(FOOTER_CONTENT.terms_url)}" target="_blank" rel="noopener noreferrer">Terms of Use</a>
+          <a href="${escUrl(FOOTER_CONTENT.cookies_url)}" target="_blank" rel="noopener noreferrer">Cookie Policy</a>
+        </div>
+      </div>
     </div>
   `;
   footer.style.display = 'block';
