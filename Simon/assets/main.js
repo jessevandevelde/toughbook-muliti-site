@@ -467,6 +467,11 @@ function buildFooter(fields, items) {
     .map(i => `<li><a href="${escUrl(i.url)}" ${i.url.startsWith('http') ? 'target="_blank" rel="noopener noreferrer"' : ''}>${escHtml(i.text)}</a></li>`)
     .join('');
 
+  const groupLinks = items
+    .filter(i => i.itemType === 'group_link')
+    .map(i => `<li><a href="${escUrl(i.url)}" ${i.url !== '#' ? 'target="_blank" rel="noopener noreferrer"' : ''}>${escHtml(i.text)}</a></li>`)
+    .join('');
+
   const footer = document.getElementById('footer');
   footer.innerHTML = `
     <div class="footer-glow-1"></div>
@@ -495,6 +500,10 @@ function buildFooter(fields, items) {
         <div>
           <div class="footer-col-title">Ondersteuning</div>
           <ul class="footer-links">${supportLinks}</ul>
+        </div>
+        <div>
+          <div class="footer-col-title">Groepsproducten</div>
+          <ul class="footer-links">${groupLinks}</ul>
         </div>
         <div>
           <div class="footer-col-title">Contact</div>

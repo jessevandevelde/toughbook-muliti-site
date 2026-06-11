@@ -215,6 +215,11 @@ const FOOTER_CONTENT = {
     { url: '../assets/downloads/toughbook33-specificaties.pdf',           text: 'Specifications Sheet' },
     { url: 'https://eu.connect.panasonic.com/nl/en/toughbook',            text: 'Panasonic Connect' },
   ],
+  group_links: [
+    { url: '#', text: 'TOUGHBOOK 56' },
+    { url: '#', text: 'Toughbook G2' },
+    { url: '#', text: 'Toughbook 40' },
+  ],
 };
 
 const FEATURE_ICONS = {
@@ -480,6 +485,10 @@ function buildFooter() {
     `<li><a href="${escUrl(link.url)}" ${link.url.startsWith('http') ? 'target="_blank" rel="noopener noreferrer"' : ''}>${escHtml(link.text)}</a></li>`
   ).join('');
 
+  const groupLinks = FOOTER_CONTENT.group_links.map(link =>
+    `<li><a href="${escUrl(link.url)}" ${link.url !== '#' ? 'target="_blank" rel="noopener noreferrer"' : ''}>${escHtml(link.text)}</a></li>`
+  ).join('');
+
   const footer = document.getElementById('footer');
   footer.innerHTML = `
     <div class="footer-glow-1"></div>
@@ -508,6 +517,10 @@ function buildFooter() {
         <div>
           <div class="footer-col-title">Support</div>
           <ul class="footer-links">${supportLinks}</ul>
+        </div>
+        <div>
+          <div class="footer-col-title">Group Products</div>
+          <ul class="footer-links">${groupLinks}</ul>
         </div>
         <div>
           <div class="footer-col-title">Contact</div>
