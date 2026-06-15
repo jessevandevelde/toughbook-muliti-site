@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="nl">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Toughbook 33 – Enterprise Rugged Laptop</title>
+
+  <!-- Google Fonts -->
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet" />
+
+  <!-- Onze eigen CSS -->
+  <link rel="stylesheet" href="/Simon/assets/style.css" />
+</head>
+<body>
+
+  <!-- Laadscherm — verdwijnt als data klaar is -->
+  <div id="loading">
+    <div class="loader"></div>
+    <p>Website wordt geladen...</p>
+  </div>
+
+  <!-- Navbar — wordt gevuld door JavaScript -->
+  <nav id="navbar" style="display:none;"></nav>
+
+  <!-- Hero sectie -->
+  <section id="hero" class="hero" style="display:none;"></section>
+
+  <!-- Features sectie -->
+  <section id="features" class="features" style="display:none;"></section>
+
+  <!-- Specificaties sectie -->
+  <section id="specifications" class="specs" style="display:none;"></section>
+
+  <!-- Gallery sectie — HTML staat hier vast, JS vult de afbeeldingen -->
+  <section id="gallery-section" class="gallery" style="display:none;">
+    <div class="section-inner">
+      <div class="section-head fade-up">
+        <h2 class="section-title">Product <span class="gradient-text">Gallery</span></h2>
+        <p class="section-desc">Explore the Toughbook 33 in detail from every angle.</p>
+      </div>
+
+      <!-- Hoofdslider -->
+      <div class="gallery-main fade-up">
+        <div class="gallery-img-wrap">
+          <img id="galleryMainImg" src="" alt="Toughbook Gallery" />
+          <div class="gallery-overlay">
+            <div class="gallery-title" id="galleryTitle"></div>
+            <div class="gallery-desc" id="galleryDesc"></div>
+          </div>
+
+          <!-- Pijlknoppen -->
+          <button class="gallery-btn gallery-prev" onclick="changeSlide(-1)">
+            <svg fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24" width="26" height="26">
+              <path stroke-linecap="round" stroke-linejoin="round" d="M15 19l-7-7 7-7"/>
+            </svg>
+          </button>
+          <button class="gallery-btn gallery-next" onclick="changeSlide(1)">
+            <svg fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24" width="26" height="26">
+              <path stroke-linecap="round" stroke-linejoin="round" d="M9 5l7 7-7 7"/>
+            </svg>
+          </button>
+
+          <!-- Dots -->
+          <div class="gallery-dots">
+            <button class="gallery-dot active" onclick="goSlide(0)"></button>
+            <button class="gallery-dot" onclick="goSlide(1)"></button>
+            <button class="gallery-dot" onclick="goSlide(2)"></button>
+            <button class="gallery-dot" onclick="goSlide(3)"></button>
+          </div>
+        </div>
+      </div>
+
+      <!-- Thumbnails -->
+      <div class="gallery-thumbs fade-up">
+        <div class="gallery-thumb active" onclick="goSlide(0)">
+          <img src="./assets/images/Product gallery/Rugged_Panasonic_Toughbook_in_cinematic_lighting.png" alt="Cinematic View" />
+          <div class="gallery-thumb-overlay"></div>
+        </div>
+        <div class="gallery-thumb" onclick="goSlide(1)">
+          <img src="./assets/images/Product gallery/Rugged_Toughbook_in_stormy_terrain.png" alt="Stormy Terrain" />
+          <div class="gallery-thumb-overlay"></div>
+        </div>
+        <div class="gallery-thumb" onclick="goSlide(2)">
+          <img src="./assets/images/Product gallery/Rugged_Toughbook_in_a_snowy_wilderness.png" alt="Arctic Conditions" />
+          <div class="gallery-thumb-overlay"></div>
+        </div>
+        <div class="gallery-thumb" onclick="goSlide(3)">
+          <img src="./assets/images/Product gallery/Robuuste_Panasonic_Toughbook_in_mistige_studiohoek.png" alt="Studio Detail" />
+          <div class="gallery-thumb-overlay"></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Downloads sectie -->
+  <section id="downloads" class="downloads" style="display:none;"></section>
+
+  <!-- CTA sectie -->
+  <section id="cta" class="cta" style="display:none;"></section>
+
+  <!-- Footer -->
+  <footer id="footer" style="display:none;"></footer>
+
+  <!-- Onze eigen JavaScript — staat onderaan zodat HTML eerst laadt -->
+  <script src="/Simon/assets/main.js"></script>
+
+</body>
+</html>
