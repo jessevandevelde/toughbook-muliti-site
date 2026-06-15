@@ -5,3 +5,4 @@
 - [ ] Test via lokale server: open / en/of /Soufian/pages/hero.php en check of hero content laadt.
 - [ ] Stop/laat huidige server(s) draaien en geef run-instructie.
 
+ 

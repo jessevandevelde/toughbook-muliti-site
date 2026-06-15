@@ -130,7 +130,7 @@
  
   .hero-right {
     background: #0f0f0f;
-    position: relative; overflow: hidden;
+    position: relative; overflow: hidden;   
     display: flex; align-items: center; justify-content: center;
   }
   .hero-right img {
@@ -227,7 +227,7 @@
     transform: scaleY(0); transform-origin: bottom;
     transition: transform .25s;
   }
-  .sector-card:hover { border-color: var(--yellow); transform: translateY(-3px); }
+  .sector-card:hover { border-color: var(--yellow); transform: translvateY(-3px); }
   .sector-card:hover::before { transform: scaleY(1); }
   .sector-num {
     font-family: var(--mono); font-size: 0.65rem;
