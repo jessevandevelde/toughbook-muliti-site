@@ -1,7 +1,7 @@
 import type { Request, Response } from 'express';
 import { cmsPage } from './cms.page.js';
-import { getCmsTree, updateFieldValue } from './cms.service.js';
-import type { FieldValuePayload } from './types/cms.interfaces.js';
+import { getCmsTree, updateBlockOrder, updateFieldValue } from './cms.service.js';
+import type { BlockOrderPayload, FieldValuePayload } from './types/cms.interfaces.js';
 
 const badRequestStatus = 400;
 const internalServerErrorStatus = 500;
@@ -12,6 +12,22 @@ const hasFieldValue = (value: unknown): value is FieldValuePayload => {
   }
 
   return 'fieldValue' in value && typeof value.fieldValue === 'string';
+};
+
+const hasBlockOrder = (value: unknown): value is BlockOrderPayload => {
+  if (typeof value !== 'object' || value === null || Array.isArray(value)) {
+    return false;
+  }
+
+  if (!('blockIds' in value) || !Array.isArray(value.blockIds)) {
+    return false;
+  }
+
+  const uniqueBlockIds = new Set(value.blockIds);
+
+  return value.blockIds.length > 0
+    && uniqueBlockIds.size === value.blockIds.length
+    && value.blockIds.every(blockId => Number.isInteger(blockId) && blockId > 0);
 };
 
 const getRouteId = (value: string | string[]): string => {
@@ -64,6 +80,34 @@ export const updateBlockFieldHandler = async (req: Request, res: Response): Prom
 
     res.status(internalServerErrorStatus).json({
       message: 'Failed to update block field.',
+    });
+  }
+};
+
+export const updateBlockOrderHandler = async (req: Request, res: Response): Promise<void> => {
+  const body: unknown = req.body;
+
+  if (!hasBlockOrder(body)) {
+    res.status(badRequestStatus).json({
+      message: 'Invalid block order.',
+    });
+
+    return;
+  }
+
+  try {
+    await updateBlockOrder(body.blockIds);
+
+    res.json({
+      message: 'Block order updated.',
+    });
+  }
+  catch (error) {
+    console.error('Failed to update block order.');
+    console.error(error);
+
+    res.status(internalServerErrorStatus).json({
+      message: 'Failed to update block order.',
     });
   }
 };
