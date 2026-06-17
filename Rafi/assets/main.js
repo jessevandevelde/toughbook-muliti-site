@@ -1,32 +1,37 @@
- /* Spec data */
+/* Spec data */
   const specData = {
     overview: [
-      { label: 'Form Factor', value: '10.1" Fully-Rugged Convertible 2-in-1' },
-      { label: 'Display', value: '10.1" WUXGA IPS, 1920×1200, 800 nit, Outdoor Readable' },
-      { label: 'Battery Life', value: 'Up to 18.5 hours (hot-swappable)' },
-      { label: 'Weight', value: 'From 1.30 kg (2.87 lbs)' },
-      { label: 'Operating System', value: 'Windows 10 Pro / Windows 11 Pro' },
+      { label: 'Vormfactor', value: '10,1" volledig robuuste tablet / 2-in-1 met optioneel afneembaar toetsenbord' },
+      { label: 'Beeldscherm', value: '10,1" WUXGA IPS, 1920×1200, maximaal 1000 nits, anti-reflectie, geschikt voor buiten' },
+      { label: 'Batterijduur', value: 'Tot 18,5 uur (68 Wh Li-ion; optionele brugbatterij voor hot-swap)' },
+      { label: 'Gewicht', value: 'Vanaf ca. 1.315 g (tablet, zonder toetsenbord)' },
+      { label: 'Afmetingen', value: '279,4 × 188 × 28 mm (tablet)' },
+      { label: 'Besturingssysteem', value: 'Windows 11 Pro (Windows 10 Pro downgrade beschikbaar)' },
     ],
     performance: [
-      { label: 'Processor', value: 'Intel® Core™ i5-10310U vPro® / i7-10810U vPro®' },
-      { label: 'Memory', value: 'Up to 32 GB DDR4-2133' },
-      { label: 'Storage', value: 'Up to 1 TB PCIe NVMe SSD (OPAL 2.0)' },
-      { label: 'Graphics', value: 'Intel® UHD Graphics 620' },
-      { label: 'TPM', value: 'TPM 2.0 (Firmware)' },
+      { label: 'Processor', value: 'Intel® Core™ i5-10310U vPro® (tot 4,4 GHz) / i7-10810U vPro® (tot 4,9 GHz)' },
+      { label: 'Geheugen', value: '16 GB of 32 GB DDR4' },
+      { label: 'Opslag', value: '512 GB of 1 TB OPAL 2.0 quick-release SSD (PCIe NVMe)' },
+      { label: 'Grafische chip', value: 'Intel® UHD Graphics' },
+      { label: 'TPM', value: 'TPM 2.0 (firmware)' },
+      { label: 'Camera', value: 'Infrarood-webcam (Windows Hello) + 8 MP achtercamera' },
     ],
     durability: [
-      { label: 'Military Standard', value: 'MIL-STD-810H certified' },
-      { label: 'Ingress Protection', value: 'IP65 — dust & water sealed' },
-      { label: 'Drop Resistance', value: '6-foot drop to concrete (26 angles)' },
-      { label: 'Operating Temp', value: '-29 °C to +63 °C' },
-      { label: 'Humidity', value: '95% non-condensing' },
+      { label: 'Militaire norm', value: 'MIL-STD-810H gecertificeerd' },
+      { label: 'Stof- en waterbestendigheid', value: 'IP65 — volledig afgedicht tegen stof en waterstralen' },
+      { label: 'Valbestendigheid', value: '180 cm valduurzaamheid (tablet + optioneel toetsenbord)' },
+      { label: 'Bedrijfstemperatuur', value: '-20 °C tot +60 °C' },
+      { label: 'Opslagtemperatuur', value: '-30 °C tot +70 °C' },
+      { label: 'Luchtvochtigheid', value: 'Tot 95% niet-condenserend' },
     ],
     connectivity: [
       { label: 'WLAN', value: 'Wi-Fi 6 (802.11ax) + Bluetooth® 5.1' },
-      { label: 'WWAN', value: '4G LTE (optional) / 5G Sub-6GHz (optional)' },
-      { label: 'Ports', value: 'USB-C (Thunderbolt™ 4), 2× USB 3.1, HDMI, RJ-45, Serial (DB-9)' },
-      { label: 'Security', value: 'Fingerprint reader, Smart card slot, NFC (optional)' },
-      { label: 'GNSS', value: 'GPS / GLONASS (integrated)' },
+      { label: 'WWAN', value: 'Optioneel 4G LTE / 5G Sub-6 GHz (incl. standalone & privé 5G-netwerken)' },
+      { label: 'Poorten (tablet)', value: 'USB-A 3.1, USB-C, Nano-SIM-sleuf, audio-aansluiting (3,5 mm)' },
+      { label: 'Poorten (met toetsenbord)', value: 'Extra USB-A 3.1, RJ-45, HDMI, via xPAK: serieel (DB-9), extra LAN, enz.' },
+      { label: 'Modulaire uitbreiding', value: '2 xPAK-gebieden — meer dan 20 combinaties (o.a. thermische camera, barcodescanner, HF-RFID, smartcard)' },
+      { label: 'Beveiliging', value: 'TPM 2.0, IR-webcam (Windows Hello), smartcardslot, optionele NFC' },
+      { label: 'Satellietnavigatie', value: 'GPS / A-GPS (geïntegreerd)' },
     ],
   };
 
@@ -66,7 +71,7 @@
   /* Language */
   const t = {
     EN: { navSpecs:'Specifications', navDownloads:'Downloads', navQuote:'Get Quote', navContact:'Contact', navCta:'Request a Quote', heroTag:'Next Generation Rugged', heroSub:'The Ultimate Rugged 2-in-1 Convertible', heroDesc:'Engineered for extreme environments, the Toughbook G2 delivers uncompromising performance where reliability is non-negotiable — from emergency response to military operations.', heroCta1:'Request a Quote', heroCta2:'View Specifications', specsH:'Technical Specifications', specsSub:'Comprehensive specifications for the Toughbook G2 rugged convertible', specsDl:'Download Full Spec Sheet (PDF)', dlH:'Product Documentation', dlSub:'Official Panasonic Toughbook G2 documentation for procurement, IT, and field teams', quoteH:'Request a Quote', quoteSub:"Get a customised proposal tailored to your organisation's operational requirements", submit:'Submit Quote Request', sTitle:'Quote Request Submitted', sDesc:'Thank you for your interest. A specialist will contact you within one business day.', contactH:'Contact Us', contactSub:'Our specialists are ready to assist with your Toughbook G2 deployment' },
-    NL: { navSpecs:'Specificaties', navDownloads:'Downloads', navQuote:'Offerte', navContact:'Contact', navCta:'Offerte Aanvragen', heroTag:'Volgende Generatie Robuust', heroSub:'De Ultieme Robuuste 2-in-1 Convertible', heroDesc:'Ontworpen voor extreme omstandigheden levert de Toughbook G2 oncompromitterende prestaties waar betrouwbaarheid niet onderhandelbaar is.', heroCta1:'Offerte Aanvragen', heroCta2:'Specificaties Bekijken', specsH:'Technische Specificaties', specsSub:'Volledige specificaties van de Toughbook G2 robuuste convertible', specsDl:'Volledige Specsheet Downloaden (PDF)', dlH:'Productdocumentatie', dlSub:'Officiële Panasonic Toughbook G2 documentatie voor inkoop, IT en velddiensten', quoteH:'Offerte Aanvragen', quoteSub:'Ontvang een op maat gemaakte offerte voor uw organisatie', submit:'Offerteverzoek Versturen', sTitle:'Offerteverzoek Ingediend', sDesc:'Bedankt voor uw interesse. Een specialist neemt binnen één werkdag contact met u op.', contactH:'Neem Contact Op', contactSub:'Onze specialisten staan klaar om uw Toughbook G2 implementatie te ondersteunen' },
+    NL: { navSpecs:'Specificaties', navDownloads:'Downloads', navQuote:'Offerte', navContact:'Contact', navCta:'Offerte Aanvragen', heroTag:'Volgende Generatie Robuust', heroSub:'Het Ultieme Robuuste 2-in-1 Tablet', heroDesc:'De TOUGHBOOK G2 combineert militaire robuustheid met modulaire flexibiliteit in een compact 10,1-inch ontwerp. Getest volgens MIL-STD-810H en officieel IP65-gecertificeerd — gebouwd voor professionals die geen uitval kunnen veroorloven.', heroCta1:'Offerte Aanvragen', heroCta2:'Specificaties Bekijken', specsH:'Technische Specificaties', specsSub:'Volledige technische specificaties van de Panasonic TOUGHBOOK G2 (FZ-G2) robuuste tablet', specsDl:'Volledige Specsheet Downloaden (PDF)', dlH:'Productdocumentatie', dlSub:'Officiële Panasonic TOUGHBOOK G2 documentatie voor inkoop, IT en velddiensten', quoteH:'Offerte Aanvragen', quoteSub:'Ontvang een op maat gemaakt voorstel afgestemd op de operationele behoeften van uw organisatie', submit:'Offerteverzoek Versturen', sTitle:'Offerteverzoek Verzonden', sDesc:'Bedankt voor uw interesse. Een specialist neemt binnen één werkdag contact met u op.', contactH:'Neem Contact Op', contactSub:'Onze specialisten staan klaar om u te helpen bij uw TOUGHBOOK G2-implementatie' },
     DE: { navSpecs:'Spezifikationen', navDownloads:'Downloads', navQuote:'Angebot', navContact:'Kontakt', navCta:'Angebot Anfordern', heroTag:'Nächste Generation Robust', heroSub:'Der ultimative robuste 2-in-1 Convertible', heroDesc:'Entwickelt für extreme Umgebungen liefert das Toughbook G2 kompromisslose Leistung, wo Zuverlässigkeit unverzichtbar ist.', heroCta1:'Angebot Anfordern', heroCta2:'Spezifikationen Ansehen', specsH:'Technische Spezifikationen', specsSub:'Vollständige Spezifikationen des Toughbook G2 robusten Convertibles', specsDl:'Vollständiges Datenblatt Herunterladen (PDF)', dlH:'Produktdokumentation', dlSub:'Offizielle Panasonic Toughbook G2 Dokumentation für Beschaffung, IT und Außendienst', quoteH:'Angebot Anfordern', quoteSub:'Erhalten Sie ein auf Ihre Organisation zugeschnittenes Angebot', submit:'Angebotsanfrage Absenden', sTitle:'Angebotsanfrage Eingereicht', sDesc:'Vielen Dank für Ihr Interesse. Ein Spezialist kontaktiert Sie innerhalb eines Werktages.', contactH:'Kontakt Aufnehmen', contactSub:'Unsere Spezialisten stehen für Ihre Toughbook G2 Implementierung bereit' },
     FR: { navSpecs:'Spécifications', navDownloads:'Téléchargements', navQuote:'Devis', navContact:'Contact', navCta:'Demander un Devis', heroTag:'Nouvelle Génération Robuste', heroSub:'Le convertible 2-en-1 robuste ultime', heroDesc:"Conçu pour les environnements extrêmes, le Toughbook G2 offre des performances inégalées là où la fiabilité est non négociable.", heroCta1:'Demander un Devis', heroCta2:'Voir les Spécifications', specsH:'Spécifications Techniques', specsSub:'Spécifications complètes du convertible robuste Toughbook G2', specsDl:'Télécharger la Fiche Technique Complète (PDF)', dlH:'Documentation Produit', dlSub:"Documentation officielle Panasonic Toughbook G2 pour les équipes d'achat, IT et terrain", quoteH:'Demander un Devis', quoteSub:"Obtenez une proposition personnalisée pour les besoins de votre organisation", submit:'Soumettre la Demande de Devis', sTitle:'Demande de Devis Soumise', sDesc:"Merci pour votre intérêt. Un spécialiste vous contactera dans un jour ouvrable.", contactH:'Nous Contacter', contactSub:'Nos spécialistes sont prêts à vous accompagner dans votre déploiement Toughbook G2' },
   };

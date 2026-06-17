@@ -90,7 +90,11 @@
     .hero-thumb { flex: 1; border-radius: var(--radius-sm); overflow: hidden; border: 2px solid var(--zinc-800); opacity: 0.55; cursor: pointer; transition: all 0.2s; }
     .hero-thumb:hover { opacity: 0.85; border-color: var(--zinc-600); }
     .hero-thumb.active { border-color: var(--blue-500); opacity: 1; }
-    .hero-thumb img { width: 100%; aspect-ratio: 16/9; object-fit: cover; }
+    .hero-thumb img { 
+      width: 100%; 
+      aspect-ratio: 16/9; 
+      object-fit: cover; 
+    }
 
     /* SPECS */
     #specs { padding: 96px 0; background: var(--zinc-950); border-top: 1px solid #111; }

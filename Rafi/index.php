@@ -61,12 +61,12 @@
       <div>
         <div class="hero-tag">
           <span class="hero-tag-dot"></span>
-          <span id="hero-tag">Volgende generatie robuust</span>
+          <span id="hero-tag">Volledig robuust · MIL-STD-810H · IP65</span>
         </div>
         <div class="hero-title">Toughbook</div>
         <div class="hero-title-blue">G2</div>
-        <p class="hero-subtitle" id="hero-sub">De ultieme robuuste 2-in-1 convertible</p>
-        <p class="hero-desc" id="hero-desc">Ontworpen voor extreme omgevingen levert de Toughbook G2 compromisloze prestaties waar betrouwbaarheid niet onderhandelbaar is — van hulpverlening tot militaire operaties.</p>
+        <p class="hero-subtitle" id="hero-sub">Het ultieme robuuste 2-in-1 tablet</p>
+        <p class="hero-desc" id="hero-desc">De TOUGHBOOK G2 combineert militaire robuustheid met modulaire flexibiliteit in een compact 10,1-inch ontwerp. Getest volgens MIL-STD-810H en officieel IP65-gecertificeerd — gebouwd voor professionals die geen uitval kunnen veroorloven.</p>
         <div class="hero-features">
           <div class="hero-feature">
             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
@@ -78,11 +78,11 @@
           </div>
           <div class="hero-feature">
             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/></svg>
-            <span>18,5 uur batterijduur</span>
+            <span>Tot 18,5 uur batterijduur</span>
           </div>
           <div class="hero-feature">
             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><rect x="4" y="4" width="16" height="16" rx="2"/><rect x="9" y="9" width="6" height="6"/><line x1="9" y1="1" x2="9" y2="4"/><line x1="15" y1="1" x2="15" y2="4"/><line x1="9" y1="20" x2="9" y2="23"/><line x1="15" y1="20" x2="15" y2="23"/><line x1="20" y1="9" x2="23" y2="9"/><line x1="20" y1="14" x2="23" y2="14"/><line x1="1" y1="9" x2="4" y2="9"/><line x1="1" y1="14" x2="4" y2="14"/></svg>
-            <span>Intel Core i5 / i7 vPro®</span>
+            <span>Intel Core i5 / i7 vPro® (10e gen.)</span>
           </div>
         </div>
         <div class="hero-ctas">
@@ -122,7 +122,7 @@
     <div class="section-header">
       <span class="section-label">Specificaties</span>
       <h2 class="section-heading" id="specs-heading">Technische specificaties</h2>
-      <p class="section-sub" id="specs-sub">Uitgebreide specificaties voor de Toughbook G2 robuuste convertible</p>
+      <p class="section-sub" id="specs-sub">Volledige technische specificaties van de Panasonic TOUGHBOOK G2 (FZ-G2) robuuste tablet</p>
     </div>
     <div class="specs-grid">
       <div>
@@ -140,16 +140,16 @@
       </div>
       <div>
         <p class="highlights-label">Belangrijkste kenmerken</p>
-        <div class="highlight-item"><div class="highlight-dot"></div><div><div class="highlight-title">Verwisselbare batterij</div><div class="highlight-desc">Batterijen vervangen zonder uit te schakelen — nul downtime in continue bedrijfsvoering.</div></div></div>
-        <div class="highlight-item"><div class="highlight-dot"></div><div><div class="highlight-title">Tri-mode convertible</div><div class="highlight-desc">Laptop-, tablet- en tentmodus — één apparaat voor elk veldscenario.</div></div></div>
-        <div class="highlight-item"><div class="highlight-dot"></div><div><div class="highlight-title">Touchscreen voor handschoenen &amp; regen</div><div class="highlight-desc">Buitengebruik geschikt capacitief touchscreen dat werkt met handschoenen of in neerslag.</div></div></div>
-        <div class="highlight-item"><div class="highlight-dot"></div><div><div class="highlight-title">Intel vPro® extern beheer</div><div class="highlight-desc">IT-beheerders kunnen apparaten op afstand beheren en herstellen op schaal.</div></div></div>
-        <div class="highlight-item"><div class="highlight-dot"></div><div><div class="highlight-title">3 jaar garantie</div><div class="highlight-desc">Standaard 3 jaar uitgebreide garantie met optionele verlenging.</div></div></div>
-        <div class="highlight-item"><div class="highlight-dot"></div><div><div class="highlight-title">Geïntegreerde beveiligingssuite</div><div class="highlight-desc">TPM 2.0, vingerafdrukscanner, smartcardslot en optionele NFC in één behuizing.</div></div></div>
+        <div class="highlight-item"><div class="highlight-dot"></div><div><div class="highlight-title">Modulaire xPAK-uitbreiding</div><div class="highlight-desc">Twee uitbreidingsgebieden met meer dan 20 combinaties — voeg een thermische camera, barcodescanner, seriële poort of extra USB toe zonder gereedschap.</div></div></div>
+        <div class="highlight-item"><div class="highlight-dot"></div><div><div class="highlight-title">2-in-1 tablet en laptop</div><div class="highlight-desc">Gebruik de TOUGHBOOK G2 als volledig robuuste tablet of voeg het optionele afneembare toetsenbord toe voor een complete laptopervaring.</div></div></div>
+        <div class="highlight-item"><div class="highlight-dot"></div><div><div class="highlight-title">Touchscreen voor handschoenen, pen &amp; regen</div><div class="highlight-desc">10,1-inch WUXGA IPS-display met 1000 nits helderheid en ondersteuning voor handschoentouch, digitizer-pen en gebruik in de regen.</div></div></div>
+        <div class="highlight-item"><div class="highlight-dot"></div><div><div class="highlight-title">Intel vPro® extern beheer</div><div class="highlight-desc">Intel AMT maakt extern beheer en herstel van apparaten mogelijk via vPro-technologie — zelfs wanneer het besturingssysteem niet reageert.</div></div></div>
+        <div class="highlight-item"><div class="highlight-dot"></div><div><div class="highlight-title">Quick-release SSD</div><div class="highlight-desc">De SSD is snel en eenvoudig te verwijderen voor veilige gegevensbehandeling en eenvoudig onderhoud in het veld.</div></div></div>
+        <div class="highlight-item"><div class="highlight-dot"></div><div><div class="highlight-title">Geïntegreerde beveiligingssuite</div><div class="highlight-desc">TPM 2.0, infrarood-webcam voor Windows Hello, smartcardslot en optionele NFC — allemaal ingebouwd in één robuuste behuizing.</div></div></div>
         <div class="stats-strip">
-          <div class="stat-cell"><div class="stat-value">100K+</div><div class="stat-label">Wereldwijde implementaties</div></div>
-          <div class="stat-cell"><div class="stat-value">99,9%</div><div class="stat-label">Beschikbaarheid</div></div>
-          <div class="stat-cell"><div class="stat-value">3 jr</div><div class="stat-label">Garantie inbegrepen</div></div>
+          <div class="stat-cell"><div class="stat-value">10,1"</div><div class="stat-label">WUXGA IPS-display</div></div>
+          <div class="stat-cell"><div class="stat-value">18,5 u</div><div class="stat-label">Batterijduur</div></div>
+          <div class="stat-cell"><div class="stat-value">IP65</div><div class="stat-label">Water- &amp; stofbestendig</div></div>
         </div>
       </div>
     </div>
@@ -296,15 +296,15 @@
         <div class="contact-info-list">
           <div class="contact-info-item">
             <div class="contact-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07A19.5 19.5 0 0 1 4.69 12 19.79 19.79 0 0 1 1.61 3.41 2 2 0 0 1 3.6 1.23h3a2 2 0 0 1 2 1.72c.127.96.361 1.903.7 2.81a2 2 0 0 1-.45 2.11L7.91 8.97a16 16 0 0 0 6 6l.9-.89a2 2 0 0 1 2.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0 1 21.73 17z"/></svg></div>
-            <div><div class="contact-item-label">Verkoop &amp; ondersteuning</div><div class="contact-item-value">+1 (800) TOUGHBOOK</div></div>
+            <div><div class="contact-item-label">Verkoop &amp; ondersteuning</div><div class="contact-item-value">+31 (0)73 640 40 40</div></div>
           </div>
           <div class="contact-info-item">
             <div class="contact-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg></div>
-            <div><div class="contact-item-label">E-mail</div><div class="contact-item-value">sales@toughbook.panasonic.com</div></div>
+            <div><div class="contact-item-label">E-mail</div><div class="contact-item-value">toughbook@panasonic.nl</div></div>
           </div>
           <div class="contact-info-item">
             <div class="contact-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg></div>
-            <div><div class="contact-item-label">Hoofdvestiging</div><div class="contact-item-value">Two Riverfront Plaza, Newark, NJ 07102, USA</div></div>
+            <div><div class="contact-item-label">Vestiging Nederland</div><div class="contact-item-value">Panasonic Nederland B.V., Hettenheuvelweg 45, 1101 BM Amsterdam</div></div>
           </div>
           <div class="contact-info-item">
             <div class="contact-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg></div>
@@ -374,7 +374,7 @@
       </div>
     </div>
     <div class="footer-bottom">
-      <span class="footer-copy">© 2026 Panasonic Corporation of North America. Alle rechten voorbehouden.</span>
+      <span class="footer-copy">© 2026 Panasonic Connect Europe GmbH. Alle rechten voorbehouden.</span>
       <span class="footer-note">Specificaties kunnen zonder voorafgaande kennisgeving worden gewijzigd.</span>
     </div>
   </div>
