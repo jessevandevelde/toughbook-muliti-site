@@ -209,10 +209,10 @@
     /* FOOTER */
     #footer { background: var(--zinc-950); border-top: 1px solid #111; padding: 56px 0 32px; }
     .footer-grid { display: grid; grid-template-columns: 200px repeat(4, 1fr); gap: 40px; margin-bottom: 40px; }
-    .footer-brand-text { font-size: 12px; color: var(--zinc-700); line-height: 1.7; margin-top: 14px; }
-    .footer-col-title { font-size: 10px; text-transform: uppercase; letter-spacing: 0.12em; color: var(--zinc-500); margin-bottom: 16px; }
+    .footer-brand-text { font-size: 12px; color:#bcbcbd; line-height: 1.7; margin-top: 14px; }
+    .footer-col-title { font-size: 10px; text-transform: uppercase; letter-spacing: 0.12em; color:#c4c4c7; margin-bottom: 16px; }
     .footer-col ul { display: flex; flex-direction: column; gap: 10px; }
-    .footer-col a { font-size: 12px; color: var(--zinc-600); transition: color 0.2s; }
+    .footer-col a { font-size: 12px; color:#b6b6b7; transition: color 0.2s; }
     .footer-col a:hover { color: var(--zinc-300); }
     .footer-bottom { display: flex; align-items: center; justify-content: space-between; padding-top: 24px; border-top: 1px solid #111; flex-wrap: wrap; gap: 8px; }
     .footer-copy { font-size: 11px; color: var(--zinc-700); }
