@@ -215,14 +215,14 @@
               <label class="form-label">Voornaam <span class="form-required">*</span></label>
               <div class="input-wrap">
                 <svg class="input-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
-                <input class="form-input" type="text" placeholder="Jan" required />
+                <input class="form-input" type="text" name="firstName" placeholder="Jan" required />
               </div>
             </div>
             <div class="form-group">
               <label class="form-label">Achternaam <span class="form-required">*</span></label>
               <div class="input-wrap">
                 <svg class="input-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
-                <input class="form-input" type="text" placeholder="Jansen" required />
+                <input class="form-input" type="text" name="lastName" placeholder="Jansen" required />
               </div>
             </div>
           </div>
@@ -231,14 +231,14 @@
               <label class="form-label">E-mail <span class="form-required">*</span></label>
               <div class="input-wrap">
                 <svg class="input-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
-                <input class="form-input" type="email" placeholder="jan@bedrijf.nl" required />
+                <input class="form-input" type="email" name="email" placeholder="jan@bedrijf.nl" required />
               </div>
             </div>
             <div class="form-group">
               <label class="form-label">Telefoon</label>
               <div class="input-wrap">
                 <svg class="input-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07A19.5 19.5 0 0 1 4.69 12 19.79 19.79 0 0 1 1.61 3.41 2 2 0 0 1 3.6 1.23h3a2 2 0 0 1 2 1.72c.127.96.361 1.903.7 2.81a2 2 0 0 1-.45 2.11L7.91 8.97a16 16 0 0 0 6 6l.9-.89a2 2 0 0 1 2.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0 1 21.73 17l.19-.08z"/></svg>
-                <input class="form-input" type="tel" placeholder="+31 6 1234 5678" />
+                <input class="form-input" type="tel" name="phone" placeholder="+31 6 1234 5678" />
               </div>
             </div>
           </div>
@@ -247,29 +247,29 @@
               <label class="form-label">Bedrijf <span class="form-required">*</span></label>
               <div class="input-wrap">
                 <svg class="input-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg>
-                <input class="form-input" type="text" placeholder="Bedrijfsnaam" required />
+                <input class="form-input" type="text" name="company" placeholder="Bedrijfsnaam" required />
               </div>
             </div>
             <div class="form-group">
               <label class="form-label">Functie</label>
-              <input class="form-input no-icon" type="text" placeholder="IT-manager, inkoopverantwoordelijke…" />
+              <input class="form-input no-icon" type="text" name="jobTitle" placeholder="IT-manager, inkoopverantwoordelijke…" />
             </div>
           </div>
           <div class="form-row">
             <div class="form-group">
               <label class="form-label">Product</label>
-              <input class="form-input no-icon" type="text" value="Panasonic Toughbook G2" disabled />
+              <input class="form-input no-icon" type="text" name="product" value="Panasonic Toughbook G2" disabled />
             </div>
             <div class="form-group">
               <label class="form-label">Geschat aantal <span class="form-required">*</span></label>
-              <input class="form-input no-icon" type="number" min="1" placeholder="bijv. 25" required />
+              <input class="form-input no-icon" type="number" name="quantity" min="1" placeholder="bijv. 25" required />
             </div>
           </div>
           <div class="form-group">
             <label class="form-label">Aanvullende wensen</label>
             <div class="input-wrap">
               <svg class="textarea-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>
-              <textarea class="form-input" placeholder="Implementatietijdlijn, speciale configuraties, integratievereisten…"></textarea>
+              <textarea class="form-input" name="notes" placeholder="Implementatietijdlijn, speciale configuraties, integratievereisten…"></textarea>
             </div>
           </div>
           <button type="submit" class="btn-submit">
@@ -381,6 +381,42 @@
 </footer>
 
 <script src="assets/main.js"></script>
+<script>
+async function submitForm(e) {
+  e.preventDefault();
+
+  const form      = document.getElementById('quote-form');
+  const btn       = form.querySelector('.btn-submit');
+  const label     = document.getElementById('submit-label');
+  const successEl = document.getElementById('form-success');
+
+  // Loading state
+  btn.disabled = true;
+  label.textContent = 'Verzenden…';
+
+  // Collect form data (include disabled product field manually)
+  const data = new FormData(form);
+  data.set('product', 'Panasonic Toughbook G2');
+
+  try {
+    const res  = await fetch('send_quote.php', { method: 'POST', body: data });
+    const json = await res.json();
+
+    if (json.success) {
+      form.style.display      = 'none';
+      successEl.style.display = 'flex';
+    } else {
+      alert(json.message || 'Er is een fout opgetreden. Probeer het opnieuw.');
+      btn.disabled     = false;
+      label.textContent = 'Offerteaanvraag versturen';
+    }
+  } catch (err) {
+    alert('Verbindingsfout. Controleer uw internetverbinding en probeer het opnieuw.');
+    btn.disabled      = false;
+    label.textContent = 'Offerteaanvraag versturen';
+  }
+}
+</script>
  
 </body>
 </html>
