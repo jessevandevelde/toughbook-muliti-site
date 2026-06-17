@@ -910,9 +910,52 @@ a {
 .footer-links {
   list-style: none;
   display: grid;
-  gap: 8px;
-  color: var(--muted);
+  gap: 4px;
   font-size: 14px;
+}
+
+.footer-links li a {
+  display: block;
+  color: var(--muted);
+  padding: 5px 0;
+  position: relative;
+  transition: color 0.2s ease, padding-left 0.22s ease;
+}
+
+.footer-links li a::before {
+  content: "";
+  position: absolute;
+  left: 0;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 0;
+  height: 1px;
+  background: var(--accent);
+  transition: width 0.22s ease;
+}
+
+.footer-links li a:hover {
+  color: var(--text);
+  padding-left: 18px;
+}
+
+.footer-links li a:hover::before {
+  width: 12px;
+}
+
+.footer-links li:not(:has(a)) {
+  color: var(--muted);
+  padding: 5px 0;
+  font-size: 14px;
+}
+
+.footer-bottom a {
+  color: var(--muted);
+  transition: color 0.2s ease;
+}
+
+.footer-bottom a:hover {
+  color: var(--accent);
 }
 
 .footer-bottom {

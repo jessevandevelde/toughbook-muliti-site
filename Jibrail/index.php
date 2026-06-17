@@ -25,8 +25,6 @@ $apiBase = rtrim($apiBase, '/');
         <p class="loading-text">Loading site content...</p>
     </div>
 
-    <header id="navbar" class="site-header" hidden></header>
-
     <main id="content" class="site-main">
         <section id="hero" class="section hero" hidden></section>
         <section id="features" class="section features" hidden></section>

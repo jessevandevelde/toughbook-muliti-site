@@ -449,94 +449,42 @@
 
   const renderCta = (fields, items) => {
     const title = pick(fields, 'title');
-    const subtitle = pick(fields, 'subtitle');
+    const subtitle = pick(fields, 'subtitle', pick(fields, 'text'));
     const badge = pick(fields, 'badge_text');
     const contactPhone = pick(fields, 'contact_phone');
     const contactEmail = pick(fields, 'contact_email');
     const contactLocation = pick(fields, 'contact_location');
 
-    const formItems = items.filter((item) => String(item.itemType || '').includes('form'));
     const benefitItems = items.filter((item) => !String(item.itemType || '').includes('form'));
 
-    const formTitle = pick(fields, 'form_title', pick(fields, 'form_heading', 'Contact'));
-    const formButtonText = pick(fields, 'form_button_text', pick(fields, 'primary_button_text', 'Send request'));
+    // Patch the left column of the existing contact section
+    const contactInfo = elements.contact && elements.contact.querySelector('.contact-info');
+    if (!contactInfo) {
+      return;
+    }
 
-    const defaultFormItems = [
-      {
-        label: pick(fields, 'form_name_label', 'Name'),
-        placeholder: pick(fields, 'form_name_placeholder', 'Your name'),
-        input_type: 'text',
-      },
-      {
-        label: pick(fields, 'form_email_label', 'Email'),
-        placeholder: pick(fields, 'form_email_placeholder', 'you@company.com'),
-        input_type: 'email',
-      },
-      {
-        label: pick(fields, 'form_message_label', 'Message'),
-        placeholder: pick(fields, 'form_message_placeholder', 'How can we help?'),
-        input_type: 'textarea',
-      },
-    ];
-
-    const formFields = (formItems.length ? formItems : defaultFormItems).map((item, index) => {
-      const label = item.label || item.title || item.name || `Field ${index + 1}`;
-      const placeholder = item.placeholder || '';
-      const inputType = item.input_type || item.type || (String(item.itemType || '').includes('textarea') ? 'textarea' : 'text');
-      const fieldId = `form-field-${index}`;
-
-      if (inputType === 'textarea') {
-        return `
-          <div class="input-row">
-            <label class="input-label" for="${fieldId}">${escapeHtml(label)}</label>
-            <textarea id="${fieldId}" class="input-control" rows="4" placeholder="${escapeHtml(placeholder)}"></textarea>
-          </div>
-        `;
-      }
-
-      return `
-        <div class="input-row">
-          <label class="input-label" for="${fieldId}">${escapeHtml(label)}</label>
-          <input id="${fieldId}" class="input-control" type="${escapeHtml(inputType)}" placeholder="${escapeHtml(placeholder)}" />
+    contactInfo.innerHTML = `
+      ${badge ? `<span class="eyebrow">${escapeHtml(badge)}</span>` : ''}
+      ${title ? `<h2 class="section-title">${escapeHtml(title)}</h2>` : ''}
+      ${subtitle ? `<p class="section-desc">${escapeHtml(subtitle)}</p>` : ''}
+      ${(contactPhone || contactEmail || contactLocation) ? `
+        <div class="contact-list">
+          ${contactPhone ? `<div class="contact-item"><strong>Telefoon</strong><br>${escapeHtml(contactPhone)}</div>` : ''}
+          ${contactEmail ? `<div class="contact-item"><strong>E-mail</strong><br><a href="mailto:${escapeHtml(contactEmail)}">${escapeHtml(contactEmail)}</a></div>` : ''}
+          ${contactLocation ? `<div class="contact-item"><strong>Locatie</strong><br>${escapeHtml(contactLocation)}</div>` : ''}
         </div>
-      `;
-    }).join('');
-
-    elements.cta.innerHTML = `
-      <div class="section-inner cta-shell">
-        <div class="cta-grid">
-          <div class="reveal">
-            ${badge ? `<span class="eyebrow">${escapeHtml(badge)}</span>` : ''}
-            ${title ? `<h2 class="section-title">${escapeHtml(title)}</h2>` : ''}
-            ${subtitle ? `<p class="section-desc">${escapeHtml(subtitle)}</p>` : ''}
-            ${(contactPhone || contactEmail || contactLocation) ? `
-              <div class="contact-stack">
-                ${contactPhone ? `<div class="contact-line">Phone: <a href="tel:${escapeHtml(contactPhone)}">${escapeHtml(contactPhone)}</a></div>` : ''}
-                ${contactEmail ? `<div class="contact-line">Email: <a href="mailto:${escapeHtml(contactEmail)}">${escapeHtml(contactEmail)}</a></div>` : ''}
-                ${contactLocation ? `<div class="contact-line">Location: ${escapeHtml(contactLocation)}</div>` : ''}
-              </div>
-            ` : ''}
-            ${benefitItems.length ? `
-              <div class="cta-list">
-                ${benefitItems.map((item) => `
-                  <div class="cta-item">
-                    <div class="cta-item-title">${escapeHtml(item.title || '')}</div>
-                    <div class="cta-item-text">${escapeHtml(item.description || '')}</div>
-                  </div>
-                `).join('')}
-              </div>
-            ` : ''}
-          </div>
-          <div class="form-card reveal">
-            <div class="form-title">${escapeHtml(formTitle)}</div>
-            <div class="form-grid">${formFields}</div>
-            <button class="btn btn-primary" type="button">${escapeHtml(formButtonText)}</button>
-          </div>
+      ` : ''}
+      ${benefitItems.length ? `
+        <div class="contact-list">
+          ${benefitItems.map((item) => `
+            <div class="contact-item">
+              <strong>${escapeHtml(item.title || item.label || '')}</strong>
+              ${(item.description || item.value) ? `<br>${escapeHtml(item.description || item.value)}` : ''}
+            </div>
+          `).join('')}
         </div>
-      </div>
+      ` : ''}
     `;
-
-    showSection(elements.cta);
   };
 
   const renderFooter = (fields, items) => {
@@ -560,28 +508,39 @@
       { label: pick(fields, 'cookies_label'), url: pick(fields, 'cookies_url') },
     ].filter((link) => link.url && link.label);
 
+    const colNav     = pick(fields, 'col_nav_title',     'Navigation');
+    const colProd    = pick(fields, 'col_products_title', 'Products');
+    const colContact = pick(fields, 'col_contact_title',  'Contact');
+
+    const phone    = pick(fields, 'contact_phone');
+    const email    = pick(fields, 'contact_email');
+    const location = pick(fields, 'contact_location');
+
     elements.footer.innerHTML = `
       <div class="footer-grid">
         <div>
           ${brandText ? `<div class="footer-brand">${escapeHtml(brandText)}</div>` : ''}
           ${description ? `<p class="footer-text">${escapeHtml(description)}</p>` : ''}
         </div>
+        ${navLinks ? `
         <div>
-          <div class="footer-col-title">Navigation</div>
+          <div class="footer-col-title">${escapeHtml(colNav)}</div>
           <ul class="footer-links">${navLinks}</ul>
-        </div>
+        </div>` : ''}
+        ${productLinks ? `
         <div>
-          <div class="footer-col-title">Products</div>
+          <div class="footer-col-title">${escapeHtml(colProd)}</div>
           <ul class="footer-links">${productLinks}</ul>
-        </div>
+        </div>` : ''}
+        ${(phone || email || location) ? `
         <div>
-          <div class="footer-col-title">Contact</div>
+          <div class="footer-col-title">${escapeHtml(colContact)}</div>
           <ul class="footer-links">
-            ${pick(fields, 'contact_phone') ? `<li><a href="tel:${escapeHtml(pick(fields, 'contact_phone'))}">${escapeHtml(pick(fields, 'contact_phone'))}</a></li>` : ''}
-            ${pick(fields, 'contact_email') ? `<li><a href="mailto:${escapeHtml(pick(fields, 'contact_email'))}">${escapeHtml(pick(fields, 'contact_email'))}</a></li>` : ''}
-            ${pick(fields, 'contact_location') ? `<li>${escapeHtml(pick(fields, 'contact_location'))}</li>` : ''}
+            ${phone    ? `<li><a href="tel:${escapeHtml(phone)}">${escapeHtml(phone)}</a></li>` : ''}
+            ${email    ? `<li><a href="mailto:${escapeHtml(email)}">${escapeHtml(email)}</a></li>` : ''}
+            ${location ? `<li>${escapeHtml(location)}</li>` : ''}
           </ul>
-        </div>
+        </div>` : ''}
       </div>
       <div class="footer-bottom">
         ${copyright ? `<span>${escapeHtml(copyright)}</span>` : ''}
@@ -622,6 +581,7 @@
     image_block: renderFeatures,
     text_block: renderSpecifications,
     contact_block: renderContactBlock,
+    cta_block: renderCta,
     footer_block: renderFooter,
   };
 
