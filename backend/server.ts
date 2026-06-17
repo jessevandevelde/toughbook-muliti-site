@@ -58,15 +58,26 @@ const transporter = nodemailer.createTransport({
   },
 });
 
+const getBodyField = (body: unknown, key: string): string => {
+  if (body === null || typeof body !== 'object') return '';
+  if (!(key in body)) return '';
+
+  const val: unknown = Reflect.get(body, key);
+
+  return typeof val === 'string' ? val.trim() : '';
+};
+
 api.post('/contact', async (req, res) => {
-  const name    = String(req.body.name    ?? '').trim();
-  const company = String(req.body.company ?? '').trim();
-  const email   = String(req.body.email   ?? '').trim();
-  const phone   = String(req.body.phone   ?? '').trim();
-  const message = String(req.body.message ?? '').trim();
+  const body: unknown = req.body;
+  const name = getBodyField(body, 'name');
+  const company = getBodyField(body, 'company');
+  const email = getBodyField(body, 'email');
+  const phone = getBodyField(body, 'phone');
+  const message = getBodyField(body, 'message');
 
   if (!name || !email || !message) {
     res.status(BAD_REQUEST).json({ error: 'Naam, e-mail en bericht zijn verplicht.' });
+
     return;
   }
 
