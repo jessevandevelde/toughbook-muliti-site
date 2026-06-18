@@ -145,7 +145,7 @@ function buildNavbar(fields, items) {
   nav.innerHTML = `
     <div class="nav-inner">
       <a href="#" class="nav-logo">
-        <div class="nav-logo-icon">P</div>
+        <div class="nav-logo-icon">33</div>
         <span class="nav-logo-text">${escHtml(fields.logo_text)}</span>
       </a>
       <ul class="nav-links">${links}</ul>
@@ -497,7 +497,7 @@ function buildFooter(fields, items) {
       <div class="footer-top">
         <div>
           <div class="footer-logo">
-            <div class="footer-logo-icon">P</div>
+            <div class="footer-logo-icon">33</div>
             <span class="footer-logo-text">${escHtml(fields.logo_text)}</span>
           </div>
           <p class="footer-desc">${escHtml(fields.description)}</p>
