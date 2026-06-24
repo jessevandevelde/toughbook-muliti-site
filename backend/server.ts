@@ -16,8 +16,13 @@ const serverPort = process.env.PORT ?? '3000';
 const serverUrl = process.env.SERVER_URL ?? `http://localhost:${serverPort}`;
 
 const allowedOrigins = [
+  'http://localhost',
+  'http://127.0.0.1',
+  'http://localhost:80',
+  'http://127.0.0.1:80',
   'http://localhost:4200',
   'http://localhost:8000',
+  'http://localhost:8080',
   'http://127.0.0.1:5500',
   'http://127.0.0.1:3000',
   'http://127.0.0.1:8080',
@@ -31,12 +36,15 @@ app.use(cookieParser());
 
 app.use(cors({
   origin: (origin, callback) => {
-    if (!origin || allowedOrigins.includes(origin)) {
+    if (!origin) {
       callback(null, true);
-
       return;
     }
-
+    const isLocalhost = /^https?:\/\/(localhost|127\.0\.0\.1)(:\d+)?$/.test(origin);
+    if (isLocalhost || allowedOrigins.includes(origin)) {
+      callback(null, true);
+      return;
+    }
     callback(new Error(`Origin not allowed by CORS: ${origin}`));
   },
   credentials: true,
