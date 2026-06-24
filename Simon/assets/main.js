@@ -704,7 +704,7 @@ function initQuoteForm() {
     status.className = 'quote-form-status quote-form-info';
 
     try {
-      const response = await fetch(`${API_BASE}/api/contact`, {
+      const response = await fetch(`${API_BASE}/api/contact/`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(payload),
