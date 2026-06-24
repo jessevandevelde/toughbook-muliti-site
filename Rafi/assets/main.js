@@ -1,5 +1,5 @@
 /* Spec data */
-  const specData = {
+  const fallbackSpecData = {
     overview: [
       { label: 'Vormfactor', value: '10,1" volledig robuuste tablet / 2-in-1 met optioneel afneembaar toetsenbord' },
       { label: 'Beeldscherm', value: '10,1" WUXGA IPS, 1920×1200, maximaal 1000 nits, anti-reflectie, geschikt voor buiten' },
@@ -35,6 +35,188 @@
     ],
   };
 
+  let specData = fallbackSpecData;
+  let cmsWebsite = null;
+  const cmsApiUrl = 'http://localhost:3000/api/content/by-domain/rafi.nl';
+  let heroImages = [
+    'assets/images/toughbook2.jpeg',
+    'assets/images/toughbook.jpeg',
+    'assets/images/toughbook3.jpeg',
+    'assets/images/toughbook4.jpeg',
+  ];
+
+  const normalizeFieldName = (value) => (value || '').toString().trim().toLowerCase();
+  const getFieldValue = (fields, fieldNames) => {
+    if (!Array.isArray(fields)) {
+      return '';
+    }
+
+    const normalizedNames = fieldNames.map(normalizeFieldName);
+    const field = fields.find(entry => {
+      const fieldName = normalizeFieldName(entry.fieldName || entry.name || entry.key);
+      return normalizedNames.includes(fieldName);
+    });
+
+    return field?.fieldValue ?? field?.value ?? '';
+  };
+
+  const getBlockByName = (website, blockNames) => {
+    const blocks = website?.blocks || website?.websiteBlocks || website?.content?.blocks || [];
+    const normalizedNames = blockNames.map(normalizeFieldName);
+
+    return blocks.find(block => {
+      const blockName = normalizeFieldName(block.blockTypeName || block.blockName || block.block_name || block.name || block.type);
+      return normalizedNames.includes(blockName);
+    });
+  };
+
+  const getBlockItems = (block) => block?.items || block?.blockItems || block?.block_items || [];
+
+  const buildSpecDataFromCms = (specsBlock) => {
+    const items = getBlockItems(specsBlock)
+      .slice()
+      .sort((a, b) => (a.sortOrder ?? a.sort_order ?? 0) - (b.sortOrder ?? b.sort_order ?? 0));
+    const grouped = {};
+
+    items.forEach(item => {
+      const fields = item.fields || item.itemFields || item.blockItemFields || [];
+      const tabName = getFieldValue(fields, ['tab', 'category', 'section', 'group', 'spec_tab']) || 'overview';
+      const label = getFieldValue(fields, ['label', 'name', 'title']);
+      const value = getFieldValue(fields, ['value', 'content', 'text', 'description']);
+
+      if (!label || !value) {
+        return;
+      }
+
+      if (!grouped[tabName]) {
+        grouped[tabName] = [];
+      }
+
+      grouped[tabName].push({ label, value });
+    });
+
+    return Object.keys(grouped).length > 0 ? grouped : null;
+  };
+
+  const extractHeroImages = (website) => {
+    const heroBlock = getBlockByName(website, ['hero_block']);
+    if (!heroBlock) {
+      return heroImages;
+    }
+
+    const values = [];
+    const collectImageValues = (fields) => {
+      fields.forEach(field => {
+        const fieldName = normalizeFieldName(field.fieldName || field.name || field.key);
+        const fieldValue = (field.fieldValue ?? field.value ?? '').toString().trim();
+        if (!fieldValue) {
+          return;
+        }
+
+        if (fieldName.includes('image') || fieldName.includes('thumb') || fieldName.includes('src') || fieldName.includes('gallery')) {
+          values.push(fieldValue);
+        }
+      });
+    };
+
+    collectImageValues(heroBlock.fields || []);
+    getBlockItems(heroBlock).forEach(item => collectImageValues(item.fields || []));
+
+    return values.length > 0 ? values : heroImages;
+  };
+
+  const setTextContent = (selector, value) => {
+    const element = document.querySelector(selector);
+    if (element && value) {
+      element.textContent = value;
+    }
+  };
+
+  const syncHeroThumbs = () => {
+    const mainImage = document.getElementById('hero-main-img');
+    if (mainImage && heroImages[0]) {
+      mainImage.src = heroImages[0];
+    }
+
+    document.querySelectorAll('.hero-thumb').forEach((thumb, index) => {
+      const thumbImage = thumb.querySelector('img');
+      if (thumbImage && heroImages[index]) {
+        thumbImage.src = heroImages[index];
+      }
+
+      thumb.classList.toggle('active', index === 0);
+    });
+  };
+
+  const applyCmsContent = (website) => {
+    const navbarBlock = getBlockByName(website, ['navbar_block']);
+    const heroBlock = getBlockByName(website, ['hero_block']);
+    const specsBlock = getBlockByName(website, ['specifications_block']);
+    const downloadsBlock = getBlockByName(website, ['downloads_block']);
+    const quoteBlock = getBlockByName(website, ['quote_form_block']);
+    const contactBlock = getBlockByName(website, ['contact_block']);
+
+    setTextContent('#nav-cta', getFieldValue(navbarBlock?.fields || [], ['button_text', 'cta_text', 'nav_cta']));
+    setTextContent('#nav-downloads', getFieldValue(navbarBlock?.fields || [], ['nav_downloads_text', 'downloads_text', 'nav_downloads']));
+
+    setTextContent('#hero-tag', getFieldValue(heroBlock?.fields || [], ['badge_text', 'tag_text', 'hero_tag']));
+    setTextContent('.hero-title', getFieldValue(heroBlock?.fields || [], ['title_line_1', 'title_left', 'title']));
+    setTextContent('.hero-title-blue', getFieldValue(heroBlock?.fields || [], ['title_line_2', 'title_right', 'subtitle_line_2']));
+    setTextContent('#hero-sub', getFieldValue(heroBlock?.fields || [], ['subtitle', 'sub_title', 'hero_subtitle']));
+    setTextContent('#hero-desc', getFieldValue(heroBlock?.fields || [], ['description', 'body', 'hero_description']));
+    setTextContent('#hero-cta1', getFieldValue(heroBlock?.fields || [], ['cta_primary', 'button_primary_text', 'primary_cta']));
+    setTextContent('#hero-cta2', getFieldValue(heroBlock?.fields || [], ['cta_secondary', 'button_secondary_text', 'secondary_cta']));
+
+    setTextContent('#specs-heading', getFieldValue(specsBlock?.fields || [], ['heading', 'title', 'section_title']));
+    setTextContent('#specs-sub', getFieldValue(specsBlock?.fields || [], ['subtitle', 'subheading', 'description']));
+    setTextContent('#downloads .section-label', getFieldValue(downloadsBlock?.fields || [], ['label', 'eyebrow', 'section_label']));
+    setTextContent('#quote-heading', getFieldValue(quoteBlock?.fields || [], ['heading', 'title', 'section_title']));
+    setTextContent('#quote-sub', getFieldValue(quoteBlock?.fields || [], ['subtitle', 'subheading', 'description']));
+    setTextContent('#success-title', getFieldValue(quoteBlock?.fields || [], ['success_title', 'confirmation_title']));
+    setTextContent('#success-desc', getFieldValue(quoteBlock?.fields || [], ['success_description', 'confirmation_description']));
+    setTextContent('#contact-heading', getFieldValue(contactBlock?.fields || [], ['heading', 'title', 'section_title']));
+    setTextContent('#contact-sub', getFieldValue(contactBlock?.fields || [], ['subtitle', 'subheading', 'description']));
+
+    const downloadButtonText = getFieldValue(specsBlock?.fields || [], ['download_text', 'button_text', 'download_button_text']);
+    const specsButton = document.getElementById('specs-dl-btn');
+    if (specsButton && downloadButtonText) {
+      specsButton.lastChild.textContent = ' ' + downloadButtonText;
+    }
+
+    const specDataFromCms = buildSpecDataFromCms(specsBlock);
+    if (specDataFromCms) {
+      specData = specDataFromCms;
+      if (!specData[activeTab]) {
+        activeTab = Object.keys(specData)[0];
+      }
+      document.querySelectorAll('.spec-tab').forEach(button => button.classList.remove('active'));
+      const activeButton = Array.from(document.querySelectorAll('.spec-tab')).find(button => button.getAttribute('onclick')?.includes(activeTab));
+      if (activeButton) {
+        activeButton.classList.add('active');
+      }
+      renderSpecTable();
+    }
+
+    heroImages = extractHeroImages(website);
+    syncHeroThumbs();
+  };
+
+  const loadCmsContent = async () => {
+    try {
+      const response = await fetch(cmsApiUrl);
+      if (!response.ok) {
+        throw new Error(`CMS request failed with status ${response.status}`);
+      }
+
+      const payload = await response.json();
+      const website = payload.website || payload;
+      cmsWebsite = website;
+      applyCmsContent(website);
+    } catch (error) {
+      console.warn('Failed to load CMS content for the Rafi page.', error);
+    }
+  };
+
   let activeTab = 'overview';
   function renderSpecTable() {
     document.getElementById('spec-table').innerHTML = specData[activeTab].map(r =>
@@ -49,13 +231,6 @@
   }
   renderSpecTable();
 
-  /* Hero gallery */
-  const heroImages = [
-    'assets/images/toughbook2.jpeg',
-    'assets/images/toughbook.jpeg',
-    'assets/images/toughbook3.jpeg',
-    'assets/images/toughbook4.jpeg',
-  ];
   function setHeroImg(idx, el) {
     document.getElementById('hero-main-img').src = heroImages[idx];
     document.querySelectorAll('.hero-thumb').forEach(t => t.classList.remove('active'));
@@ -88,7 +263,12 @@
     const dlBtn = document.getElementById('specs-dl-btn');
     if(dlBtn) dlBtn.lastChild.textContent = ' ' + l.specsDl;
   }
-  document.getElementById('lang-select').addEventListener('change', e => applyLang(e.target.value));
+  document.getElementById('lang-select').addEventListener('change', e => {
+    applyLang(e.target.value);
+    if (cmsWebsite) {
+      applyCmsContent(cmsWebsite);
+    }
+  });
 
 
   /* Form */
@@ -111,3 +291,6 @@
             link.click();
         })
         .catch(() => alert('Download mislukt. Controleer of het bestand wel bestaat.'));});
+
+  applyLang(document.getElementById('lang-select').value);
+  loadCmsContent();

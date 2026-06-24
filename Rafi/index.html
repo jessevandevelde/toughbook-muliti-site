@@ -399,7 +399,7 @@ async function submitForm(e) {
   data.set('product', 'Panasonic Toughbook G2');
 
   try {
-    const res  = await fetch('send_quote.php', { method: 'POST', body: data });
+    const res  = await fetch('./send_quote.php', { method: 'POST', body: data });
     const json = await res.json();
 
     if (json.success) {
