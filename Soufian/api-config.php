@@ -4,7 +4,7 @@
  */
 
 // Backend API base URL
-define('API_BASE_URL', 'http://localhost:3001/api');
+define('API_BASE_URL', 'http://localhost:3000/api');
 define('CACHE_DIR', __DIR__ . '/cache');
 
 // Ensure cache directory exists
@@ -19,7 +19,7 @@ if (!is_dir(CACHE_DIR)) {
  * @param int $cacheTTL Cache time to live in seconds (0 = no cache)
  * @return array|null Content data or null on failure
  */
-function getContentFromAPI($endpoint, $cacheTTL = 3600) {
+function getContentFromAPI($endpoint, $cacheTTL = 0) {
     $cacheFile = CACHE_DIR . '/' . md5($endpoint) . '.json';
     
     // Try to get from cache
@@ -33,18 +33,36 @@ function getContentFromAPI($endpoint, $cacheTTL = 3600) {
     // Fetch from API
     $url = API_BASE_URL . '/' . $endpoint;
     
-    $ch = curl_init();
-    curl_setopt_array($ch, [
-        CURLOPT_URL => $url,
-        CURLOPT_RETURNTRANSFER => true,
-        CURLOPT_TIMEOUT => 5,
-        CURLOPT_FOLLOWLOCATION => true,
-        CURLOPT_SSL_VERIFYPEER => false,
-    ]);
-    
-    $response = curl_exec($ch);
-    $httpCode = curl_getinfo($ch, CURLINFO_HTTP_CODE);
-    curl_close($ch);
+    if (function_exists('curl_init')) {
+        $ch = curl_init();
+        curl_setopt_array($ch, [
+            CURLOPT_URL => $url,
+            CURLOPT_RETURNTRANSFER => true,
+            CURLOPT_TIMEOUT => 5,
+            CURLOPT_FOLLOWLOCATION => true,
+            CURLOPT_SSL_VERIFYPEER => false,
+        ]);
+
+        $response = curl_exec($ch);
+        $httpCode = curl_getinfo($ch, CURLINFO_HTTP_CODE);
+        curl_close($ch);
+    } else {
+        $context = stream_context_create([
+            'http' => [
+                'timeout' => 5,
+                'ignore_errors' => true,
+            ],
+        ]);
+        $response = @file_get_contents($url, false, $context);
+        $httpCode = 0;
+
+        foreach ($http_response_header ?? [] as $header) {
+            if (preg_match('/^HTTP\/\S+\s+(\d{3})/', $header, $matches)) {
+                $httpCode = (int) $matches[1];
+                break;
+            }
+        }
+    }
     
     if ($httpCode !== 200) {
         error_log("API Error: $endpoint returned HTTP $httpCode");
@@ -69,12 +87,29 @@ function getContentFromAPI($endpoint, $cacheTTL = 3600) {
  * @return array|null Block data or null if not found
  */
 function getBlockByType($content, $blockType) {
+    if (isset($content['website'])) {
+        $content = $content['website'];
+    }
+
     if (!$content || !isset($content['blocks'])) {
         return null;
     }
+
+    $blockTypeAliases = [
+        'hero' => 'hero_block',
+        'features' => 'features_block',
+        'sectors' => 'werksectoren_block',
+        'specs' => 'specifications_block',
+        'gallery' => 'gallery_block',
+        'downloads' => 'downloads_block',
+        'cta' => 'quote_form_block',
+        'footer' => 'footer_block',
+        'navbar' => 'navbar_block',
+    ];
+    $targetBlockType = $blockTypeAliases[$blockType] ?? $blockType;
     
     foreach ($content['blocks'] as $block) {
-        if ($block['blockTypeName'] === $blockType) {
+        if ($block['blockTypeName'] === $targetBlockType) {
             return $block;
         }
     }
