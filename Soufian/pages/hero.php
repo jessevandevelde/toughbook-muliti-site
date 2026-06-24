@@ -72,7 +72,7 @@ $heroStats = getBlockItems($heroBlock);
       <a href="#specs" class="btn-secondary"><?php echo htmlspecialchars($hero_cta_secondary); ?></a>
     </div>
     <div class="hero-stats">
-      <?php foreach ($heroStats as $stat): ?>
+      <?php foreach ($heroStats as $stat): ?> 
       <div class="stat">
         <span class="stat-label"><?php echo htmlspecialchars(getItemFieldValue($stat, 'label')); ?></span>
         <span class="stat-value"><?php echo htmlspecialchars(getItemFieldValue($stat, 'value')); ?></span>
