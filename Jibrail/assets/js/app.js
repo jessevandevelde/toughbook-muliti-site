@@ -698,11 +698,65 @@
         elements.loading.style.display = 'none';
       }
       startReveal();
+      initContactForm();
     }
     catch (error) {
       console.error('Failed to load website content', error);
       showError('Failed to load content. Check backend connection.');
     }
+  };
+
+  const initContactForm = () => {
+    const form = elements.contact;
+    if (!form) return;
+
+    const btn = form.querySelector('.contact-form .btn');
+    if (!btn) return;
+
+    let statusEl = form.querySelector('.form-status');
+    if (!statusEl) {
+      statusEl = document.createElement('p');
+      statusEl.className = 'form-status';
+      btn.after(statusEl);
+    }
+
+    btn.addEventListener('click', async () => {
+      const name    = form.querySelector('#contact-name')?.value?.trim() || '';
+      const company = form.querySelector('#contact-company')?.value?.trim() || '';
+      const email   = form.querySelector('#contact-email')?.value?.trim() || '';
+      const message = form.querySelector('#contact-message')?.value?.trim() || '';
+
+      if (!name || !email || !message) {
+        statusEl.textContent = 'Vul naam, e-mail en bericht in.';
+        statusEl.className = 'form-status form-status--error';
+        return;
+      }
+
+      btn.disabled = true;
+      statusEl.textContent = 'Verzenden...';
+      statusEl.className = 'form-status form-status--info';
+
+      try {
+        const res = await fetch(`${apiBase}/api/contact`, {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          credentials: 'include',
+          body: JSON.stringify({ name, company, email, message }),
+        });
+        const data = await res.json();
+        if (!res.ok) throw new Error(data.error || 'Serverfout');
+        statusEl.textContent = data.message || 'Verzonden!';
+        statusEl.className = 'form-status form-status--success';
+        form.querySelectorAll('.input-control').forEach((el) => { el.value = ''; });
+      }
+      catch (err) {
+        statusEl.textContent = 'Verzenden mislukt. Probeer het later opnieuw.';
+        statusEl.className = 'form-status form-status--error';
+      }
+      finally {
+        btn.disabled = false;
+      }
+    });
   };
 
   init();
