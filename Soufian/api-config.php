@@ -170,4 +170,31 @@ function getItemFieldValue($item, $fieldName, $default = '') {
     
     return $default;
 }
+
+/**
+ * Convert CMS image paths from the original site into paths available in this project.
+ *
+ * @param string $url CMS image path
+ * @param string $fallback Local fallback image path
+ * @return string
+ */
+function getAssetUrl($url, $fallback = '') {
+    $filename = basename((string) $url);
+    $legacyImageMap = [
+        'toughbook-40-hero.jpg' => 'toughbook-hero.jpg',
+        'toughbook-gallery-1.jpg' => 'toughbook-1.jpg',
+        'toughbook-gallery-2.jpg' => 'toughbook-2.jpg',
+        'toughbook-gallery-3.jpg' => 'toughbook-3.jpg',
+        'toughbook-gallery-4.jpg' => 'toughbook-4.jpg',
+    ];
+
+    $resolvedFilename = $legacyImageMap[$filename] ?? $filename;
+    $projectImagePath = __DIR__ . '/images/' . $resolvedFilename;
+
+    if ($resolvedFilename && file_exists($projectImagePath)) {
+        return '/Soufian/images/' . $resolvedFilename;
+    }
+
+    return $fallback;
+}
 ?>

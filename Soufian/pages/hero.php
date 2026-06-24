@@ -25,7 +25,7 @@ $hero_h1_secondary = '';
 $hero_description = getBlockFieldValue($heroBlock, 'subtitle', 'De Toughbook 40 MK2 &mdash; het meest veelzijdige 14" volledig robuuste werkstation ooit gebouwd.');
 $hero_cta_primary = getBlockFieldValue($heroBlock, 'primary_button_text', 'Vraag Offerte Aan');
 $hero_cta_secondary = getBlockFieldValue($heroBlock, 'secondary_button_text', 'Bekijk Specs');
-$hero_image = getBlockFieldValue($heroBlock, 'image_url', '../images/toughbook-hero.jpg');
+$hero_image = getAssetUrl(getBlockFieldValue($heroBlock, 'image_url'), '/Soufian/images/toughbook-hero.jpg');
 $price_old = getBlockFieldValue($heroBlock, 'price_old', '€ 4.885,00');
 $price_new = getBlockFieldValue($heroBlock, 'price_new', '€ 4.640,75');
 
@@ -104,12 +104,16 @@ $heroStats = getBlockItems($heroBlock);
   <div class="features-grid">
     <?php 
     $featureItems = getBlockItems($featuresBlock);
-    foreach ($featureItems as $feature): 
+    foreach ($featureItems as $feature):
+      $featureIcon = getItemFieldValue($feature, 'icon');
+      $featureTitle = getItemFieldValue($feature, 'title');
+      $featureDescription = getItemFieldValue($feature, 'description');
+      if (!$featureIcon && !$featureTitle && !$featureDescription) continue;
     ?>
     <div class="feature-card">
-      <div class="feature-icon"><?php echo getItemFieldValue($feature, 'icon', '&#9673;'); ?></div>
-      <div class="feature-title"><?php echo htmlspecialchars(getItemFieldValue($feature, 'title')); ?></div>
-      <p class="feature-text"><?php echo htmlspecialchars(getItemFieldValue($feature, 'description')); ?></p>
+      <div class="feature-icon"><?php echo $featureIcon ?: '&#9673;'; ?></div>
+      <div class="feature-title"><?php echo htmlspecialchars($featureTitle); ?></div>
+      <p class="feature-text"><?php echo htmlspecialchars($featureDescription); ?></p>
     </div>
     <?php endforeach; ?>
   </div>
@@ -203,7 +207,7 @@ $heroStats = getBlockItems($heroBlock);
     foreach ($galleryItems as $item): 
     ?>
     <div class="gallery-item">
-      <img src="<?php echo htmlspecialchars(getItemFieldValue($item, 'image_url')); ?>" alt="<?php echo htmlspecialchars(getItemFieldValue($item, 'alt_text', 'Gallery image')); ?>">
+      <img src="<?php echo htmlspecialchars(getAssetUrl(getItemFieldValue($item, 'image_url'), '/Soufian/images/toughbook-1.jpg')); ?>" alt="<?php echo htmlspecialchars(getItemFieldValue($item, 'label', 'Gallery image')); ?>">
     </div>
     <?php endforeach; ?>
   </div>
