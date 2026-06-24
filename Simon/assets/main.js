@@ -56,16 +56,16 @@ function gradientWord(safeTitle, word) {
 
 // Lokale afbeeldingen (pad relatief aan index.html)
 const IMAGES = {
-  hero:              'assets/images/wow/Panasonic_Toughbook_in_moody_studio_shot.png',
-  featureRobuust:    'assets/images/Product gallery/Rugged_Panasonic_Toughbook_close-up.png',
-  featureScherm:     'assets/images/Product gallery/Robuuste_TOUGHBOOK_in_dramatisch_licht.png',
-  featureBatterij:   'assets/images/Product gallery/Rugged_emergency_vehicle_cockpit_in_rain.png',
-  featurePrestaties: 'assets/images/Product gallery/Ruw_bouwterrein_met_robuust_apparaat.png',
+  hero:              'assets/images/wow/Panasonic_Toughbook_in_a_tech_storm.png',
+  featureRobuust:    'assets/images/Product gallery/Ruwe_kracht_in_modderige_omstandigheden.png',
+  featureScherm:     'assets/images/wow/Futuristisch_tech_lab_met_Toughbook_laptop.png',
+  featureBatterij:   'assets/images/Product gallery/Bouwplaats_in_de_regen_met_tablet.png',
+  featurePrestaties: 'assets/images/wow/Nachtmissie_met_tactisch_laptop_en_helikopter.png',
   specsExploded:     'assets/images/wow/Panasonic_Toughbook_uitgelegd_in_lagen.png',
-  gallery1: 'assets/images/Product gallery/Rugged_Panasonic_Toughbook_in_cinematic_lighting.png',
-  gallery2: 'assets/images/Product gallery/Rugged_Toughbook_in_stormy_terrain.png',
-  gallery3: 'assets/images/Product gallery/Rugged_Toughbook_in_a_snowy_wilderness.png',
-  gallery4: 'assets/images/Product gallery/Robuuste_Panasonic_Toughbook_in_mistige_studiohoek.png',
+  gallery1: 'assets/images/wow/Panasonic_Toughbook_in_a_tech_storm.png',
+  gallery2: 'assets/images/wow/Panasonic_Toughbook_in_stormy_terrain.png',
+  gallery3: 'assets/images/Product gallery/Rugged_Panasonic_Toughbook_in_cinematic_lighting.png',
+  gallery4: 'assets/images/wow/Nachtmissie_met_tactisch_laptop_en_helikopter.png',
 };
 
 
@@ -104,6 +104,7 @@ fetch(API_URL)
     startScrollEffects();
     startScrollAnimations();
     initGallery();
+    initQuoteForm();
   })
   .catch(error => {
     console.error('Fout bij ophalen data:', error);
@@ -125,6 +126,9 @@ fetch(API_URL)
 // --- NAVBAR ---
 function buildNavbar(fields, items) {
   const nav = document.getElementById('navbar');
+  const isEnglish = /\/Simon\/en(\/|$)/.test(window.location.pathname);
+  const langHref = isEnglish ? '/Simon/index.html' : '/Simon/en/index.html';
+  const langLabel = isEnglish ? 'NL' : 'EN';
 
   const links = items
     .filter(i => i.itemType === 'nav_link')
@@ -141,12 +145,12 @@ function buildNavbar(fields, items) {
   nav.innerHTML = `
     <div class="nav-inner">
       <a href="#" class="nav-logo">
-        <div class="nav-logo-icon">P</div>
+        <div class="nav-logo-icon">33</div>
         <span class="nav-logo-text">${escHtml(fields.logo_text)}</span>
       </a>
       <ul class="nav-links">${links}</ul>
       <div class="nav-right">
-        ${langSwitcher}
+        <a href="${langHref}" class="nav-lang-link">${langLabel}</a>
         <a href="${escUrl(fields.button_url)}" class="btn-nav">${escHtml(fields.button_text)}</a>
         <button class="nav-hamburger" aria-label="Menu openen" aria-expanded="false" aria-controls="navMobile">
           <span></span><span></span><span></span>
@@ -155,6 +159,7 @@ function buildNavbar(fields, items) {
     </div>
     <div class="nav-mobile" id="navMobile" aria-hidden="true">
       <ul class="nav-mobile-links">${links}</ul>
+      <a href="${langHref}" class="btn-nav btn-nav-mobile">${langLabel}</a>
       <a href="${escUrl(fields.button_url)}" class="btn-nav btn-nav-mobile">${escHtml(fields.button_text)}</a>
       ${langSwitcher}
     </div>
@@ -393,7 +398,7 @@ function buildDownloads(fields, items) {
         <span>${escHtml(item.file_type)}</span>
         <span>${escHtml(item.file_size)}</span>
       </div>
-      <a href="${escUrl(item.url)}" class="btn-download" download>
+      <a href="${escUrl(item.url)}" class="btn-download" ${item.url.startsWith('/') ? 'download' : 'target="_blank" rel="noopener noreferrer"'}>
         ${DL_BTN_SVG} ${escHtml(item.button_text)}
       </a>
     </div>
@@ -411,7 +416,7 @@ function buildDownloads(fields, items) {
       <div class="dl-info-box fade-up">
         <div class="dl-info-title">${escHtml(fields.cta_title)}</div>
         <div class="dl-info-text">${escHtml(fields.cta_text)}</div>
-        <button class="btn-touch">${escHtml(fields.cta_button_text)}</button>
+        <a href="#offerte" class="btn-touch">${escHtml(fields.cta_button_text)}</a>
       </div>
     </div>
   `;
@@ -452,9 +457,9 @@ function buildCTA(fields, items) {
                 <path stroke-linecap="round" stroke-linejoin="round" d="M13 7l5 5m0 0l-5 5m5-5H6"/>
               </svg>
             </a>
-            <a href="${escUrl(fields.secondary_button_url)}" class="btn-cta-ghost">
+            <a href="#gallery-section" class="btn-cta-ghost">
               <svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24" width="20" height="20" aria-hidden="true">
-                <path stroke-linecap="round" stroke-linejoin="round" d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z"/>
+                <path stroke-linecap="round" stroke-linejoin="round" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"/>
               </svg>
               ${escHtml(fields.secondary_button_text)}
             </a>
@@ -474,9 +479,14 @@ function buildFooter(fields, items) {
     .map(i => `<li><a href="${escUrl(i.url)}">${escHtml(i.text)}</a></li>`)
     .join('');
 
-  const productLinks = items
+  const supportLinks = items
     .filter(i => i.itemType === 'product_link')
-    .map(i => `<li><a href="${escUrl(i.url)}">${escHtml(i.text)}</a></li>`)
+    .map(i => `<li><a href="${escUrl(i.url)}" ${i.url.startsWith('http') ? 'target="_blank" rel="noopener noreferrer"' : ''}>${escHtml(i.text)}</a></li>`)
+    .join('');
+
+  const groupLinks = items
+    .filter(i => i.itemType === 'group_link')
+    .map(i => `<li><a href="${escUrl(i.url)}" ${i.url !== '#' ? 'target="_blank" rel="noopener noreferrer"' : ''}>${escHtml(i.text)}</a></li>`)
     .join('');
 
   const footer = document.getElementById('footer');
@@ -487,32 +497,30 @@ function buildFooter(fields, items) {
       <div class="footer-top">
         <div>
           <div class="footer-logo">
-            <div class="footer-logo-icon">P</div>
+            <div class="footer-logo-icon">33</div>
             <span class="footer-logo-text">${escHtml(fields.logo_text)}</span>
           </div>
           <p class="footer-desc">${escHtml(fields.description)}</p>
           <div class="footer-socials">
-            <a href="#" class="social-btn" aria-label="Facebook">
-              <svg fill="currentColor" viewBox="0 0 24 24" aria-hidden="true"><path d="M18 2h-3a5 5 0 00-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 011-1h3z"/></svg>
-            </a>
-            <a href="#" class="social-btn" aria-label="Twitter / X">
-              <svg fill="currentColor" viewBox="0 0 24 24" aria-hidden="true"><path d="M23 3a10.9 10.9 0 01-3.14 1.53 4.48 4.48 0 00-7.86 3v1A10.66 10.66 0 013 4s-4 9 5 13a11.64 11.64 0 01-7 2c9 5 20 0 20-11.5a4.5 4.5 0 00-.08-.83A7.72 7.72 0 0023 3z"/></svg>
-            </a>
-            <a href="#" class="social-btn" aria-label="LinkedIn">
+            <a href="https://www.linkedin.com/company/panasonic-connect-europe/" target="_blank" rel="noopener noreferrer" class="social-btn" aria-label="LinkedIn">
               <svg fill="currentColor" viewBox="0 0 24 24" aria-hidden="true"><path d="M16 8a6 6 0 016 6v7h-4v-7a2 2 0 00-2-2 2 2 0 00-2 2v7h-4v-7a6 6 0 016-6zM2 9h4v12H2z"/><circle cx="4" cy="4" r="2"/></svg>
             </a>
-            <a href="#" class="social-btn" aria-label="Instagram">
-              <svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24" aria-hidden="true"><rect x="2" y="2" width="20" height="20" rx="5"/><path d="M16 11.37A4 4 0 1112.63 8 4 4 0 0116 11.37z"/><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"/></svg>
+            <a href="https://www.youtube.com/@PanasonicConnectEurope" target="_blank" rel="noopener noreferrer" class="social-btn" aria-label="YouTube">
+              <svg fill="currentColor" viewBox="0 0 24 24" aria-hidden="true"><path d="M22.54 6.42a2.78 2.78 0 00-1.95-1.96C18.88 4 12 4 12 4s-6.88 0-8.59.46A2.78 2.78 0 001.46 6.42 29 29 0 001 12a29 29 0 00.46 5.58 2.78 2.78 0 001.95 1.96C5.12 20 12 20 12 20s6.88 0 8.59-.46a2.78 2.78 0 001.95-1.96A29 29 0 0023 12a29 29 0 00-.46-5.58z"/><polygon fill="#fff" points="9.75,15.02 15.5,12 9.75,8.98 9.75,15.02"/></svg>
             </a>
           </div>
         </div>
         <div>
-          <div class="footer-col-title">Navigation</div>
+          <div class="footer-col-title">Navigatie</div>
           <ul class="footer-links">${navLinks}</ul>
         </div>
         <div>
-          <div class="footer-col-title">Products</div>
-          <ul class="footer-links">${productLinks}</ul>
+          <div class="footer-col-title">Ondersteuning</div>
+          <ul class="footer-links">${supportLinks}</ul>
+        </div>
+        <div>
+          <div class="footer-col-title">Groepsproducten</div>
+          <ul class="footer-links">${groupLinks}</ul>
         </div>
         <div>
           <div class="footer-col-title">Contact</div>
@@ -541,9 +549,9 @@ function buildFooter(fields, items) {
       <div class="footer-bottom">
         <span class="footer-copy">${escHtml(fields.copyright)}</span>
         <div class="footer-bottom-links">
-          <a href="${escUrl(fields.privacy_policy_url)}">Privacy Policy</a>
-          <a href="${escUrl(fields.terms_url)}">Terms of Service</a>
-          <a href="${escUrl(fields.cookies_url)}">Cookie Policy</a>
+          <a href="${escUrl(fields.privacy_policy_url)}" target="_blank" rel="noopener noreferrer">Privacyverklaring</a>
+          <a href="${escUrl(fields.terms_url)}" target="_blank" rel="noopener noreferrer">Gebruiksvoorwaarden</a>
+          <a href="${escUrl(fields.cookies_url)}" target="_blank" rel="noopener noreferrer">Cookie-beleid</a>
         </div>
       </div>
     </div>
@@ -555,66 +563,63 @@ function buildFooter(fields, items) {
 // ===== 4. GALLERY SLIDER =====
 
 const GALLERY_SLIDES = [
-  {
-    img:   IMAGES.gallery1,
-    title: 'Cinematic View',
-    desc:  'De Toughbook 33 in dramatisch cinematisch licht — gebouwd voor elke omgeving'
-  },
-  {
-    img:   IMAGES.gallery2,
-    title: 'Stormy Terrain',
-    desc:  'Werkt perfect in de zwaarste weersomstandigheden — regen, wind en modder'
-  },
-  {
-    img:   IMAGES.gallery3,
-    title: 'Arctic Conditions',
-    desc:  'Betrouwbaar tot -29°C — zelfs in besneeuwde en ijzige omstandigheden'
-  },
-  {
-    img:   IMAGES.gallery4,
-    title: 'Studio Detail',
-    desc:  'Elk detail van de robuuste behuizing is ontworpen voor maximale duurzaamheid'
-  },
+  { img: 'assets/images/wow/Panasonic_Toughbook_in_a_tech_storm.png',                           title: 'Tech Storm',           desc: 'De TOUGHBOOK 33 trotseert de krachtigste technologische stormen — altijd verbonden, altijd aan.' },
+  { img: 'assets/images/wow/Nachtmissie_met_tactisch_laptop_en_helikopter.png',                  title: 'Night Mission',        desc: 'Ingezet bij nachtmissies en tactische operaties — waar betrouwbaarheid geen optie is.' },
+  { img: 'assets/images/wow/Panasonic_Toughbook_in_stormy_terrain.png',                          title: 'Stormy Terrain',       desc: 'Werkt perfect in de zwaarste weersomstandigheden — regen, wind en modder.' },
+  { img: 'assets/images/wow/Futuristisch_tech_lab_met_Toughbook_laptop.png',                     title: 'Futuristisch Lab',     desc: 'Thuis in het meest geavanceerde tech-lab — Intel Core i7 vPro met Intel Iris Xe Graphics.' },
+  { img: 'assets/images/wow/Panasonic_Toughbook in_futuristic_setting.png',                      title: 'Futuristic Setting',   desc: 'De TOUGHBOOK 33 MK4 — ontworpen voor de wereld van morgen, gebouwd voor vandaag.' },
+  { img: 'assets/images/wow/Panasonic_Toughbook_in_moody_studio_shot.png',                       title: 'Studio Shot',          desc: 'Elk detail van de robuuste behuizing is ontworpen voor maximale duurzaamheid en stijl.' },
+  { img: 'assets/images/Product gallery/Rugged_Panasonic_Toughbook_in_cinematic_lighting.png',   title: 'Cinematic View',       desc: 'De TOUGHBOOK 33 in dramatisch cinematisch licht — gebouwd voor elke omgeving.' },
+  { img: 'assets/images/Product gallery/Rugged_Panasonic_Toughbook_close-up.png',                title: 'Close-up Detail',      desc: 'MIL-STD-810H gecertificeerd — elk onderdeel is getest op extreme omstandigheden.' },
+  { img: 'assets/images/Product gallery/Robuuste_TOUGHBOOK_in_dramatisch_licht.png',             title: 'Dramatisch Licht',     desc: '12" QHD scherm met 1.200 cd/m² helderheid — zichtbaar in direct zonlicht.' },
+  { img: 'assets/images/Product gallery/Robuuste_Panasonic_Toughbook_in_mistige_studiohoek.png', title: 'Misty Studio',         desc: 'Robuust design, verfijnd tot in elk detail — IP65 waterdicht en stofvrij.' },
+  { img: 'assets/images/Product gallery/Rugged_emergency_vehicle_cockpit_in_rain.png',           title: 'Emergency Vehicle',    desc: 'Standaard uitrusting in hulpdienstvoertuigen — werkt in de hevigste regenbuien.' },
+  { img: 'assets/images/Product gallery/Ruwe_kracht_in_modderige_omstandigheden.png',            title: 'Ruwe Kracht',          desc: '150 cm valweerstand — overleeft val op beton, modder of asfalt.' },
+  { img: 'assets/images/Product gallery/Bouwplaats_in_de_regen_met_tablet.png',                  title: 'Bouwplaats',           desc: 'Hot-swappable batterij — nooit stilstand op de bouwplaats of in het veld.' },
+  { img: 'assets/images/Product gallery/Rugged_Toughbook_in_stormy_terrain.png',                 title: 'Stormy Field',         desc: 'Temperatuurbereik van -29°C tot +63°C — klaar voor elk klimaat ter wereld.' },
+  { img: 'assets/images/Product gallery/Rugged_Toughbook_in_a_snowy_wilderness.png',             title: 'Arctic Conditions',    desc: 'Betrouwbaar tot -29°C — zelfs in besneeuwde en ijzige omstandigheden.' },
+  { img: 'assets/images/Product gallery/Ruw_bouwterrein_met_robuust_apparaat.png',               title: 'Bouwterrein',          desc: 'Van kantoor tot bouwterrein — de TOUGHBOOK 33 past zich aan elke werkplek aan.' },
+  { img: 'assets/images/Product gallery/Ruw_industrieterrein_met_Panasonic_Toughbook.png',       title: 'Industrieterrein',     desc: 'Vertrouwd door industrie en logistiek wereldwijd — gebouwd voor de zwaarste taken.' },
+  { img: 'assets/images/Product gallery/Ruw_ontwerp_met_kleurrijke_verlichting.png',             title: 'Design Detail',        desc: 'Krachtig uiterlijk, krachtige inhoud — Intel Wi-Fi 6E en 5G altijd verbonden.' },
 ];
 
 let currentSlide = 0;
 let galleryTimer  = null;
 
 function initGallery() {
-  // Sectie zichtbaar maken (was altijd display:none)
-  document.getElementById('gallery-section').style.display = 'block';
+  // Bouw dots dynamisch op basis van GALLERY_SLIDES
+  const dotsContainer = document.querySelector('.gallery-dots');
+  dotsContainer.innerHTML = GALLERY_SLIDES.map((_, i) => `
+    <button class="gallery-dot${i === 0 ? ' active' : ''}" data-slide="${i}" role="tab"
+      aria-selected="${i === 0}" aria-label="Afbeelding ${i + 1}"></button>
+  `).join('');
 
+  // Bouw thumbnails dynamisch op
+  const thumbsContainer = document.querySelector('.gallery-thumbs');
+  thumbsContainer.innerHTML = GALLERY_SLIDES.map((slide, i) => `
+    <button class="gallery-thumb${i === 0 ? ' active' : ''}" data-slide="${i}" role="tab"
+      aria-selected="${i === 0}" aria-label="${slide.title}">
+      <img src="${slide.img}" alt="${slide.title}" loading="lazy" />
+      <div class="gallery-thumb-overlay" aria-hidden="true"></div>
+    </button>
+  `).join('');
+
+  document.getElementById('gallery-section').style.display = 'block';
   updateGallery();
 
-  // Pijlknoppen
-  document.getElementById('galleryPrev').addEventListener('click', () => {
-    changeSlide(-1);
-    resetGalleryTimer();
-  });
-  document.getElementById('galleryNext').addEventListener('click', () => {
-    changeSlide(1);
-    resetGalleryTimer();
+  document.getElementById('galleryPrev').addEventListener('click', () => { changeSlide(-1); resetGalleryTimer(); });
+  document.getElementById('galleryNext').addEventListener('click', () => { changeSlide(1);  resetGalleryTimer(); });
+
+  dotsContainer.querySelectorAll('.gallery-dot').forEach(dot => {
+    dot.addEventListener('click', () => { goSlide(Number(dot.dataset.slide)); resetGalleryTimer(); });
   });
 
-  // Dots en thumbnails via data-slide attribuut
-  document.querySelectorAll('.gallery-dot').forEach(dot => {
-    dot.addEventListener('click', () => {
-      goSlide(Number(dot.dataset.slide));
-      resetGalleryTimer();
-    });
+  thumbsContainer.querySelectorAll('.gallery-thumb').forEach(thumb => {
+    thumb.addEventListener('click', () => { goSlide(Number(thumb.dataset.slide)); resetGalleryTimer(); });
   });
 
-  document.querySelectorAll('.gallery-thumb').forEach(thumb => {
-    thumb.addEventListener('click', () => {
-      goSlide(Number(thumb.dataset.slide));
-      resetGalleryTimer();
-    });
-  });
-
-  // Auto-play: schuift elke 5 seconden automatisch door
   startGalleryTimer();
 
-  // Pauzeer bij hover of focus op de slider
   const galleryMain = document.querySelector('.gallery-main');
   galleryMain.addEventListener('mouseenter', () => clearInterval(galleryTimer));
   galleryMain.addEventListener('mouseleave', startGalleryTimer);
@@ -669,6 +674,60 @@ function goSlide(index) {
   updateGallery();
 }
 
+function initQuoteForm() {
+  const form = document.getElementById('quoteForm');
+  if (!form) return;
+
+  const status = document.getElementById('quoteFormStatus');
+  const submitButton = form.querySelector('button[type="submit"]');
+
+  form.addEventListener('submit', async (event) => {
+    event.preventDefault();
+
+    const formData = new FormData(form);
+    const payload = {
+      name: String(formData.get('name') || '').trim(),
+      company: String(formData.get('company') || '').trim(),
+      email: String(formData.get('email') || '').trim(),
+      phone: String(formData.get('phone') || '').trim(),
+      message: String(formData.get('message') || '').trim(),
+    };
+
+    if (!payload.name || !payload.email || !payload.message) {
+      status.textContent = 'Vul alstublieft naam, e-mail en bericht in.';
+      status.className = 'quote-form-status quote-form-error';
+      return;
+    }
+
+    submitButton.disabled = true;
+    status.textContent = 'Verzenden...';
+    status.className = 'quote-form-status quote-form-info';
+
+    try {
+      const response = await fetch(`${API_BASE}/api/contact`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(payload),
+      });
+
+      const data = await response.json();
+      if (!response.ok) {
+        throw new Error(data.error || 'Serverfout');
+      }
+
+      status.textContent = data.message || 'Je aanvraag is verzonden.';
+      status.className = 'quote-form-status quote-form-success';
+      form.reset();
+    } catch (error) {
+      console.error(error);
+      status.textContent = 'Verzenden is mislukt. Probeer het later opnieuw.';
+      status.className = 'quote-form-status quote-form-error';
+    } finally {
+      submitButton.disabled = false;
+    }
+  });
+}
+
 
 // ===== 5. SCROLL & UI EFFECTEN =====
 
@@ -678,16 +737,11 @@ function startScrollEffects() {
   const backToTop   = document.getElementById('backToTop');
 
   window.addEventListener('scroll', () => {
-    const scrollY = window.scrollY;
-    const maxScroll = document.documentElement.scrollHeight - window.innerHeight;
+    const scrollY    = window.scrollY;
+    const maxScroll  = document.documentElement.scrollHeight - window.innerHeight;
 
-    // Navbar: solide achtergrond bij scrollen
     nav.classList.toggle('scrolled', scrollY > 40);
-
-    // Scroll progress bar bovenaan de pagina
     progressBar.style.width = (Math.min(scrollY / maxScroll, 1) * 100) + '%';
-
-    // Back-to-top knop: verschijnt na 600px scrollen
     backToTop.classList.toggle('visible', scrollY > 600);
   }, { passive: true });
 
@@ -702,7 +756,7 @@ function startScrollAnimations() {
       entries.forEach(entry => {
         if (entry.isIntersecting) {
           entry.target.classList.add('show');
-          observer.unobserve(entry.target); // Stop observeren na animatie (performance)
+          observer.unobserve(entry.target);
         }
       });
     },

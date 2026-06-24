@@ -5,6 +5,9 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <meta name="description" content="De Panasonic Toughbook 33 — het meest robuuste enterprise laptop ter wereld. Waterproof, schokbestendig en klaar voor extreme omstandigheden." />
   <title>Toughbook 33 – Enterprise Rugged Laptop</title>
+  <link rel="canonical" href="/Simon/index.html" />
+  <link rel="alternate" href="/Simon/index.html" hreflang="nl" />
+  <link rel="alternate" href="/Simon/en/index.html" hreflang="en" />
 
   <!-- Inline SVG favicon zodat geen apart bestand nodig is -->
   <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><rect width='100' height='100' rx='20' fill='%234f46e5'/><text y='.9em' font-size='80' x='10' fill='white' font-weight='900'>P</text></svg>" />
@@ -68,40 +71,80 @@
               </svg>
             </button>
 
-            <!-- Dots -->
-            <div class="gallery-dots" role="tablist" aria-label="Galerij navigatie">
-              <button class="gallery-dot active" data-slide="0" role="tab" aria-selected="true"  aria-label="Afbeelding 1"></button>
-              <button class="gallery-dot"        data-slide="1" role="tab" aria-selected="false" aria-label="Afbeelding 2"></button>
-              <button class="gallery-dot"        data-slide="2" role="tab" aria-selected="false" aria-label="Afbeelding 3"></button>
-              <button class="gallery-dot"        data-slide="3" role="tab" aria-selected="false" aria-label="Afbeelding 4"></button>
-            </div>
+            <!-- Dots — worden dynamisch gevuld door main.js -->
+            <div class="gallery-dots" role="tablist" aria-label="Galerij navigatie"></div>
           </div>
         </div>
 
-        <!-- Thumbnails — event listeners worden in main.js gezet -->
-        <div class="gallery-thumbs fade-up" role="tablist" aria-label="Galerij miniaturen">
-          <button class="gallery-thumb active" data-slide="0" role="tab" aria-selected="true"  aria-label="Cinematic View">
-            <img src="./assets/images/Product gallery/Rugged_Panasonic_Toughbook_in_cinematic_lighting.png" alt="Cinematic View" loading="lazy" />
-            <div class="gallery-thumb-overlay" aria-hidden="true"></div>
-          </button>
-          <button class="gallery-thumb"        data-slide="1" role="tab" aria-selected="false" aria-label="Stormy Terrain">
-            <img src="./assets/images/Product gallery/Rugged_Toughbook_in_stormy_terrain.png" alt="Stormy Terrain" loading="lazy" />
-            <div class="gallery-thumb-overlay" aria-hidden="true"></div>
-          </button>
-          <button class="gallery-thumb"        data-slide="2" role="tab" aria-selected="false" aria-label="Arctic Conditions">
-            <img src="./assets/images/Product gallery/Rugged_Toughbook_in_a_snowy_wilderness.png" alt="Arctic Conditions" loading="lazy" />
-            <div class="gallery-thumb-overlay" aria-hidden="true"></div>
-          </button>
-          <button class="gallery-thumb"        data-slide="3" role="tab" aria-selected="false" aria-label="Studio Detail">
-            <img src="./assets/images/Product gallery/Robuuste_Panasonic_Toughbook_in_mistige_studiohoek.png" alt="Studio Detail" loading="lazy" />
-            <div class="gallery-thumb-overlay" aria-hidden="true"></div>
-          </button>
+        <!-- Thumbnails — worden dynamisch gevuld door main.js -->
+        <div class="gallery-thumbs fade-up" role="tablist" aria-label="Galerij miniaturen"></div>
+
+        <!-- Knop onder de galerij -->
+        <div class="gallery-cta fade-up" style="text-align:center; margin-top:2rem;">
+          <a href="#offerte" class="btn-primary" style="display:inline-flex; align-items:center; gap:0.5rem;">
+            <span>Offerte aanvragen</span>
+            <svg width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24" aria-hidden="true">
+              <path stroke-linecap="round" stroke-linejoin="round" d="M13 7l5 5m0 0l-5 5m5-5H6"/>
+            </svg>
+          </a>
         </div>
       </div>
     </section>
 
     <!-- Downloads sectie -->
     <section id="downloads" class="downloads" aria-label="Downloads" style="display:none;"></section>
+
+    <!-- Offerte formulier -->
+    <section id="offerte" class="quote-form-section fade-up" aria-label="Offerte aanvragen">
+      <div class="section-inner">
+        <div class="section-head">
+          <span class="section-badge">Offerte aanvragen</span>
+          <h2 class="section-title">Vraag een vrijblijvende offerte aan</h2>
+          <p class="section-desc">Vul dit formulier in en wij nemen binnen 24 uur contact op met een passend voorstel.</p>
+        </div>
+
+        <div class="quote-form-grid">
+          <form id="quoteForm" class="quote-form" autocomplete="off">
+            <div class="form-row">
+              <label for="quoteName">Naam</label>
+              <input id="quoteName" name="name" type="text" required placeholder="Je volledige naam" />
+            </div>
+            <div class="form-row">
+              <label for="quoteCompany">Bedrijf</label>
+              <input id="quoteCompany" name="company" type="text" placeholder="Bedrijfsnaam (optioneel)" />
+            </div>
+            <div class="form-row">
+              <label for="quoteEmail">E-mailadres</label>
+              <input id="quoteEmail" name="email" type="email" required placeholder="naam@bedrijf.nl" />
+            </div>
+            <div class="form-row">
+              <label for="quotePhone">Telefoon</label>
+              <input id="quotePhone" name="phone" type="tel" placeholder="06 12 34 56 78" />
+            </div>
+            <div class="form-row form-row-full">
+              <label for="quoteMessage">Bericht</label>
+              <textarea id="quoteMessage" name="message" rows="6" required placeholder="Waar heeft u een offerte voor nodig?"></textarea>
+            </div>
+            <div class="form-footer">
+              <button type="submit" class="btn-submit">Verstuur aanvraag</button>
+              <div id="quoteFormStatus" class="quote-form-status" aria-live="polite"></div>
+            </div>
+          </form>
+
+          <aside class="quote-form-aside">
+            <div class="quote-info-card">
+              <h3>Wat wij van u nodig hebben</h3>
+              <ul>
+                <li>Uw naam en contactgegevens</li>
+                <li>Het gewenste Toughbook model</li>
+                <li>De gebruiksomgeving of special requests</li>
+              </ul>
+              <p>Wij bekijken uw aanvraag en sturen een passend voorstel op maat.</p>
+            </div>
+          </aside>
+        </div>
+      </div>
+    </section>
 
     <!-- CTA sectie -->
     <section id="cta" class="cta" aria-label="Call to action" style="display:none;"></section>
