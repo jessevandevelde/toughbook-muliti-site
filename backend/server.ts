@@ -56,11 +56,12 @@ const CREATED = 201;
 const INTERNAL_ERROR = 500;
 
 const transporter = nodemailer.createTransport({
-  service: 'gmail',
-  auth: {
-    user: process.env.MAIL_USER,
-    pass: process.env.MAIL_PASS,
-  },
+  host: process.env.MAIL_HOST ?? 'localhost',
+  port: parseInt(process.env.MAIL_PORT ?? '1025'),
+  secure: process.env.MAIL_SECURE === 'true',
+  ...(process.env.MAIL_USER && process.env.MAIL_PASS
+    ? { auth: { user: process.env.MAIL_USER, pass: process.env.MAIL_PASS } }
+    : {}),
 });
 
 const getField = (body: unknown, key: string): string => {
