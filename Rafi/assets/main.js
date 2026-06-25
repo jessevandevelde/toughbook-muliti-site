@@ -243,15 +243,12 @@
   });
   function closeMobile() { document.getElementById('mobile-menu').classList.remove('open'); }
 
-  /* Language */
+  /* Language (Dutch only) */
   const t = {
-    EN: { navSpecs:'Specifications', navDownloads:'Downloads', navQuote:'Get Quote', navContact:'Contact', navCta:'Request a Quote', heroTag:'Next Generation Rugged', heroSub:'The Ultimate Rugged 2-in-1 Convertible', heroDesc:'Engineered for extreme environments, the Toughbook G2 delivers uncompromising performance where reliability is non-negotiable — from emergency response to military operations.', heroCta1:'Request a Quote', heroCta2:'View Specifications', specsH:'Technical Specifications', specsSub:'Comprehensive specifications for the Toughbook G2 rugged convertible', specsDl:'Download Full Spec Sheet (PDF)', dlH:'Product Documentation', dlSub:'Official Panasonic Toughbook G2 documentation for procurement, IT, and field teams', quoteH:'Request a Quote', quoteSub:"Get a customised proposal tailored to your organisation's operational requirements", submit:'Submit Quote Request', sTitle:'Quote Request Submitted', sDesc:'Thank you for your interest. A specialist will contact you within one business day.', contactH:'Contact Us', contactSub:'Our specialists are ready to assist with your Toughbook G2 deployment' },
     NL: { navSpecs:'Specificaties', navDownloads:'Downloads', navQuote:'Offerte', navContact:'Contact', navCta:'Offerte Aanvragen', heroTag:'Volgende Generatie Robuust', heroSub:'Het Ultieme Robuuste 2-in-1 Tablet', heroDesc:'De TOUGHBOOK G2 combineert militaire robuustheid met modulaire flexibiliteit in een compact 10,1-inch ontwerp. Getest volgens MIL-STD-810H en officieel IP65-gecertificeerd — gebouwd voor professionals die geen uitval kunnen veroorloven.', heroCta1:'Offerte Aanvragen', heroCta2:'Specificaties Bekijken', specsH:'Technische Specificaties', specsSub:'Volledige technische specificaties van de Panasonic TOUGHBOOK G2 (FZ-G2) robuuste tablet', specsDl:'Volledige Specsheet Downloaden (PDF)', dlH:'Productdocumentatie', dlSub:'Officiële Panasonic TOUGHBOOK G2 documentatie voor inkoop, IT en velddiensten', quoteH:'Offerte Aanvragen', quoteSub:'Ontvang een op maat gemaakt voorstel afgestemd op de operationele behoeften van uw organisatie', submit:'Offerteverzoek Versturen', sTitle:'Offerteverzoek Verzonden', sDesc:'Bedankt voor uw interesse. Een specialist neemt binnen één werkdag contact met u op.', contactH:'Neem Contact Op', contactSub:'Onze specialisten staan klaar om u te helpen bij uw TOUGHBOOK G2-implementatie' },
-    DE: { navSpecs:'Spezifikationen', navDownloads:'Downloads', navQuote:'Angebot', navContact:'Kontakt', navCta:'Angebot Anfordern', heroTag:'Nächste Generation Robust', heroSub:'Der ultimative robuste 2-in-1 Convertible', heroDesc:'Entwickelt für extreme Umgebungen liefert das Toughbook G2 kompromisslose Leistung, wo Zuverlässigkeit unverzichtbar ist.', heroCta1:'Angebot Anfordern', heroCta2:'Spezifikationen Ansehen', specsH:'Technische Spezifikationen', specsSub:'Vollständige Spezifikationen des Toughbook G2 robusten Convertibles', specsDl:'Vollständiges Datenblatt Herunterladen (PDF)', dlH:'Produktdokumentation', dlSub:'Offizielle Panasonic Toughbook G2 Dokumentation für Beschaffung, IT und Außendienst', quoteH:'Angebot Anfordern', quoteSub:'Erhalten Sie ein auf Ihre Organisation zugeschnittenes Angebot', submit:'Angebotsanfrage Absenden', sTitle:'Angebotsanfrage Eingereicht', sDesc:'Vielen Dank für Ihr Interesse. Ein Spezialist kontaktiert Sie innerhalb eines Werktages.', contactH:'Kontakt Aufnehmen', contactSub:'Unsere Spezialisten stehen für Ihre Toughbook G2 Implementierung bereit' },
-    FR: { navSpecs:'Spécifications', navDownloads:'Téléchargements', navQuote:'Devis', navContact:'Contact', navCta:'Demander un Devis', heroTag:'Nouvelle Génération Robuste', heroSub:'Le convertible 2-en-1 robuste ultime', heroDesc:"Conçu pour les environnements extrêmes, le Toughbook G2 offre des performances inégalées là où la fiabilité est non négociable.", heroCta1:'Demander un Devis', heroCta2:'Voir les Spécifications', specsH:'Spécifications Techniques', specsSub:'Spécifications complètes du convertible robuste Toughbook G2', specsDl:'Télécharger la Fiche Technique Complète (PDF)', dlH:'Documentation Produit', dlSub:"Documentation officielle Panasonic Toughbook G2 pour les équipes d'achat, IT et terrain", quoteH:'Demander un Devis', quoteSub:"Obtenez une proposition personnalisée pour les besoins de votre organisation", submit:'Soumettre la Demande de Devis', sTitle:'Demande de Devis Soumise', sDesc:"Merci pour votre intérêt. Un spécialiste vous contactera dans un jour ouvrable.", contactH:'Nous Contacter', contactSub:'Nos spécialistes sont prêts à vous accompagner dans votre déploiement Toughbook G2' },
   };
   function applyLang(lang) {
-    const l = t[lang];
+    const l = t[lang] || t.NL;
     const s = (id, v) => { const e = document.getElementById(id); if(e) e.textContent = v; };
     s('nav-specs', l.navSpecs); s('nav-downloads', l.navDownloads); s('nav-quote', l.navQuote);
     s('nav-contact', l.navContact); s('nav-cta', l.navCta); s('hero-tag', l.heroTag);
@@ -263,12 +260,6 @@
     const dlBtn = document.getElementById('specs-dl-btn');
     if(dlBtn) dlBtn.lastChild.textContent = ' ' + l.specsDl;
   }
-  document.getElementById('lang-select').addEventListener('change', e => {
-    applyLang(e.target.value);
-    if (cmsWebsite) {
-      applyCmsContent(cmsWebsite);
-    }
-  });
 
 
   /* Form */
@@ -292,5 +283,5 @@
         })
         .catch(() => alert('Download mislukt. Controleer of het bestand wel bestaat.'));});
 
-  applyLang(document.getElementById('lang-select').value);
+  applyLang('NL');
   loadCmsContent();
