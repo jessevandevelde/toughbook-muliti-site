@@ -9,7 +9,7 @@ TRUNCATE TABLE websites;
 SET FOREIGN_KEY_CHECKS=1;
 
 -- INSERT WEBSITE
-INSERT INTO websites (name, domain) VALUES ('Souf', 'souf.nl');
+INSERT INTO websites (name, domain) VALUES ('Toughbook 40 Dutch', 'toughbook-40-dutch.nl');
 SET @website_id = LAST_INSERT_ID();
 
 -- INSERT BLOCK TYPES

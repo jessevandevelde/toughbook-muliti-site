@@ -38,7 +38,7 @@ CREATE TABLE block_fields (
 );
 
 -- Test data
-INSERT INTO websites (name, domain) VALUES ('Souf', 'souf.nl');
+INSERT INTO websites (name, domain) VALUES ('Toughbook 40 Dutch', 'toughbook-40-dutch.nl');
 INSERT INTO block_types (name, description) VALUES 
   ('hero', 'Hero'),
   ('features', 'Features');

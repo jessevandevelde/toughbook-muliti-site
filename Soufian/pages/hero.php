@@ -7,7 +7,7 @@ header('Expires: 0');
 require_once __DIR__ . '/../api-config.php';
 
 // Fetch CMS blocks from backend
-$blocks = getBlocksFromBackend('souf.nl');
+$blocks = getBlocksFromBackend('toughbook-40-dutch.nl');
 
 // Extract all blocks
 $heroBlock = getBlockByType($blocks, 'hero');

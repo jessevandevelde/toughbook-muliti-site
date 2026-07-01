@@ -19,7 +19,7 @@ const apiBase = String(config.apiBase || (
     ? 'http://localhost:3000'
     : ''
 )).replace(/\/$/, '');
-const defaultDomain = window.location.pathname.includes('/Rafi-English/') ? 'copy-rafi.nl' : 'rafi.nl';
+const defaultDomain = window.location.pathname.includes('/Rafi-English/') ? 'toughbook-g2-english.nl' : 'toughbook-g2-dutch.nl';
 const websiteDomain = config.websiteDomain || defaultDomain;
 const cmsApiUrl = `${apiBase}/api/content/by-domain/${encodeURIComponent(websiteDomain)}`;
 

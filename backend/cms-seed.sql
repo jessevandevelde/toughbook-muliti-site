@@ -2,7 +2,7 @@
 -- Run this AFTER cms-schema.sql to populate sample content
 
 -- === INSERT WEBSITE ===
-INSERT INTO websites (name, domain) VALUES ('Souf', 'souf.nl');
+INSERT INTO websites (name, domain) VALUES ('Toughbook 40 Dutch', 'toughbook-40-dutch.nl');
 SET @website_id = LAST_INSERT_ID();
 
 -- === INSERT BLOCK TYPES ===

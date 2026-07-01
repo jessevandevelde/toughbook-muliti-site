@@ -1,6 +1,6 @@
 <?php
 $websiteId = 1;
-$websiteDomain = 'jibrail.nl';
+$websiteDomain = 'toughbook-56-dutch.nl';
 $apiBase = 'http://127.0.0.1:3000';
 $apiBase = rtrim($apiBase, '/');
 ?>
