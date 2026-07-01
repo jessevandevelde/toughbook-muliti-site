@@ -3,6 +3,7 @@
   const apiBase = String(config.apiBase || '').replace(/\/$/, '');
   const websiteId = config.websiteId;
   const websiteDomain = config.websiteDomain;
+  const selectedLanguage = websiteDomain === 'toughbook-56-english.nl' ? 'en' : 'nl';
   const byDomainEndpoint = apiBase && websiteDomain
     ? `${apiBase}/api/content/by-domain/${encodeURIComponent(websiteDomain)}`
     : '';
@@ -94,6 +95,8 @@
     }
     return String(value);
   };
+
+  const pickLocalized = (fields, key, fallback = '') => pick(fields, `${key}_${selectedLanguage}`, pick(fields, key, fallback));
 
   const iconMap = {
     shield: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M12 2l7 4v5c0 5-3.5 9.5-7 10-3.5-.5-7-5-7-10V6l7-4z"/></svg>',
@@ -538,23 +541,25 @@
   };
 
   const renderFooter = (fields, items) => {
-    const brandText = pick(fields, 'logo_text');
-    const description = pick(fields, 'description');
+    const brandText = pickLocalized(fields, 'logo_text');
+    const description = pickLocalized(fields, 'description');
     // CMS uses copyright_text; fall back to copyright for older setups
-    const copyright = pick(fields, 'copyright_text', pick(fields, 'copyright'));
+    const copyright = pickLocalized(fields, 'copyright_text', pickLocalized(fields, 'copyright'));
+    const disclaimer = pickLocalized(fields, 'disclaimer');
     const sharedColumns = items.filter(item => item.itemType === 'footer_column');
     const sharedLinks = items.filter(item => item.itemType === 'footer_link');
 
     if (sharedColumns.length) {
       const columnMarkup = sharedColumns.map((column) => {
+        const title = pickLocalized(column, 'title');
         const links = sharedLinks
           .filter(link => Math.floor((link.sortOrder || 0) / 10) === (column.sortOrder || 0))
-          .map(link => `<li><a href="${safeUrl(link.url || '#')}">${escapeHtml(link.text || link.title || '')}</a></li>`)
+          .map(link => `<li><a href="${safeUrl(pickLocalized(link, 'url', '#'))}">${escapeHtml(pickLocalized(link, 'text', pickLocalized(link, 'title')))}</a></li>`)
           .join('');
 
         return `
           <div>
-            <div class="footer-col-title">${escapeHtml(column.title || '')}</div>
+            <div class="footer-col-title">${escapeHtml(title)}</div>
             <ul class="footer-links">${links}</ul>
           </div>
         `;
@@ -570,7 +575,7 @@
         </div>
         <div class="footer-bottom">
           ${copyright ? `<span>${escapeHtml(copyright)}</span>` : ''}
-          ${pick(fields, 'disclaimer') ? `<span>${escapeHtml(pick(fields, 'disclaimer'))}</span>` : ''}
+          ${disclaimer ? `<span>${escapeHtml(disclaimer)}</span>` : ''}
         </div>
       `;
 

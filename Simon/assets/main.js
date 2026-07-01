@@ -439,18 +439,19 @@ function buildCTA(fields, items) {
 
 // --- FOOTER ---
 function buildFooter(fields, items) {
+  const pickLocalized = (source, key, fallback = '') => source[`${key}_nl`] || source[key] || fallback;
   const columns = items.filter(i => i.itemType === 'footer_column');
   const footerLinks = items.filter(i => i.itemType === 'footer_link');
   const columnMarkup = columns.length
     ? columns.map(column => {
       const columnLinks = footerLinks
         .filter(link => Math.floor((link.sortOrder || 0) / 10) === (column.sortOrder || 0))
-        .map(link => `<li><a href="${link.url || '#'}">${link.text || link.title || ''}</a></li>`)
+        .map(link => `<li><a href="${pickLocalized(link, 'url', '#')}">${pickLocalized(link, 'text', pickLocalized(link, 'title'))}</a></li>`)
         .join('');
 
       return `
         <div>
-          <div class="footer-col-title">${column.title || ''}</div>
+          <div class="footer-col-title">${pickLocalized(column, 'title')}</div>
           <ul class="footer-links">${columnLinks}</ul>
         </div>
       `;
@@ -475,9 +476,9 @@ function buildFooter(fields, items) {
         <div>
           <div class="footer-logo">
             <div class="footer-logo-icon">P</div>
-            <span class="footer-logo-text">${fields.logo_text}</span>
+            <span class="footer-logo-text">${pickLocalized(fields, 'logo_text')}</span>
           </div>
-          <p class="footer-desc">${fields.description}</p>
+          <p class="footer-desc">${pickLocalized(fields, 'description')}</p>
           <div class="footer-socials">
             <a href="#" class="social-btn">
               <svg fill="currentColor" viewBox="0 0 24 24"><path d="M18 2h-3a5 5 0 00-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 011-1h3z"/></svg>
@@ -496,9 +497,9 @@ function buildFooter(fields, items) {
         ${columnMarkup}
       </div>
       <div class="footer-bottom">
-        <span class="footer-copy">${fields.copyright_text || fields.copyright}</span>
+        <span class="footer-copy">${pickLocalized(fields, 'copyright_text', pickLocalized(fields, 'copyright'))}</span>
         <div class="footer-bottom-links">
-          ${footerLinks.filter(link => Math.floor((link.sortOrder || 0) / 10) === 4).map(link => `<a href="${link.url || '#'}">${link.text || link.title || ''}</a>`).join('')}
+          ${footerLinks.filter(link => Math.floor((link.sortOrder || 0) / 10) === 4).map(link => `<a href="${pickLocalized(link, 'url', '#')}">${pickLocalized(link, 'text', pickLocalized(link, 'title'))}</a>`).join('')}
         </div>
       </div>
     </div>

@@ -85,6 +85,14 @@ $navbarBlock = getBlockByType($blocks, 'navbar');
 $specSheetButtonBlock = getBlockByType($blocks, 'spec_sheet_button');
 $sharedFooterBlock = getSharedFooterFromBackend();
 
+function getLocalizedBlockFieldValue($block, $fieldName, $language, $default = '') {
+    return getBlockFieldValue($block, $fieldName . '_' . $language, getBlockFieldValue($block, $fieldName, $default));
+}
+
+function getLocalizedItemFieldValue($item, $fieldName, $language, $default = '') {
+    return getItemFieldValue($item, $fieldName . '_' . $language, getItemFieldValue($item, $fieldName, $default));
+}
+
 // Hero section data
 $page_title = getBlockFieldValue($heroBlock, 'page_title', 'Panasonic Toughbook 40 MK2');
 $hero_badge = getBlockFieldValue($heroBlock, 'badge', getBlockFieldValue($heroBlock, 'label', 'MISSIEKRITISCH // MK-2 INZET'));
@@ -343,7 +351,7 @@ $heroStats = getBlockItems($heroBlock);
  
 <!-- FOOTER -->
 <footer>
-  <div class="footer-brand"><?php echo htmlspecialchars(getBlockFieldValue($sharedFooterBlock, 'logo_text', 'TOUGHBOOK')); ?> <span>// NETWERK</span></div>
+  <div class="footer-brand"><?php echo htmlspecialchars(getLocalizedBlockFieldValue($sharedFooterBlock, 'logo_text', $language, 'TOUGHBOOK')); ?> <span>// <?php echo $language === 'en' ? 'NETWORK' : 'NETWERK'; ?></span></div>
   <div class="footer-columns">
     <?php
     $footerItems = getBlockItems($sharedFooterBlock);
@@ -352,15 +360,15 @@ $heroStats = getBlockItems($heroBlock);
       $columnSort = (int) ($column['sortOrder'] ?? 0);
     ?>
     <div class="footer-col">
-      <div class="footer-col-title"><?php echo htmlspecialchars(getItemFieldValue($column, 'title')); ?></div>
+      <div class="footer-col-title"><?php echo htmlspecialchars(getLocalizedItemFieldValue($column, 'title', $language)); ?></div>
       <?php foreach ($footerItems as $link): ?>
         <?php if (($link['itemType'] ?? '') !== 'footer_link' || (int) floor(((int) ($link['sortOrder'] ?? 0)) / 10) !== $columnSort) continue; ?>
-        <a href="<?php echo htmlspecialchars(getItemFieldValue($link, 'url', '#')); ?>"><?php echo htmlspecialchars(getItemFieldValue($link, 'text')); ?></a>
+        <a href="<?php echo htmlspecialchars(getLocalizedItemFieldValue($link, 'url', $language, '#')); ?>"><?php echo htmlspecialchars(getLocalizedItemFieldValue($link, 'text', $language)); ?></a>
       <?php endforeach; ?>
     </div>
     <?php endforeach; ?>
   </div>
-  <div class="footer-copy"><?php echo htmlspecialchars(getBlockFieldValue($sharedFooterBlock, 'copyright', date('Y') . ' Panasonic. Alle rechten voorbehouden.')); ?></div>
+  <div class="footer-copy"><?php echo htmlspecialchars(getLocalizedBlockFieldValue($sharedFooterBlock, 'copyright', $language, date('Y') . ' Panasonic. Alle rechten voorbehouden.')); ?></div>
 </footer>
 
 <script>

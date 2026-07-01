@@ -455,14 +455,15 @@ const renderFooter = (block) => {
   const footer = document.getElementById('footer');
   if (!footer) return;
 
+  const localizedBlockValue = (name, fallback = '') => getFieldValue(fields, [`${name}_${selectedLanguage}`, name], fallback);
+  const localizedItemValue = (item, name, fallback = '') => getFieldValue(itemFields(item), [`${name}_${selectedLanguage}`, name], fallback);
   const columns = itemsByType(block, 'footer_column');
   const links = itemsByType(block, 'footer_link');
   const columnHtml = columns.map((column) => {
-    const title = getFieldValue(itemFields(column), ['title']);
+    const title = localizedItemValue(column, 'title');
     const columnLinks = links.filter(link => Math.floor((link.sortOrder ?? 0) / 10) === (column.sortOrder ?? 0));
     return `<div class="footer-col"><div class="footer-col-title">${escapeHtml(title)}</div><ul>${columnLinks.map((link) => {
-      const fields = itemFields(link);
-      return `<li><a href="${safeUrl(getFieldValue(fields, ['url'], '#'))}">${escapeHtml(getFieldValue(fields, ['text', 'title']))}</a></li>`;
+      return `<li><a href="${safeUrl(localizedItemValue(link, 'url', '#'))}">${escapeHtml(localizedItemValue(link, 'text', localizedItemValue(link, 'title')))}</a></li>`;
     }).join('')}</ul></div>`;
   }).join('');
 
@@ -470,14 +471,14 @@ const renderFooter = (block) => {
     <div class="container">
       <div class="footer-grid">
         <div>
-          <div class="nav-logo-badge" style="display:inline-block"><span>${escapeHtml(getFieldValue(fields, ['logo_text'], 'PANASONIC'))}</span></div>
-          <p class="footer-brand-text">${escapeHtml(getFieldValue(fields, ['description']))}</p>
+          <div class="nav-logo-badge" style="display:inline-block"><span>${escapeHtml(localizedBlockValue('logo_text', 'PANASONIC'))}</span></div>
+          <p class="footer-brand-text">${escapeHtml(localizedBlockValue('description'))}</p>
         </div>
         ${columnHtml}
       </div>
       <div class="footer-bottom">
-        <span class="footer-copy">${escapeHtml(getFieldValue(fields, ['copyright_text', 'copyright']))}</span>
-        <span class="footer-note">${escapeHtml(getFieldValue(fields, ['disclaimer']))}</span>
+        <span class="footer-copy">${escapeHtml(localizedBlockValue('copyright_text', localizedBlockValue('copyright')))}</span>
+        <span class="footer-note">${escapeHtml(localizedBlockValue('disclaimer'))}</span>
       </div>
     </div>
   `;

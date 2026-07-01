@@ -577,17 +577,18 @@ function buildFooter() {
 }
 
 function buildSharedFooter(fields, items) {
+  const pickLocalized = (source, key, fallback = '') => source[`${key}_en`] || source[key] || fallback;
   const columns = items.filter(item => item.itemType === 'footer_column');
   const footerLinks = items.filter(item => item.itemType === 'footer_link');
   const columnMarkup = columns.map(column => {
     const columnLinks = footerLinks
       .filter(link => Math.floor((link.sortOrder || 0) / 10) === (column.sortOrder || 0))
-      .map(link => `<li><a href="${escUrl(link.url || '#')}">${escHtml(link.text || link.title || '')}</a></li>`)
+      .map(link => `<li><a href="${escUrl(pickLocalized(link, 'url', '#'))}">${escHtml(pickLocalized(link, 'text', pickLocalized(link, 'title')))}</a></li>`)
       .join('');
 
     return `
       <div>
-        <div class="footer-col-title">${escHtml(column.title || '')}</div>
+        <div class="footer-col-title">${escHtml(pickLocalized(column, 'title'))}</div>
         <ul class="footer-links">${columnLinks}</ul>
       </div>
     `;
@@ -595,7 +596,7 @@ function buildSharedFooter(fields, items) {
 
   const legalLinks = footerLinks
     .filter(link => Math.floor((link.sortOrder || 0) / 10) === 4)
-    .map(link => `<a href="${escUrl(link.url || '#')}">${escHtml(link.text || link.title || '')}</a>`)
+    .map(link => `<a href="${escUrl(pickLocalized(link, 'url', '#'))}">${escHtml(pickLocalized(link, 'text', pickLocalized(link, 'title')))}</a>`)
     .join('');
 
   const footer = document.getElementById('footer');
@@ -607,9 +608,9 @@ function buildSharedFooter(fields, items) {
         <div>
           <div class="footer-logo">
             <div class="footer-logo-icon">P</div>
-            <span class="footer-logo-text">${escHtml(fields.logo_text || 'Panasonic Toughbook')}</span>
+            <span class="footer-logo-text">${escHtml(pickLocalized(fields, 'logo_text', 'Panasonic Toughbook'))}</span>
           </div>
-          <p class="footer-desc">${escHtml(fields.description || '')}</p>
+          <p class="footer-desc">${escHtml(pickLocalized(fields, 'description'))}</p>
           <div class="footer-socials">
             <a href="https://www.linkedin.com/company/panasonic-connect-europe/" target="_blank" rel="noopener noreferrer" class="social-btn" aria-label="LinkedIn">
               <svg fill="currentColor" viewBox="0 0 24 24" aria-hidden="true"><path d="M16 8a6 6 0 016 6v7h-4v-7a2 2 0 00-2-2 2 2 0 00-2 2v7h-4v-7a6 6 0 016-6zM2 9h4v12H2z"/><circle cx="4" cy="4" r="2"/></svg>
@@ -622,7 +623,7 @@ function buildSharedFooter(fields, items) {
         ${columnMarkup}
       </div>
       <div class="footer-bottom">
-        <span class="footer-copy">${escHtml(fields.copyright_text || fields.copyright || '')}</span>
+        <span class="footer-copy">${escHtml(pickLocalized(fields, 'copyright_text', pickLocalized(fields, 'copyright')))}</span>
         <div class="footer-bottom-links">${legalLinks}</div>
       </div>
     </div>
