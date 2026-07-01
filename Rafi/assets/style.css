@@ -254,3 +254,7 @@
       .footer-grid { grid-template-columns: 1fr; }
       .spec-row { grid-template-columns: 1fr; gap: 4px; }
     }
+
+/* ruimte voor taalwisselaar */
+.nav-inner { padding-right: 72px !important; }
+

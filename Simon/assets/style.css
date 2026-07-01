@@ -553,3 +553,7 @@ footer { position: relative; overflow: hidden; background: linear-gradient(180de
   * { transition-duration: 0.01ms !important; animation-duration: 0.01ms !important; }
 }
 
+
+/* ruimte voor taalwisselaar */
+nav { padding-right: 72px !important; }
+

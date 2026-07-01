@@ -393,3 +393,7 @@
     .hero-stats { flex-wrap: wrap; gap: 1rem; }
     .stat { border-right: none; }
   }
+
+/* ruimte voor taalwisselaar */
+nav { padding-right: 72px !important; }
+
