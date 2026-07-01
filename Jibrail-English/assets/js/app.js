@@ -363,9 +363,34 @@
       {
         id: 'contact-email',
         type: 'email',
-        span: 2,
+        span: 1,
         label: pick(fields, 'form_email_label'),
         placeholder: pick(fields, 'form_email_placeholder'),
+      },
+      {
+        id: 'contact-phone',
+        type: 'tel',
+        span: 1,
+        label: pick(fields, 'form_phone_label', 'Phone'),
+        placeholder: pick(fields, 'form_phone_placeholder', '+31 6 1234 5678'),
+      },
+      {
+        id: 'contact-model',
+        type: 'text',
+        span: 1,
+        label: pick(fields, 'form_model_label', 'Model'),
+        placeholder: pick(fields, 'form_model_placeholder', 'Toughbook 56'),
+        value: pick(fields, 'model_name', 'Toughbook 56'),
+        required: true,
+      },
+      {
+        id: 'contact-quantity',
+        type: 'number',
+        span: 1,
+        label: pick(fields, 'form_quantity_label', 'Quantity'),
+        placeholder: pick(fields, 'form_quantity_placeholder', 'For example 10'),
+        min: '1',
+        required: true,
       },
       {
         id: 'contact-message',
@@ -390,7 +415,7 @@
       return `
           <div class="input-row${spanClass}">
             ${field.label ? `<label class="input-label" for="${field.id}">${escapeHtml(field.label)}</label>` : ''}
-            <input id="${field.id}" class="input-control" type="${escapeHtml(field.type)}" placeholder="${escapeHtml(field.placeholder || '')}" />
+            <input id="${field.id}" class="input-control" type="${escapeHtml(field.type)}" placeholder="${escapeHtml(field.placeholder || '')}"${field.value ? ` value="${escapeHtml(field.value)}"` : ''}${field.min ? ` min="${escapeHtml(field.min)}"` : ''}${field.required ? ' required' : ''} />
           </div>
         `;
     }).join('');
@@ -762,10 +787,13 @@
       const name    = form.querySelector('#contact-name')?.value?.trim() || '';
       const company = form.querySelector('#contact-company')?.value?.trim() || '';
       const email   = form.querySelector('#contact-email')?.value?.trim() || '';
+      const phone   = form.querySelector('#contact-phone')?.value?.trim() || '';
+      const model   = form.querySelector('#contact-model')?.value?.trim() || '';
+      const quantity = form.querySelector('#contact-quantity')?.value?.trim() || '';
       const message = form.querySelector('#contact-message')?.value?.trim() || '';
 
-      if (!name || !email || !message) {
-        statusEl.textContent = 'Vul naam, e-mail en bericht in.';
+      if (!name || !email || !model || !quantity || !message) {
+        statusEl.textContent = 'Please fill in name, email, model, quantity and message.';
         statusEl.className = 'form-status form-status--error';
         return;
       }
@@ -779,7 +807,7 @@
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
           credentials: 'include',
-          body: JSON.stringify({ name, company, email, message }),
+          body: JSON.stringify({ name, company, email, phone, model, quantity, message }),
         });
         const data = await res.json();
         if (!res.ok) throw new Error(data.error || 'Serverfout');

@@ -262,6 +262,19 @@ $heroStats = getBlockItems($heroBlock);
     <h2><?php echo htmlspecialchars(getBlockFieldValue($ctaBlock, 'title', 'KLAAR VOOR DEPLOYMENT?')); ?></h2>
     <p><?php echo htmlspecialchars(getBlockFieldValue($ctaBlock, 'subtitle', 'Vraag een offerte aan of neem contact op.')); ?></p>
   </div>
+  <form id="quote-form" class="quote-form" autocomplete="off">
+    <div class="quote-form-grid">
+      <label><span>Naam *</span><input type="text" name="name" placeholder="Je volledige naam" required></label>
+      <label><span>Bedrijf</span><input type="text" name="company" placeholder="Bedrijfsnaam"></label>
+      <label><span>E-mail *</span><input type="email" name="email" placeholder="naam@bedrijf.nl" required></label>
+      <label><span>Telefoon</span><input type="tel" name="phone" placeholder="+31 6 1234 5678"></label>
+      <label><span>Model *</span><input type="text" name="model" value="Toughbook 40" required></label>
+      <label><span>Aantal *</span><input type="number" name="quantity" min="1" placeholder="Bijv. 10" required></label>
+      <label class="quote-form-message"><span>Bericht *</span><textarea name="message" rows="5" placeholder="Waar heeft u een offerte voor nodig?" required></textarea></label>
+    </div>
+    <button type="submit" class="btn-dark"><?php echo htmlspecialchars(getBlockFieldValue($ctaBlock, 'button_text', 'Vraag Offerte Aan')); ?></button>
+    <p id="quote-form-status" class="quote-form-status" aria-live="polite"></p>
+  </form>
   <a href="mailto:<?php echo htmlspecialchars(getBlockFieldValue($ctaBlock, 'email_value', 'info@toughbook.nl')); ?>" class="btn-dark"><?php echo htmlspecialchars(getBlockFieldValue($ctaBlock, 'button_text', 'Vraag Offerte Aan →')); ?></a>
 </section>
  
@@ -286,6 +299,61 @@ $heroStats = getBlockItems($heroBlock);
   </div>
   <div class="footer-copy"><?php echo htmlspecialchars(getBlockFieldValue($sharedFooterBlock, 'copyright', date('Y') . ' Panasonic. All rights reserved.')); ?></div>
 </footer>
+
+<script>
+const quoteForm = document.getElementById('quote-form');
+const quoteStatus = document.getElementById('quote-form-status');
+
+if (quoteForm) {
+  quoteForm.addEventListener('submit', async (event) => {
+    event.preventDefault();
+
+    const submitButton = quoteForm.querySelector('button[type="submit"]');
+    const formData = new FormData(quoteForm);
+    const payload = {
+      name: String(formData.get('name') || '').trim(),
+      company: String(formData.get('company') || '').trim(),
+      email: String(formData.get('email') || '').trim(),
+      phone: String(formData.get('phone') || '').trim(),
+      model: String(formData.get('model') || '').trim(),
+      quantity: String(formData.get('quantity') || '').trim(),
+      message: String(formData.get('message') || '').trim(),
+    };
+
+    if (!payload.name || !payload.email || !payload.model || !payload.quantity || !payload.message) {
+      quoteStatus.textContent = 'Vul je naam, e-mail, model, aantal en bericht in.';
+      quoteStatus.className = 'quote-form-status quote-form-status--error';
+      return;
+    }
+
+    submitButton.disabled = true;
+    quoteStatus.textContent = 'Verzenden...';
+    quoteStatus.className = 'quote-form-status quote-form-status--info';
+
+    try {
+      const response = await fetch('http://127.0.0.1:3000/api/contact', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(payload),
+      });
+      const data = await response.json();
+
+      if (!response.ok) {
+        throw new Error(data.error || 'Server error');
+      }
+
+      quoteStatus.textContent = data.message || 'Je aanvraag is verzonden.';
+      quoteStatus.className = 'quote-form-status quote-form-status--success';
+      quoteForm.reset();
+    } catch (error) {
+      quoteStatus.textContent = 'Verzenden mislukt. Probeer het later opnieuw.';
+      quoteStatus.className = 'quote-form-status quote-form-status--error';
+    } finally {
+      submitButton.disabled = false;
+    }
+  });
+}
+</script>
  
 </body>
 </html>

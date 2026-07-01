@@ -200,17 +200,17 @@
         <form id="quote-form" onsubmit="submitForm(event)">
           <div class="form-row">
             <div class="form-group">
-              <label class="form-label">Voornaam <span class="form-required">*</span></label>
+              <label class="form-label">Name <span class="form-required">*</span></label>
               <div class="input-wrap">
                 <svg class="input-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
-                <input class="form-input" type="text" name="firstName" placeholder="Jan" required />
+                <input class="form-input" type="text" name="name" placeholder="John Smith" required />
               </div>
             </div>
             <div class="form-group">
-              <label class="form-label">Achternaam <span class="form-required">*</span></label>
+              <label class="form-label">Company</label>
               <div class="input-wrap">
-                <svg class="input-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
-                <input class="form-input" type="text" name="lastName" placeholder="Jansen" required />
+                <svg class="input-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg>
+                <input class="form-input" type="text" name="company" placeholder="Company name" />
               </div>
             </div>
           </div>
@@ -232,32 +232,19 @@
           </div>
           <div class="form-row">
             <div class="form-group">
-              <label class="form-label">Bedrijf <span class="form-required">*</span></label>
-              <div class="input-wrap">
-                <svg class="input-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg>
-                <input class="form-input" type="text" name="company" placeholder="Bedrijfsnaam" required />
-              </div>
+              <label class="form-label">Model <span class="form-required">*</span></label>
+              <input class="form-input no-icon" type="text" name="model" value="Toughbook G2" required />
             </div>
             <div class="form-group">
-              <label class="form-label">Functie</label>
-              <input class="form-input no-icon" type="text" name="jobTitle" placeholder="IT-manager, inkoopverantwoordelijke…" />
-            </div>
-          </div>
-          <div class="form-row">
-            <div class="form-group">
-              <label class="form-label">Product</label>
-              <input class="form-input no-icon" type="text" name="product" value="Panasonic Toughbook G2" disabled />
-            </div>
-            <div class="form-group">
-              <label class="form-label">Geschat aantal <span class="form-required">*</span></label>
-              <input class="form-input no-icon" type="number" name="quantity" min="1" placeholder="bijv. 25" required />
+              <label class="form-label">Quantity <span class="form-required">*</span></label>
+              <input class="form-input no-icon" type="number" name="quantity" min="1" placeholder="For example 10" required />
             </div>
           </div>
           <div class="form-group">
-            <label class="form-label">Aanvullende wensen</label>
+            <label class="form-label">Message <span class="form-required">*</span></label>
             <div class="input-wrap">
               <svg class="textarea-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>
-              <textarea class="form-input" name="notes" placeholder="Implementatietijdlijn, speciale configuraties, integratievereisten…"></textarea>
+              <textarea class="form-input" name="message" required placeholder="What do you need a quote for?"></textarea>
             </div>
           </div>
           <button type="submit" class="btn-submit">
@@ -387,19 +374,30 @@ async function submitForm(e) {
   btn.disabled = true;
   label.textContent = 'Verzenden…';
 
-  // Collect form data (include disabled product field manually)
   const data = new FormData(form);
-  data.set('product', 'Panasonic Toughbook G2');
+  const payload = {
+    name: String(data.get('name') || '').trim(),
+    company: String(data.get('company') || '').trim(),
+    email: String(data.get('email') || '').trim(),
+    phone: String(data.get('phone') || '').trim(),
+    model: String(data.get('model') || '').trim(),
+    quantity: String(data.get('quantity') || '').trim(),
+    message: String(data.get('message') || '').trim(),
+  };
 
   try {
-    const res  = await fetch('./send_quote.php', { method: 'POST', body: data });
+    const res  = await fetch('http://127.0.0.1:3000/api/contact', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(payload),
+    });
     const json = await res.json();
 
-    if (json.success) {
+    if (res.ok) {
       form.style.display      = 'none';
       successEl.style.display = 'flex';
     } else {
-      alert(json.message || 'Er is een fout opgetreden. Probeer het opnieuw.');
+      alert(json.error || json.message || 'Er is een fout opgetreden. Probeer het opnieuw.');
       btn.disabled     = false;
       label.textContent = 'Offerteaanvraag versturen';
     }

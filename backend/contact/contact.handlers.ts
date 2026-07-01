@@ -22,6 +22,8 @@ const getContactRequest = (body: unknown): ContactRequest => {
     company: getBodyField(body, 'company'),
     email: getBodyField(body, 'email'),
     phone: getBodyField(body, 'phone'),
+    model: getBodyField(body, 'model'),
+    quantity: getBodyField(body, 'quantity'),
     message: getBodyField(body, 'message'),
   };
 };
@@ -29,9 +31,9 @@ const getContactRequest = (body: unknown): ContactRequest => {
 export const sendContactRequestHandler = async (req: Request, res: Response): Promise<void> => {
   const contactRequest = getContactRequest(req.body);
 
-  if (!contactRequest.name || !contactRequest.email || !contactRequest.message) {
+  if (!contactRequest.name || !contactRequest.email || !contactRequest.model || !contactRequest.quantity || !contactRequest.message) {
     res.status(badRequestStatus).json({
-      error: 'Naam, e-mail en bericht zijn verplicht.',
+      error: 'Naam, e-mail, model, aantal en bericht zijn verplicht.',
     });
 
     return;

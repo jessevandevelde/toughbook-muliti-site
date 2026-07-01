@@ -3,5 +3,7 @@ export interface ContactRequest {
   company: string
   email: string
   phone: string
+  model: string
+  quantity: string
   message: string
 }

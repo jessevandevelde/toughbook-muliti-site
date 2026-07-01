@@ -814,11 +814,13 @@ function initQuoteForm() {
       company: String(formData.get('company') || '').trim(),
       email:   String(formData.get('email')   || '').trim(),
       phone:   String(formData.get('phone')   || '').trim(),
+      model:   String(formData.get('model')   || '').trim(),
+      quantity: String(formData.get('quantity') || '').trim(),
       message: String(formData.get('message') || '').trim(),
     };
 
-    if (!payload.name || !payload.email || !payload.message) {
-      status.textContent = 'Please fill in your name, email and message.';
+    if (!payload.name || !payload.email || !payload.model || !payload.quantity || !payload.message) {
+      status.textContent = 'Please fill in your name, email, model, quantity and message.';
       status.className = 'quote-form-status quote-form-error';
       return;
     }

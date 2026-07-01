@@ -13,6 +13,7 @@
 const WEBSITE_ID = 4;
 const API_URL = `http://127.0.0.1:3000/api/content/websites/${WEBSITE_ID}`;
 const SHARED_FOOTER_URL = 'http://127.0.0.1:3000/api/content/by-domain/shared-footer';
+const CONTACT_API_URL = 'http://127.0.0.1:3000/api/contact/';
 
 // Afbeeldingen die we lokaal hebben opgeslagen
 const IMAGES = {
@@ -98,6 +99,9 @@ fetch(API_URL, {
 
     // Gallery initialiseren
     initGallery();
+
+    // Offerteformulier koppelen aan mailservice
+    initQuoteForm();
   })
   .catch(error => {
     console.error('Fout bij ophalen data:', error);
@@ -585,4 +589,60 @@ function startScrollAnimations() {
 
   // Observeer alle elementen met class "fade-up"
   document.querySelectorAll('.fade-up').forEach(el => observer.observe(el));
+}
+
+function initQuoteForm() {
+  const form = document.getElementById('quoteForm');
+  if (!form) return;
+
+  const status = document.getElementById('quoteFormStatus');
+  const submitButton = form.querySelector('button[type="submit"]');
+
+  form.addEventListener('submit', async (event) => {
+    event.preventDefault();
+
+    const formData = new FormData(form);
+    const payload = {
+      name: String(formData.get('name') || '').trim(),
+      company: String(formData.get('company') || '').trim(),
+      email: String(formData.get('email') || '').trim(),
+      phone: String(formData.get('phone') || '').trim(),
+      model: String(formData.get('model') || '').trim(),
+      quantity: String(formData.get('quantity') || '').trim(),
+      message: String(formData.get('message') || '').trim(),
+    };
+
+    if (!payload.name || !payload.email || !payload.model || !payload.quantity || !payload.message) {
+      status.textContent = 'Vul je naam, e-mailadres, model, aantal en bericht in.';
+      status.className = 'quote-form-status quote-form-error';
+      return;
+    }
+
+    submitButton.disabled = true;
+    status.textContent = 'Verzenden...';
+    status.className = 'quote-form-status quote-form-info';
+
+    try {
+      const response = await fetch(CONTACT_API_URL, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(payload),
+      });
+
+      const data = await response.json();
+      if (!response.ok) {
+        throw new Error(data.error || 'Server error');
+      }
+
+      status.textContent = data.message || 'Je aanvraag is verzonden.';
+      status.className = 'quote-form-status quote-form-success';
+      form.reset();
+    } catch (error) {
+      console.error(error);
+      status.textContent = 'Verzenden mislukt. Probeer het later opnieuw.';
+      status.className = 'quote-form-status quote-form-error';
+    } finally {
+      submitButton.disabled = false;
+    }
+  });
 }

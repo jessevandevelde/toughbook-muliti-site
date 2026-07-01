@@ -37,6 +37,8 @@ export const sendContactRequest = async (contactRequest: ContactRequest): Promis
         <tr><td><strong>Bedrijf</strong></td><td>${getDisplayValue(contactRequest.company)}</td></tr>
         <tr><td><strong>E-mail</strong></td><td><a href="mailto:${email}">${email}</a></td></tr>
         <tr><td><strong>Telefoon</strong></td><td>${getDisplayValue(contactRequest.phone)}</td></tr>
+        <tr><td><strong>Model</strong></td><td>${getDisplayValue(contactRequest.model)}</td></tr>
+        <tr><td><strong>Aantal</strong></td><td>${getDisplayValue(contactRequest.quantity)}</td></tr>
         <tr><td><strong>Bericht</strong></td><td>${escapeHtml(contactRequest.message)}</td></tr>
         <tr><td><strong>Ontvangen op</strong></td><td>${new Date().toLocaleString('nl-NL')}</td></tr>
       </table>
