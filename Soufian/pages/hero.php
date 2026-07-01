@@ -1,4 +1,4 @@
-<?php
+﻿<?php
 header('Cache-Control: no-store, no-cache, must-revalidate, proxy-revalidate');
 header('Pragma: no-cache');
 header('Expires: 0');
@@ -270,5 +270,7 @@ $heroStats = getBlockItems($heroBlock);
   <div class="footer-copy"><?php echo htmlspecialchars(getBlockFieldValue($footerBlock, 'copyright', '© ' . date('Y') . ' PANASONIC CONNECT • ALLE RECHTEN VOORBEHOUDEN')); ?></div>
 </footer>
  
+<a href="../../Soufian-English/" class="lang-switch" title="Switch to English"><img src="https://flagcdn.com/w40/gb.png" width="28" height="20" alt="English" /></a>
 </body>
 </html>
+

@@ -1,4 +1,4 @@
-<?php
+﻿<?php
 header('Cache-Control: no-store, no-cache, must-revalidate, proxy-revalidate');
 header('Pragma: no-cache');
 header('Expires: 0');
@@ -270,5 +270,7 @@ $heroStats = getBlockItems($heroBlock);
   <div class="footer-copy"><?php echo htmlspecialchars(getBlockFieldValue($footerBlock, 'copyright', date('Y') . ' Panasonic. All rights reserved.')); ?></div>
 </footer>
  
+<a href="../../Soufian/" class="lang-switch" title="Naar de Nederlandse versie"><img src="https://flagcdn.com/w40/nl.png" width="28" height="20" alt="Nederlands" /></a>
 </body>
 </html>
+
