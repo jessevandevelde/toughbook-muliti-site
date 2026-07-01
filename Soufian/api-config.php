@@ -80,6 +80,19 @@ function getContentFromAPI($endpoint, $cacheTTL = 0) {
 }
 
 /**
+ * Request the CMS blocks for a website domain from the backend.
+ *
+ * @param string $domain Website domain
+ * @param int $cacheTTL Cache time to live in seconds (0 = no cache)
+ * @return array Website blocks
+ */
+function getBlocksFromBackend($domain, $cacheTTL = 0) {
+    $content = getContentFromAPI('content/by-domain/' . $domain, $cacheTTL);
+
+    return $content['website']['blocks'] ?? [];
+}
+
+/**
  * Get block content by type and website
  * 
  * @param array $content Website content tree
@@ -91,7 +104,11 @@ function getBlockByType($content, $blockType) {
         $content = $content['website'];
     }
 
-    if (!$content || !isset($content['blocks'])) {
+    if (isset($content[0]['blockTypeName'])) {
+        $blocks = $content;
+    } elseif (isset($content['blocks'])) {
+        $blocks = $content['blocks'];
+    } else {
         return null;
     }
 
@@ -106,10 +123,13 @@ function getBlockByType($content, $blockType) {
         'footer' => 'footer_block',
         'navbar' => 'navbar_block',
     ];
-    $targetBlockType = $blockTypeAliases[$blockType] ?? $blockType;
+    $targetBlockTypes = array_unique([
+        $blockType,
+        $blockTypeAliases[$blockType] ?? $blockType,
+    ]);
     
-    foreach ($content['blocks'] as $block) {
-        if ($block['blockTypeName'] === $targetBlockType) {
+    foreach ($blocks as $block) {
+        if (in_array($block['blockTypeName'], $targetBlockTypes, true)) {
             return $block;
         }
     }
@@ -172,29 +192,23 @@ function getItemFieldValue($item, $fieldName, $default = '') {
 }
 
 /**
- * Convert CMS image paths from the original site into paths available in this project.
+ * Return CMS image paths for the frontend.
  *
  * @param string $url CMS image path
  * @param string $fallback Local fallback image path
  * @return string
  */
 function getAssetUrl($url, $fallback = '') {
-    $filename = basename((string) $url);
-    $legacyImageMap = [
-        'toughbook-40-hero.jpg' => 'toughbook-hero.jpg',
-        'toughbook-gallery-1.jpg' => 'toughbook-1.jpg',
-        'toughbook-gallery-2.jpg' => 'toughbook-2.jpg',
-        'toughbook-gallery-3.jpg' => 'toughbook-3.jpg',
-        'toughbook-gallery-4.jpg' => 'toughbook-4.jpg',
-    ];
+    $url = trim((string) $url);
 
-    $resolvedFilename = $legacyImageMap[$filename] ?? $filename;
-    $projectImagePath = __DIR__ . '/images/' . $resolvedFilename;
-
-    if ($resolvedFilename && file_exists($projectImagePath)) {
-        return '/Soufian/images/' . $resolvedFilename;
+    if ($url === '') {
+        return $fallback;
     }
 
-    return $fallback;
+    if (preg_match('/^https?:\/\//i', $url)) {
+        return $url;
+    }
+
+    return str_replace('\\', '/', $url);
 }
 ?>

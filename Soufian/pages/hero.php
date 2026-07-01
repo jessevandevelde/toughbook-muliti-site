@@ -2,30 +2,30 @@
 // Load CMS API helpers
 require_once __DIR__ . '/../api-config.php';
 
-// Fetch content from backend CMS
-$websiteContent = getContentFromAPI('content/by-domain/souf.nl');
+// Fetch CMS blocks from backend
+$blocks = getBlocksFromBackend('souf.nl');
 
 // Extract all blocks
-$heroBlock = getBlockByType($websiteContent, 'hero');
-$featuresBlock = getBlockByType($websiteContent, 'features');
-$sectorsBlock = getBlockByType($websiteContent, 'sectors');
-$specsBlock = getBlockByType($websiteContent, 'specs');
-$galleryBlock = getBlockByType($websiteContent, 'gallery');
-$downloadsBlock = getBlockByType($websiteContent, 'downloads');
-$ctaBlock = getBlockByType($websiteContent, 'cta');
-$footerBlock = getBlockByType($websiteContent, 'footer');
-$navbarBlock = getBlockByType($websiteContent, 'navbar');
+$heroBlock = getBlockByType($blocks, 'hero');
+$featuresBlock = getBlockByType($blocks, 'features');
+$sectorsBlock = getBlockByType($blocks, 'sectors');
+$specsBlock = getBlockByType($blocks, 'specs');
+$galleryBlock = getBlockByType($blocks, 'gallery');
+$downloadsBlock = getBlockByType($blocks, 'downloads');
+$ctaBlock = getBlockByType($blocks, 'cta');
+$footerBlock = getBlockByType($blocks, 'footer');
+$navbarBlock = getBlockByType($blocks, 'navbar');
 
 // Hero section data
 $page_title = getBlockFieldValue($heroBlock, 'page_title', 'Panasonic Toughbook 40 MK2');
-$hero_badge = getBlockFieldValue($heroBlock, 'label', 'MISSION CRITICAL // MK-2 DEPLOYMENT');
-$hero_h1_main = getBlockFieldValue($heroBlock, 'title', 'ENGINEERED FOR EXTREME FRONTIERS');
-$hero_h1_accent = '';
-$hero_h1_secondary = '';
-$hero_description = getBlockFieldValue($heroBlock, 'subtitle', 'De Toughbook 40 MK2 &mdash; het meest veelzijdige 14" volledig robuuste werkstation ooit gebouwd.');
-$hero_cta_primary = getBlockFieldValue($heroBlock, 'primary_button_text', 'Vraag Offerte Aan');
-$hero_cta_secondary = getBlockFieldValue($heroBlock, 'secondary_button_text', 'Bekijk Specs');
-$hero_image = getAssetUrl(getBlockFieldValue($heroBlock, 'image_url'), '/Soufian/images/toughbook-hero.jpg');
+$hero_badge = getBlockFieldValue($heroBlock, 'badge', 'MISSION CRITICAL // MK-2 DEPLOYMENT');
+$hero_h1_main = getBlockFieldValue($heroBlock, 'heading_main', 'ENGINEERED FOR');
+$hero_h1_accent = getBlockFieldValue($heroBlock, 'heading_accent', 'EXTREME');
+$hero_h1_secondary = getBlockFieldValue($heroBlock, 'heading_secondary', 'FRONTIERS');
+$hero_description = getBlockFieldValue($heroBlock, 'description', 'De Toughbook 40 MK2 &mdash; het meest veelzijdige 14" volledig robuuste werkstation ooit gebouwd.');
+$hero_cta_primary = getBlockFieldValue($heroBlock, 'cta_primary_text', 'Vraag Offerte Aan');
+$hero_cta_secondary = getBlockFieldValue($heroBlock, 'cta_secondary_text', 'Bekijk Specs');
+$hero_image = getAssetUrl(getBlockFieldValue($heroBlock, 'image_url'), '../images/toughbook-40-hero.jpg');
 $price_old = getBlockFieldValue($heroBlock, 'price_old', '€ 4.885,00');
 $price_new = getBlockFieldValue($heroBlock, 'price_new', '€ 4.640,75');
 
@@ -205,9 +205,11 @@ $heroStats = getBlockItems($heroBlock);
     <?php 
     $galleryItems = getBlockItems($galleryBlock);
     foreach ($galleryItems as $item): 
+      $galleryImage = getAssetUrl(getItemFieldValue($item, 'image_url'));
+      if (!$galleryImage) continue;
     ?>
     <div class="gallery-item">
-      <img src="<?php echo htmlspecialchars(getAssetUrl(getItemFieldValue($item, 'image_url'), '/Soufian/images/toughbook-1.jpg')); ?>" alt="<?php echo htmlspecialchars(getItemFieldValue($item, 'label', 'Gallery image')); ?>">
+      <img src="<?php echo htmlspecialchars($galleryImage); ?>" alt="<?php echo htmlspecialchars(getItemFieldValue($item, 'alt_text', 'Gallery image')); ?>">
     </div>
     <?php endforeach; ?>
   </div>
