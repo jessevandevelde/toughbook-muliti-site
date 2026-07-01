@@ -1,0 +1,415 @@
+<!DOCTYPE html>
+<html lang="nl">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Panasonic Toughbook G2 | Volledig robuuste 2-in-1</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="assets/style.css" />
+</head>
+<body>
+
+<!-- NAVIGATION -->
+<header id="nav">
+  <div class="container">
+    <div class="nav-inner">
+      <a href="#" class="nav-logo">
+        <div class="nav-logo-badge"><span>PANASONIC</span></div>
+        <span class="nav-logo-sub">Toughbook</span>
+      </a>
+      <nav class="nav-links">
+        <a href="#specs" id="nav-specs">Specificaties</a>
+        <a href="#downloads" id="nav-downloads">Downloads</a>
+        <a href="#quote" id="nav-quote">Offerte aanvragen</a>
+        <a href="#contact" id="nav-contact">Contact</a>
+        <a href="#quote" class="btn-nav-cta" id="nav-cta">Offerte aanvragen</a>
+      </nav>
+      <button class="nav-hamburger" id="hamburger" aria-label="Menu">
+        <span></span><span></span><span></span>
+      </button>
+    </div>
+    <div class="nav-mobile" id="mobile-menu">
+      <a href="#specs" onclick="closeMobile()">Specificaties</a>
+      <a href="#downloads" onclick="closeMobile()">Downloads</a>
+      <a href="#quote" onclick="closeMobile()">Offerte aanvragen</a>
+      <a href="#contact" onclick="closeMobile()">Contact</a>
+    </div>
+  </div>
+</header>
+
+<!-- HERO -->
+<section id="hero">
+  <div class="hero-grid-bg"></div>
+  <div class="hero-glow-1"></div>
+  <div class="hero-glow-2"></div>
+  <div class="container">
+    <div class="hero-inner">
+      <div>
+        <div class="hero-tag">
+          <span class="hero-tag-dot"></span>
+          <span id="hero-tag">Volledig robuust · MIL-STD-810H · IP65</span>
+        </div>
+        <div class="hero-title">Toughbook</div>
+        <div class="hero-title-blue">G2</div>
+        <p class="hero-subtitle" id="hero-sub">Het ultieme robuuste 2-in-1 tablet</p>
+        <p class="hero-desc" id="hero-desc">De TOUGHBOOK G2 combineert militaire robuustheid met modulaire flexibiliteit in een compact 10,1-inch ontwerp. Getest volgens MIL-STD-810H en officieel IP65-gecertificeerd — gebouwd voor professionals die geen uitval kunnen veroorloven.</p>
+        <div class="hero-features">
+          <div class="hero-feature">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+            <span>MIL-STD-810H gecertificeerd</span>
+          </div>
+          <div class="hero-feature">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2.69l5.66 5.66a8 8 0 1 1-11.31 0z"/></svg>
+            <span>IP65 waterdicht</span>
+          </div>
+          <div class="hero-feature">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/></svg>
+            <span>Tot 18,5 uur batterijduur</span>
+          </div>
+          <div class="hero-feature">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><rect x="4" y="4" width="16" height="16" rx="2"/><rect x="9" y="9" width="6" height="6"/><line x1="9" y1="1" x2="9" y2="4"/><line x1="15" y1="1" x2="15" y2="4"/><line x1="9" y1="20" x2="9" y2="23"/><line x1="15" y1="20" x2="15" y2="23"/><line x1="20" y1="9" x2="23" y2="9"/><line x1="20" y1="14" x2="23" y2="14"/><line x1="1" y1="9" x2="4" y2="9"/><line x1="1" y1="14" x2="4" y2="14"/></svg>
+            <span>Intel Core i5 / i7 vPro® (10e gen.)</span>
+          </div>
+        </div>
+        <div class="hero-ctas">
+          <a href="#quote" class="btn-primary" id="hero-cta1">
+            Vraag een offerte aan
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
+          </a>
+          <a href="#specs" class="btn-secondary" id="hero-cta2">Bekijk specificaties</a>
+        </div>
+      </div>
+      <div>
+        <img id="hero-main-img" class="hero-main-img"
+          src="assets/images/toughbook2.jpeg"
+          alt="Panasonic Toughbook G2" />
+        <div class="hero-thumbs">
+          <div class="hero-thumb active" onclick="setHeroImg(0,this)">
+            <img src="assets/images/toughbook2.jpeg" alt="" />
+          </div>
+          <div class="hero-thumb" onclick="setHeroImg(1,this)">
+            <img src="assets/images/toughbook.jpeg" alt="" />
+          </div>
+          <div class="hero-thumb" onclick="setHeroImg(2,this)">
+            <img src="assets/images/toughbook3.jpeg" alt="" />
+          </div>
+          <div class="hero-thumb" onclick="setHeroImg(3,this)">
+            <img src="assets/images/toughbook4.jpeg" alt="" />
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- SPECIFICATIONS -->
+<section id="specs">
+  <div class="container">
+    <div class="section-header">
+      <span class="section-label">Specificaties</span>
+      <h2 class="section-heading" id="specs-heading">Technische specificaties</h2>
+      <p class="section-sub" id="specs-sub">Volledige technische specificaties van de Panasonic TOUGHBOOK G2 (FZ-G2) robuuste tablet</p>
+    </div>
+    <div class="specs-grid">
+      <div>
+        <div class="spec-tabs">
+          <button class="spec-tab active" onclick="setTab('overview',this)">Overzicht</button>
+          <button class="spec-tab" onclick="setTab('performance',this)">Prestaties</button>
+          <button class="spec-tab" onclick="setTab('durability',this)">Duurzaamheid</button>
+          <button class="spec-tab" onclick="setTab('connectivity',this)">Connectiviteit</button>
+        </div>
+        <div class="spec-table" id="spec-table"></div>
+        <a href="assets/TOUGHBOOK_G2_Series_Specification.pdf" class="btn-download" id="specs-dl-btn" download >
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
+          Volledige Specsheet Downloaden (PDF)
+        </a>
+      </div>
+      <div>
+        <p class="highlights-label">Belangrijkste kenmerken</p>
+        <div class="highlight-item"><div class="highlight-dot"></div><div><div class="highlight-title">Modulaire xPAK-uitbreiding</div><div class="highlight-desc">Twee uitbreidingsgebieden met meer dan 20 combinaties — voeg een thermische camera, barcodescanner, seriële poort of extra USB toe zonder gereedschap.</div></div></div>
+        <div class="highlight-item"><div class="highlight-dot"></div><div><div class="highlight-title">2-in-1 tablet en laptop</div><div class="highlight-desc">Gebruik de TOUGHBOOK G2 als volledig robuuste tablet of voeg het optionele afneembare toetsenbord toe voor een complete laptopervaring.</div></div></div>
+        <div class="highlight-item"><div class="highlight-dot"></div><div><div class="highlight-title">Touchscreen voor handschoenen, pen &amp; regen</div><div class="highlight-desc">10,1-inch WUXGA IPS-display met 1000 nits helderheid en ondersteuning voor handschoentouch, digitizer-pen en gebruik in de regen.</div></div></div>
+        <div class="highlight-item"><div class="highlight-dot"></div><div><div class="highlight-title">Intel vPro® extern beheer</div><div class="highlight-desc">Intel AMT maakt extern beheer en herstel van apparaten mogelijk via vPro-technologie — zelfs wanneer het besturingssysteem niet reageert.</div></div></div>
+        <div class="highlight-item"><div class="highlight-dot"></div><div><div class="highlight-title">Quick-release SSD</div><div class="highlight-desc">De SSD is snel en eenvoudig te verwijderen voor veilige gegevensbehandeling en eenvoudig onderhoud in het veld.</div></div></div>
+        <div class="highlight-item"><div class="highlight-dot"></div><div><div class="highlight-title">Geïntegreerde beveiligingssuite</div><div class="highlight-desc">TPM 2.0, infrarood-webcam voor Windows Hello, smartcardslot en optionele NFC — allemaal ingebouwd in één robuuste behuizing.</div></div></div>
+        <div class="stats-strip">
+          <div class="stat-cell"><div class="stat-value">10,1"</div><div class="stat-label">WUXGA IPS-display</div></div>
+          <div class="stat-cell"><div class="stat-value">18,5 u</div><div class="stat-label">Batterijduur</div></div>
+          <div class="stat-cell"><div class="stat-value">IP65</div><div class="stat-label">Water- &amp; stofbestendig</div></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- USE CASES -->
+<section id="usecases">
+  <div class="container">
+    <div class="section-header">
+      <span class="section-label">Toepassingen</span>
+      <h2 class="section-heading">Ontworpen voor uw missie</h2>
+      <p class="section-sub">De Toughbook G2 wordt ingezet in sectoren die geen uitval kunnen veroorloven.</p>
+    </div>
+    <div class="usecase-grid">
+      <div class="usecase-card">
+        <div class="usecase-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg></div>
+        <div class="usecase-title">Openbare veiligheid</div>
+        <div class="usecase-desc">Hulpdiensten vertrouwen op de G2 voor realtime CAD, kaarten en communicatie bij alle weersomstandigheden.</div>
+      </div>
+      <div class="usecase-card">
+        <div class="usecase-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M14.7 6.3a1 1 0 0 0 0 1.4l1.6 1.6a1 1 0 0 0 1.4 0l3.77-3.77a6 6 0 0 1-7.94 7.94l-6.91 6.91a2.12 2.12 0 0 1-3-3l6.91-6.91a6 6 0 0 1 7.94-7.94l-3.76 3.76z"/></svg></div>
+        <div class="usecase-title">Service in het veld</div>
+        <div class="usecase-desc">Technici raadplegen reparatiehandleidingen, diagnoses en werkorders direct op locatie.</div>
+      </div>
+      <div class="usecase-card">
+        <div class="usecase-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="8" r="6"/><path d="M15.477 12.89L17 22l-5-3-5 3 1.523-9.11"/></svg></div>
+        <div class="usecase-title">Militair &amp; defensie</div>
+        <div class="usecase-desc">Missiekritische communicatie en situatiebewustzijn in de meest veeleisende operationele omgevingen.</div>
+      </div>
+      <div class="usecase-card">
+        <div class="usecase-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><rect x="4" y="4" width="16" height="16" rx="2"/><rect x="9" y="9" width="6" height="6"/><line x1="9" y1="1" x2="9" y2="4"/><line x1="15" y1="1" x2="15" y2="4"/><line x1="9" y1="20" x2="9" y2="23"/><line x1="15" y1="20" x2="15" y2="23"/><line x1="20" y1="9" x2="23" y2="9"/><line x1="20" y1="14" x2="23" y2="14"/><line x1="1" y1="9" x2="4" y2="9"/><line x1="1" y1="14" x2="4" y2="14"/></svg></div>
+        <div class="usecase-title">Industrie &amp; productie</div>
+        <div class="usecase-desc">Kwaliteitscontrole, voorraadbeheer en productieactiviteiten — handschoenen aan, regen op het veld.</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- DOWNLOADS -->
+
+
+<!-- QUOTE FORM -->
+<section id="quote">
+  <div class="container">
+    <div class="quote-inner">
+      <div class="section-header">
+        <span class="section-label">Verkoop</span>
+        <h2 class="section-heading" id="quote-heading">Vraag een offerte aan</h2>
+        <p class="section-sub" id="quote-sub">Ontvang een voorstel op maat afgestemd op de operationele behoeften van uw organisatie</p>
+      </div>
+      <div class="form-card">
+        <div class="form-success" id="form-success">
+          <div class="form-success-icon">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
+          </div>
+          <h3 id="success-title">Offerteaanvraag verzonden</h3>
+          <p id="success-desc">Bedankt voor uw interesse. Een specialist neemt binnen één werkdag contact met u op.</p>
+        </div>
+        <form id="quote-form" onsubmit="submitForm(event)">
+          <div class="form-row">
+            <div class="form-group">
+              <label class="form-label">Voornaam <span class="form-required">*</span></label>
+              <div class="input-wrap">
+                <svg class="input-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
+                <input class="form-input" type="text" name="firstName" placeholder="Jan" required />
+              </div>
+            </div>
+            <div class="form-group">
+              <label class="form-label">Achternaam <span class="form-required">*</span></label>
+              <div class="input-wrap">
+                <svg class="input-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
+                <input class="form-input" type="text" name="lastName" placeholder="Jansen" required />
+              </div>
+            </div>
+          </div>
+          <div class="form-row">
+            <div class="form-group">
+              <label class="form-label">E-mail <span class="form-required">*</span></label>
+              <div class="input-wrap">
+                <svg class="input-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
+                <input class="form-input" type="email" name="email" placeholder="jan@bedrijf.nl" required />
+              </div>
+            </div>
+            <div class="form-group">
+              <label class="form-label">Telefoon</label>
+              <div class="input-wrap">
+                <svg class="input-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07A19.5 19.5 0 0 1 4.69 12 19.79 19.79 0 0 1 1.61 3.41 2 2 0 0 1 3.6 1.23h3a2 2 0 0 1 2 1.72c.127.96.361 1.903.7 2.81a2 2 0 0 1-.45 2.11L7.91 8.97a16 16 0 0 0 6 6l.9-.89a2 2 0 0 1 2.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0 1 21.73 17l.19-.08z"/></svg>
+                <input class="form-input" type="tel" name="phone" placeholder="+31 6 1234 5678" />
+              </div>
+            </div>
+          </div>
+          <div class="form-row">
+            <div class="form-group">
+              <label class="form-label">Bedrijf <span class="form-required">*</span></label>
+              <div class="input-wrap">
+                <svg class="input-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg>
+                <input class="form-input" type="text" name="company" placeholder="Bedrijfsnaam" required />
+              </div>
+            </div>
+            <div class="form-group">
+              <label class="form-label">Functie</label>
+              <input class="form-input no-icon" type="text" name="jobTitle" placeholder="IT-manager, inkoopverantwoordelijke…" />
+            </div>
+          </div>
+          <div class="form-row">
+            <div class="form-group">
+              <label class="form-label">Product</label>
+              <input class="form-input no-icon" type="text" name="product" value="Panasonic Toughbook G2" disabled />
+            </div>
+            <div class="form-group">
+              <label class="form-label">Geschat aantal <span class="form-required">*</span></label>
+              <input class="form-input no-icon" type="number" name="quantity" min="1" placeholder="bijv. 25" required />
+            </div>
+          </div>
+          <div class="form-group">
+            <label class="form-label">Aanvullende wensen</label>
+            <div class="input-wrap">
+              <svg class="textarea-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>
+              <textarea class="form-input" name="notes" placeholder="Implementatietijdlijn, speciale configuraties, integratievereisten…"></textarea>
+            </div>
+          </div>
+          <button type="submit" class="btn-submit">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><line x1="22" y1="2" x2="11" y2="13"/><polygon points="22 2 15 22 11 13 2 9 22 2"/></svg>
+            <span id="submit-label">Offerteaanvraag versturen</span>
+          </button>
+          <p class="form-legal">Door dit formulier te verzenden gaat u akkoord met ons privacybeleid en onze gebruiksvoorwaarden.</p>
+        </form>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CONTACT -->
+<section id="contact">
+  <div class="container">
+    <div class="section-header">
+      <span class="section-label">Contact</span>
+      <h2 class="section-heading" id="contact-heading">Neem contact op</h2>
+      <p class="section-sub" id="contact-sub">Onze specialisten staan klaar om te helpen met uw Toughbook G2-implementatie</p>
+    </div>
+    <div class="contact-grid">
+      <div>
+        <div class="contact-info-list">
+          <div class="contact-info-item">
+            <div class="contact-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07A19.5 19.5 0 0 1 4.69 12 19.79 19.79 0 0 1 1.61 3.41 2 2 0 0 1 3.6 1.23h3a2 2 0 0 1 2 1.72c.127.96.361 1.903.7 2.81a2 2 0 0 1-.45 2.11L7.91 8.97a16 16 0 0 0 6 6l.9-.89a2 2 0 0 1 2.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0 1 21.73 17z"/></svg></div>
+            <div><div class="contact-item-label">Verkoop &amp; ondersteuning</div><div class="contact-item-value">+31 (0)73 640 40 40</div></div>
+          </div>
+          <div class="contact-info-item">
+            <div class="contact-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg></div>
+            <div><div class="contact-item-label">E-mail</div><div class="contact-item-value">toughbook@panasonic.nl</div></div>
+          </div>
+          <div class="contact-info-item">
+            <div class="contact-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg></div>
+            <div><div class="contact-item-label">Vestiging Nederland</div><div class="contact-item-value">Panasonic Nederland B.V., Hettenheuvelweg 45, 1101 BM Amsterdam</div></div>
+          </div>
+          <div class="contact-info-item">
+            <div class="contact-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg></div>
+            <div><div class="contact-item-label">Openingstijden</div><div class="contact-item-value">Maandag – vrijdag, 08:00 – 18:00 CET</div></div>
+          </div>
+        </div>
+        <div class="social-row">
+          <a href="#" class="social-btn" aria-label="LinkedIn"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"/><rect x="2" y="9" width="4" height="12"/><circle cx="4" cy="4" r="2"/></svg></a>
+          <a href="#" class="social-btn" aria-label="Twitter"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M23 3a10.9 10.9 0 0 1-3.14 1.53 4.48 4.48 0 0 0-7.86 3v1A10.66 10.66 0 0 1 3 4s-4 9 5 13a11.64 11.64 0 0 1-7 2c9 5 20 0 20-11.5a4.5 4.5 0 0 0-.08-.83A7.72 7.72 0 0 0 23 3z"/></svg></a>
+          <a href="#" class="social-btn" aria-label="Facebook"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z"/></svg></a>
+        </div>
+      </div>
+      <div>
+        <div class="info-panel">
+          <div class="info-panel-label">Sectoren die wij bedienen</div>
+          <div class="industries-grid">
+            <div class="industry-item"><svg class="industry-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"/></svg>Openbare veiligheid</div>
+            <div class="industry-item"><svg class="industry-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"/></svg>Militair &amp; defensie</div>
+            <div class="industry-item"><svg class="industry-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"/></svg>Service in het veld</div>
+            <div class="industry-item"><svg class="industry-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"/></svg>Productie</div>
+            <div class="industry-item"><svg class="industry-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"/></svg>Nutsbedrijven &amp; energie</div>
+            <div class="industry-item"><svg class="industry-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"/></svg>Transport</div>
+            <div class="industry-item"><svg class="industry-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"/></svg>Gezondheidszorg</div>
+            <div class="industry-item"><svg class="industry-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"/></svg>Bouw</div>
+          </div>
+        </div>
+        <div class="info-panel">
+          <div class="info-panel-label">Certificeringen &amp; normen</div>
+          <div class="cert-list">
+            <span class="cert-badge">MIL-STD-810H</span>
+            <span class="cert-badge">IP65</span>
+            <span class="cert-badge">ISO 9001:2015</span>
+            <span class="cert-badge">TAA Compliant</span>
+            <span class="cert-badge">FIPS 140-2</span>
+            <span class="cert-badge">FCC Part 15</span>
+            <span class="cert-badge">CE Mark</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer id="footer">
+  <div class="container">
+    <div class="footer-grid">
+      <div>
+        <div class="nav-logo-badge" style="display:inline-block"><span>PANASONIC</span></div>
+        <p class="footer-brand-text">Vertrouwd door professionals wereldwijd voor taakkritische mobiele computeroplossingen.</p>
+      </div>
+      <div class="footer-col">
+        <div class="footer-col-title">Toughbook G2</div>
+        <ul><li><a href="#specs">Specificaties</a></li><li><a href="#downloads">Documentatie</a></li><li><a href="#usecases">Gebruiksscenario's</a></li><li><a href="#quote">Offerte aanvragen</a></li></ul>
+      </div>
+      <div class="footer-col">
+        <div class="footer-col-title">Bronnen</div>
+        <ul><li><a href="#">Gegevensbladen</a></li><li><a href="#">Gebruikershandleidingen</a></li><li><a href="#">Softwaredownloads</a></li><li><a href="#">Garantie-informatie</a></li></ul>
+      </div>
+      <div class="footer-col">
+        <div class="footer-col-title">Panasonic</div>
+        <ul><li><a href="#">Over ons</a></li><li><a href="#">Partnernetwerk</a></li><li><a href="#">Vacatures</a></li><li><a href="#">Nieuws &amp; pers</a></li></ul>
+      </div>
+      <div class="footer-col">
+        <div class="footer-col-title">Juridisch</div>
+        <ul><li><a href="#">Privacybeleid</a></li><li><a href="#">Gebruiksvoorwaarden</a></li><li><a href="#">Cookiebeleid</a></li><li><a href="#">Naleving</a></li></ul>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <span class="footer-copy">© 2026 Panasonic Connect Europe GmbH. Alle rechten voorbehouden.</span>
+      <span class="footer-note">Specificaties kunnen zonder voorafgaande kennisgeving worden gewijzigd.</span>
+    </div>
+  </div>
+</footer>
+
+<script>
+  window.RAFI_CMS_CONFIG = {
+    websiteDomain: 'toughbook-g2-dutch.nl',
+  };
+</script>
+<script src="assets/main.js"></script>
+<script>
+async function submitForm(e) {
+  e.preventDefault();
+
+  const form      = document.getElementById('quote-form');
+  const btn       = form.querySelector('.btn-submit');
+  const label     = document.getElementById('submit-label');
+  const successEl = document.getElementById('form-success');
+
+  // Loading state
+  btn.disabled = true;
+  label.textContent = 'Verzenden…';
+
+  // Collect form data (include disabled product field manually)
+  const data = new FormData(form);
+  data.set('product', 'Panasonic Toughbook G2');
+
+  try {
+    const res  = await fetch('./send_quote.php', { method: 'POST', body: data });
+    const json = await res.json();
+
+    if (json.success) {
+      form.style.display      = 'none';
+      successEl.style.display = 'flex';
+    } else {
+      alert(json.message || 'Er is een fout opgetreden. Probeer het opnieuw.');
+      btn.disabled     = false;
+      label.textContent = 'Offerteaanvraag versturen';
+    }
+  } catch (err) {
+    alert('Verbindingsfout. Controleer uw internetverbinding en probeer het opnieuw.');
+    btn.disabled      = false;
+    label.textContent = 'Offerteaanvraag versturen';
+  }
+}
+</script>
+ 
+</body>
+</html>

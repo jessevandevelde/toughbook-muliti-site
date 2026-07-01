@@ -37,6 +37,9 @@
     if (!raw) {
       return '#';
     }
+    if (raw.startsWith('/images/')) {
+      return `assets/Images/${raw.split('/').pop()}`;
+    }
     if (raw.startsWith('#') || raw.startsWith('/') || raw.startsWith('./') || raw.startsWith('../')) {
       return raw;
     }
@@ -670,7 +673,13 @@
       let lastStatus = 0;
 
       for (const url of endpoints) {
-        const response = await fetch(url, { credentials: 'include', cache: 'no-store' });
+        const response = await fetch(url, {
+          credentials: 'include',
+          cache: 'no-store',
+          headers: {
+            'Cache-Control': 'no-cache',
+          },
+        });
         if (response.ok) {
           payload = await response.json();
           break;

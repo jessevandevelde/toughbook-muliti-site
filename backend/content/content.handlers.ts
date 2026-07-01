@@ -9,11 +9,20 @@ const badRequestStatus = 400;
 const notFoundStatus = 404;
 const internalServerErrorStatus = 500;
 
+const preventResponseCaching = (res: Response): void => {
+  res.setHeader('Cache-Control', 'no-store, no-cache, must-revalidate, proxy-revalidate');
+  res.setHeader('Expires', '0');
+  res.setHeader('Pragma', 'no-cache');
+  res.setHeader('Surrogate-Control', 'no-store');
+};
+
 const getRouteParam = (value: string | string[]): string => {
   return Array.isArray(value) ? value[0] : value;
 };
 
 export const getAllWebsiteContentHandler = async (_req: Request, res: Response): Promise<void> => {
+  preventResponseCaching(res);
+
   try {
     const websites = await getWebsiteContentTree();
 
@@ -32,6 +41,8 @@ export const getAllWebsiteContentHandler = async (_req: Request, res: Response):
 };
 
 export const getWebsiteContentByIdHandler = async (req: Request, res: Response): Promise<void> => {
+  preventResponseCaching(res);
+
   if (!req.params.websiteId) {
     res.status(badRequestStatus).json({
       message: 'Website id is required.',
@@ -66,6 +77,8 @@ export const getWebsiteContentByIdHandler = async (req: Request, res: Response):
 };
 
 export const getWebsiteContentByDomainHandler = async (req: Request, res: Response): Promise<void> => {
+  preventResponseCaching(res);
+
   if (!req.params.domain) {
     res.status(badRequestStatus).json({
       message: 'Domain is required.',

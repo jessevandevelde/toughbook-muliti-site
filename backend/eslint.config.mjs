@@ -108,6 +108,20 @@ export default defineConfig(
     extends: [eslintConfig],
   },
   {
+    files: ['seed-db.js'],
+    languageOptions: {
+      globals: {
+        __dirname: 'readonly',
+        console: 'readonly',
+        process: 'readonly',
+        require: 'readonly',
+      },
+    },
+    rules: {
+      'no-console': 'off',
+    },
+  },
+  {
     files: ['**/*.ts'],
     extends: [tseslintConfig],
   },
