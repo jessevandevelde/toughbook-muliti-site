@@ -371,7 +371,7 @@
         id: 'contact-phone',
         type: 'tel',
         span: 1,
-        label: pick(fields, 'form_phone_label', 'Phone'),
+        label: pick(fields, 'form_phone_label', 'Telefoon'),
         placeholder: pick(fields, 'form_phone_placeholder', '+31 6 1234 5678'),
       },
       {
@@ -387,8 +387,8 @@
         id: 'contact-quantity',
         type: 'number',
         span: 1,
-        label: pick(fields, 'form_quantity_label', 'Quantity'),
-        placeholder: pick(fields, 'form_quantity_placeholder', 'For example 10'),
+        label: pick(fields, 'form_quantity_label', 'Aantal'),
+        placeholder: pick(fields, 'form_quantity_placeholder', 'Bijv. 10'),
         min: '1',
         required: true,
       },
@@ -793,7 +793,7 @@
       const message = form.querySelector('#contact-message')?.value?.trim() || '';
 
       if (!name || !email || !model || !quantity || !message) {
-        statusEl.textContent = 'Please fill in name, email, model, quantity and message.';
+        statusEl.textContent = 'Vul naam, e-mail, model, aantal en bericht in.';
         statusEl.className = 'form-status form-status--error';
         return;
       }

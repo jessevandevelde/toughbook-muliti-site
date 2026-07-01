@@ -369,10 +369,11 @@ async function submitForm(e) {
   const btn       = form.querySelector('.btn-submit');
   const label     = document.getElementById('submit-label');
   const successEl = document.getElementById('form-success');
+  const copy      = window.RAFI_LANGUAGE_COPY || {};
 
   // Loading state
   btn.disabled = true;
-  label.textContent = 'Verzenden…';
+  label.textContent = copy.sending || 'Verzenden...';
 
   const data = new FormData(form);
   const payload = {
@@ -397,19 +398,19 @@ async function submitForm(e) {
       form.style.display      = 'none';
       successEl.style.display = 'flex';
     } else {
-      alert(json.error || json.message || 'Er is een fout opgetreden. Probeer het opnieuw.');
+      alert(json.error || json.message || copy.serverError || 'Er is een fout opgetreden. Probeer het opnieuw.');
       btn.disabled     = false;
-      label.textContent = 'Offerteaanvraag versturen';
+      label.textContent = copy.submit || 'Offerteaanvraag versturen';
     }
   } catch (err) {
-    alert('Verbindingsfout. Controleer uw internetverbinding en probeer het opnieuw.');
+    alert(copy.connectionError || 'Verbindingsfout. Controleer uw internetverbinding en probeer het opnieuw.');
     btn.disabled      = false;
-    label.textContent = 'Offerteaanvraag versturen';
+    label.textContent = copy.submit || 'Offerteaanvraag versturen';
   }
 }
 </script>
 
-<a href="../Rafi-English/" class="lang-switch" title="Switch to English"><img src="https://flagcdn.com/w40/gb.png" width="28" height="20" alt="English" /></a>
+<a href="?lang=en" class="lang-switch" title="Switch to English"><img src="https://flagcdn.com/w40/gb.png" width="28" height="20" alt="English" /></a>
 </body>
 </html>
 

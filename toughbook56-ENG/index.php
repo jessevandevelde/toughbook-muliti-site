@@ -1,11 +1,16 @@
 <?php
-$websiteId = 7;
-$websiteDomain = 'toughbook-56-english.nl';
+$language = ($_GET['lang'] ?? 'en') === 'nl' ? 'nl' : 'en';
+$websiteId = $language === 'en' ? 7 : 1;
+$websiteDomain = $language === 'en' ? 'toughbook-56-english.nl' : 'toughbook-56-dutch.nl';
+$switchLanguage = $language === 'en' ? 'nl' : 'en';
+$switchTitle = $language === 'en' ? 'Naar de Nederlandse versie' : 'Switch to English';
+$switchFlag = $language === 'en' ? 'nl' : 'gb';
+$switchAlt = $language === 'en' ? 'Nederlands' : 'English';
 $apiBase = 'http://127.0.0.1:3000';
 $apiBase = rtrim($apiBase, '/');
 ?>
 <!doctype html>
-<html lang="en">
+<html lang="<?php echo htmlspecialchars($language); ?>">
 
 <head>
     <meta charset="utf-8" />
@@ -37,8 +42,8 @@ $apiBase = rtrim($apiBase, '/');
 
     <footer id="footer" class="site-footer" hidden></footer>
 
-    <a href="../toughbook56/" class="lang-switch" title="Naar de Nederlandse versie">
-        <img src="https://flagcdn.com/w40/nl.png" width="28" height="20" alt="Nederlands" />
+    <a href="?lang=<?php echo htmlspecialchars($switchLanguage); ?>" class="lang-switch" title="<?php echo htmlspecialchars($switchTitle); ?>">
+        <img src="https://flagcdn.com/w40/<?php echo htmlspecialchars($switchFlag); ?>.png" width="28" height="20" alt="<?php echo htmlspecialchars($switchAlt); ?>" />
     </a>
 
     <script>

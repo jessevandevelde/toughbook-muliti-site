@@ -511,22 +511,22 @@ function buildFooter(fields, items) {
 const GALLERY_SLIDES = [
   {
     img: 'assets/images/gallery-1.png',
-    title: 'Cinematic View',
-    desc: 'De Toughbook 33 in dramatisch cinematisch licht — gebouwd voor elke omgeving'
+    title: 'Cinematisch beeld',
+    desc: 'De Toughbook 33 in dramatisch cinematisch licht - gebouwd voor elke omgeving'
   },
   {
     img: 'assets/images/gallery-2.png',
-    title: 'Stormy Terrain',
-    desc: 'Werkt perfect in de zwaarste weersomstandigheden — regen, wind en modder'
+    title: 'Stormachtig terrein',
+    desc: 'Werkt perfect in de zwaarste weersomstandigheden - regen, wind en modder'
   },
   {
     img: 'assets/images/gallery-3.png',
-    title: 'Arctic Conditions',
-    desc: 'Betrouwbaar tot -29°C — zelfs in besneeuwde en ijzige omstandigheden'
+    title: 'Arctische omstandigheden',
+    desc: 'Betrouwbaar tot -29 graden Celsius - zelfs in besneeuwde en ijzige omstandigheden'
   },
   {
     img: 'assets/images/gallery-4.png',
-    title: 'Studio Detail',
+    title: 'Studiodetail',
     desc: 'Elk detail van de robuuste behuizing is ontworpen voor maximale duurzaamheid'
   },
 ];
@@ -631,7 +631,7 @@ function initQuoteForm() {
 
       const data = await response.json();
       if (!response.ok) {
-        throw new Error(data.error || 'Server error');
+      throw new Error(data.error || 'Serverfout');
       }
 
       status.textContent = data.message || 'Je aanvraag is verzonden.';

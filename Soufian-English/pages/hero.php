@@ -1,4 +1,4 @@
-﻿<?php
+<?php
 header('Cache-Control: no-store, no-cache, must-revalidate, proxy-revalidate');
 header('Pragma: no-cache');
 header('Expires: 0');
@@ -6,8 +6,71 @@ header('Expires: 0');
 // Load CMS API helpers
 require_once __DIR__ . '/../api-config.php';
 
+$language = ($_GET['lang'] ?? 'en') === 'nl' ? 'nl' : 'en';
+$websiteDomain = $language === 'en' ? 'toughbook-40-english.nl' : 'toughbook-40-dutch.nl';
+$switchLanguage = $language === 'en' ? 'nl' : 'en';
+$switchTitle = $language === 'en' ? 'Naar de Nederlandse versie' : 'Switch to English';
+$switchFlag = $language === 'en' ? 'nl' : 'gb';
+$switchAlt = $language === 'en' ? 'Nederlands' : 'English';
+$pageCopy = $language === 'en' ? [
+  'nav_features' => '01_FEATURES',
+  'nav_sectors' => '02_SECTORS',
+  'nav_specs' => '03_SPECS',
+  'nav_gallery' => '04_GALLERY',
+  'nav_downloads' => '05_DOWNLOADS',
+  'features_label' => '01 // Features',
+  'gallery_label' => '04 // Gallery',
+  'downloads_label' => '05 // Downloads',
+  'spec_alt' => 'Gallery image',
+] : [
+  'nav_features' => '01_KENMERKEN',
+  'nav_sectors' => '02_SECTOREN',
+  'nav_specs' => '03_SPECIFICATIES',
+  'nav_gallery' => '04_GALERIJ',
+  'nav_downloads' => '05_DOWNLOADS',
+  'features_label' => '01 // Kenmerken',
+  'gallery_label' => '04 // Galerij',
+  'downloads_label' => '05 // Downloads',
+  'spec_alt' => 'Galerij afbeelding',
+];
+$formCopy = $language === 'en' ? [
+  'name_label' => 'Name *',
+  'name_placeholder' => 'Your full name',
+  'company_label' => 'Company',
+  'company_placeholder' => 'Company name',
+  'email_label' => 'Email *',
+  'email_placeholder' => 'name@company.com',
+  'phone_label' => 'Phone',
+  'quantity_label' => 'Quantity *',
+  'quantity_placeholder' => 'For example 10',
+  'message_label' => 'Message *',
+  'message_placeholder' => 'What do you need a quote for?',
+  'button_text' => 'Request a Quote',
+  'required_error' => 'Please fill in your name, email, model, quantity and message.',
+  'sending' => 'Sending...',
+  'success' => 'Your request has been sent.',
+  'failed' => 'Sending failed. Please try again later.',
+] : [
+  'name_label' => 'Naam *',
+  'name_placeholder' => 'Je volledige naam',
+  'company_label' => 'Bedrijf',
+  'company_placeholder' => 'Bedrijfsnaam',
+  'email_label' => 'E-mail *',
+  'email_placeholder' => 'naam@bedrijf.nl',
+  'phone_label' => 'Telefoon',
+  'quantity_label' => 'Aantal *',
+  'quantity_placeholder' => 'Bijv. 10',
+  'message_label' => 'Bericht *',
+  'message_placeholder' => 'Waar heeft u een offerte voor nodig?',
+  'button_text' => 'Vraag Offerte Aan',
+  'required_error' => 'Vul je naam, e-mail, model, aantal en bericht in.',
+  'sending' => 'Verzenden...',
+  'success' => 'Je aanvraag is verzonden.',
+  'failed' => 'Verzenden mislukt. Probeer het later opnieuw.',
+];
+
 // Fetch CMS blocks from backend
-$blocks = getBlocksFromBackend('toughbook-40-english.nl');
+$blocks = getBlocksFromBackend($websiteDomain);
 
 // Extract all blocks
 $heroBlock = getBlockByType($blocks, 'hero');
@@ -43,7 +106,7 @@ $price_new = getBlockFieldValue($heroBlock, 'price_new', 'EUR 4,640.75');
 $heroStats = getBlockItems($heroBlock);
 ?>
 <!DOCTYPE html>
-<html lang="en">
+<html lang="<?php echo htmlspecialchars($language); ?>">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -58,11 +121,11 @@ $heroStats = getBlockItems($heroBlock);
 <nav>
   <a href="#hero" class="nav-brand"><?php echo htmlspecialchars(getBlockFieldValue($navbarBlock, 'logo_text', 'TOUGHBOOK // 40')); ?></a>
   <ul class="nav-links">
-    <li><a href="#features">01_FEATURES</a></li>
-    <li><a href="#sectoren">02_SECTORS</a></li>
-    <li><a href="#specs">03_SPECS</a></li>
-    <li><a href="#gallery">04_GALLERY</a></li>
-    <li><a href="#downloads">05_DOWNLOADS</a></li>
+    <li><a href="#features"><?php echo htmlspecialchars($pageCopy['nav_features']); ?></a></li>
+    <li><a href="#sectoren"><?php echo htmlspecialchars($pageCopy['nav_sectors']); ?></a></li>
+    <li><a href="#specs"><?php echo htmlspecialchars($pageCopy['nav_specs']); ?></a></li>
+    <li><a href="#gallery"><?php echo htmlspecialchars($pageCopy['nav_gallery']); ?></a></li>
+    <li><a href="#downloads"><?php echo htmlspecialchars($pageCopy['nav_downloads']); ?></a></li>
   </ul>
   <a href="<?php echo htmlspecialchars(getBlockFieldValue($navbarBlock, 'button_url', '#offerte')); ?>" class="nav-cta"><?php echo htmlspecialchars(getBlockFieldValue($navbarBlock, 'button_text', 'QUOTE')); ?></a>
 </nav>
@@ -114,7 +177,7 @@ $heroStats = getBlockItems($heroBlock);
 <!-- FEATURES -->
 <section id="features">
   <div class="features-intro">
-    <span class="section-label">01 // Features</span>
+    <span class="section-label"><?php echo htmlspecialchars($pageCopy['features_label']); ?></span>
     <h2 class="section-title"><?php echo getBlockFieldValue($featuresBlock, 'title', 'BUILT FOR THE TOUGHEST CONDITIONS'); ?></h2>
     <div class="divider"></div>
     <p style="color:var(--text);font-size:.9rem;line-height:1.7;">
@@ -218,7 +281,7 @@ $heroStats = getBlockItems($heroBlock);
  
 <!-- GALLERY -->
 <section id="gallery">
-  <span class="section-label"><?php echo getBlockFieldValue($galleryBlock, 'section_label', '04 // Gallery'); ?></span>
+  <span class="section-label"><?php echo getBlockFieldValue($galleryBlock, 'section_label', $pageCopy['gallery_label']); ?></span>
   <h2 class="section-title"><?php echo getBlockFieldValue($galleryBlock, 'title', 'FIELD-TESTED PRODUCT GALLERY'); ?></h2>
   <div class="divider"></div>
   <div class="gallery-grid">
@@ -229,7 +292,7 @@ $heroStats = getBlockItems($heroBlock);
       if (!$galleryImage) continue;
     ?>
     <div class="gallery-item">
-      <img src="<?php echo htmlspecialchars($galleryImage); ?>" alt="<?php echo htmlspecialchars(getItemFieldValue($item, 'alt_text', 'Gallery image')); ?>">
+      <img src="<?php echo htmlspecialchars($galleryImage); ?>" alt="<?php echo htmlspecialchars(getItemFieldValue($item, 'alt_text', $pageCopy['spec_alt'])); ?>">
     </div>
     <?php endforeach; ?>
   </div>
@@ -237,7 +300,7 @@ $heroStats = getBlockItems($heroBlock);
  
 <!-- DOWNLOADS -->
 <section id="downloads">
-  <span class="section-label"><?php echo getBlockFieldValue($downloadsBlock, 'section_label', '05 // Downloads'); ?></span>
+  <span class="section-label"><?php echo getBlockFieldValue($downloadsBlock, 'section_label', $pageCopy['downloads_label']); ?></span>
   <h2 class="section-title"><?php echo getBlockFieldValue($downloadsBlock, 'title', 'DOCUMENTS & DOWNLOADS'); ?></h2>
   <div class="divider"></div>
   <div class="downloads-grid">
@@ -264,15 +327,15 @@ $heroStats = getBlockItems($heroBlock);
   </div>
   <form id="quote-form" class="quote-form" autocomplete="off">
     <div class="quote-form-grid">
-      <label><span>Name *</span><input type="text" name="name" placeholder="Your full name" required></label>
-      <label><span>Company</span><input type="text" name="company" placeholder="Company name"></label>
-      <label><span>Email *</span><input type="email" name="email" placeholder="name@company.com" required></label>
-      <label><span>Phone</span><input type="tel" name="phone" placeholder="+31 6 1234 5678"></label>
+      <label><span><?php echo htmlspecialchars($formCopy['name_label']); ?></span><input type="text" name="name" placeholder="<?php echo htmlspecialchars($formCopy['name_placeholder']); ?>" required></label>
+      <label><span><?php echo htmlspecialchars($formCopy['company_label']); ?></span><input type="text" name="company" placeholder="<?php echo htmlspecialchars($formCopy['company_placeholder']); ?>"></label>
+      <label><span><?php echo htmlspecialchars($formCopy['email_label']); ?></span><input type="email" name="email" placeholder="<?php echo htmlspecialchars($formCopy['email_placeholder']); ?>" required></label>
+      <label><span><?php echo htmlspecialchars($formCopy['phone_label']); ?></span><input type="tel" name="phone" placeholder="+31 6 1234 5678"></label>
       <label><span>Model *</span><input type="text" name="model" value="Toughbook 40" required></label>
-      <label><span>Quantity *</span><input type="number" name="quantity" min="1" placeholder="For example 10" required></label>
-      <label class="quote-form-message"><span>Message *</span><textarea name="message" rows="5" placeholder="What do you need a quote for?" required></textarea></label>
+      <label><span><?php echo htmlspecialchars($formCopy['quantity_label']); ?></span><input type="number" name="quantity" min="1" placeholder="<?php echo htmlspecialchars($formCopy['quantity_placeholder']); ?>" required></label>
+      <label class="quote-form-message"><span><?php echo htmlspecialchars($formCopy['message_label']); ?></span><textarea name="message" rows="5" placeholder="<?php echo htmlspecialchars($formCopy['message_placeholder']); ?>" required></textarea></label>
     </div>
-    <button type="submit" class="btn-dark"><?php echo htmlspecialchars(getBlockFieldValue($ctaBlock, 'button_text', 'Request a Quote')); ?></button>
+    <button type="submit" class="btn-dark"><?php echo htmlspecialchars(getBlockFieldValue($ctaBlock, 'button_text', $formCopy['button_text'])); ?></button>
     <p id="quote-form-status" class="quote-form-status" aria-live="polite"></p>
   </form>
   <a href="mailto:<?php echo htmlspecialchars(getBlockFieldValue($ctaBlock, 'email_value', 'info@toughbook.nl')); ?>" class="btn-dark"><?php echo htmlspecialchars(getBlockFieldValue($ctaBlock, 'button_text', 'Request a Quote ->')); ?></a>
@@ -303,6 +366,7 @@ $heroStats = getBlockItems($heroBlock);
 <script>
 const quoteForm = document.getElementById('quote-form');
 const quoteStatus = document.getElementById('quote-form-status');
+const quoteCopy = <?php echo json_encode($formCopy); ?>;
 
 if (quoteForm) {
   quoteForm.addEventListener('submit', async (event) => {
@@ -321,13 +385,13 @@ if (quoteForm) {
     };
 
     if (!payload.name || !payload.email || !payload.model || !payload.quantity || !payload.message) {
-      quoteStatus.textContent = 'Please fill in your name, email, model, quantity and message.';
+      quoteStatus.textContent = quoteCopy.required_error;
       quoteStatus.className = 'quote-form-status quote-form-status--error';
       return;
     }
 
     submitButton.disabled = true;
-    quoteStatus.textContent = 'Sending...';
+    quoteStatus.textContent = quoteCopy.sending;
     quoteStatus.className = 'quote-form-status quote-form-status--info';
 
     try {
@@ -342,11 +406,11 @@ if (quoteForm) {
         throw new Error(data.error || 'Server error');
       }
 
-      quoteStatus.textContent = data.message || 'Your request has been sent.';
+      quoteStatus.textContent = data.message || quoteCopy.success;
       quoteStatus.className = 'quote-form-status quote-form-status--success';
       quoteForm.reset();
     } catch (error) {
-      quoteStatus.textContent = 'Sending failed. Please try again later.';
+      quoteStatus.textContent = quoteCopy.failed;
       quoteStatus.className = 'quote-form-status quote-form-status--error';
     } finally {
       submitButton.disabled = false;
@@ -355,7 +419,7 @@ if (quoteForm) {
 }
 </script>
  
-<a href="../../Soufian/" class="lang-switch" title="Naar de Nederlandse versie"><img src="https://flagcdn.com/w40/nl.png" width="28" height="20" alt="Nederlands" /></a>
+<a href="?lang=<?php echo htmlspecialchars($switchLanguage); ?>" class="lang-switch" title="<?php echo htmlspecialchars($switchTitle); ?>"><img src="https://flagcdn.com/w40/<?php echo htmlspecialchars($switchFlag); ?>.png" width="28" height="20" alt="<?php echo htmlspecialchars($switchAlt); ?>" /></a>
 </body>
 </html>
 

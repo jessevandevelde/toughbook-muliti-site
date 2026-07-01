@@ -19,8 +19,15 @@ const apiBase = String(config.apiBase || (
     ? 'http://localhost:3000'
     : ''
 )).replace(/\/$/, '');
+const languageParam = new URLSearchParams(window.location.search).get('lang');
+const selectedDomain = languageParam === 'en'
+  ? 'toughbook-g2-english.nl'
+  : languageParam === 'nl'
+    ? 'toughbook-g2-dutch.nl'
+    : '';
 const defaultDomain = window.location.pathname.includes('/Rafi-English/') ? 'toughbook-g2-english.nl' : 'toughbook-g2-dutch.nl';
-const websiteDomain = config.websiteDomain || defaultDomain;
+const websiteDomain = selectedDomain || config.websiteDomain || defaultDomain;
+const selectedLanguage = websiteDomain === 'toughbook-g2-english.nl' ? 'en' : 'nl';
 const cmsApiUrl = `${apiBase}/api/content/by-domain/${encodeURIComponent(websiteDomain)}`;
 const sharedFooterApiUrl = `${apiBase}/api/content/by-domain/shared-footer`;
 
@@ -93,6 +100,101 @@ const itemsByType = (block, type) => getBlockItems(block)
 const setTextContent = (selector, value) => {
   const element = document.querySelector(selector);
   if (element && value) element.textContent = value;
+};
+
+const languageCopy = {
+  nl: {
+    labels: {
+      name: 'Naam <span class="form-required">*</span>',
+      company: 'Bedrijf',
+      email: 'E-mail <span class="form-required">*</span>',
+      phone: 'Telefoon',
+      model: 'Model <span class="form-required">*</span>',
+      quantity: 'Aantal <span class="form-required">*</span>',
+      message: 'Bericht <span class="form-required">*</span>',
+    },
+    placeholders: {
+      name: 'Jan Jansen',
+      company: 'Bedrijfsnaam',
+      email: 'jan@bedrijf.nl',
+      phone: '+31 6 1234 5678',
+      quantity: 'Bijv. 10',
+      message: 'Waar heeft u een offerte voor nodig?',
+    },
+    submit: 'Offerteaanvraag versturen',
+    sending: 'Verzenden...',
+    successTitle: 'Offerteaanvraag verzonden',
+    successDesc: 'Bedankt voor uw interesse. Een specialist neemt binnen een werkdag contact met u op.',
+    legal: 'Door dit formulier te verzenden gaat u akkoord met ons privacybeleid en onze gebruiksvoorwaarden.',
+    serverError: 'Er is een fout opgetreden. Probeer het opnieuw.',
+    connectionError: 'Verbindingsfout. Controleer uw internetverbinding en probeer het opnieuw.',
+    switchHref: '?lang=en',
+    switchTitle: 'Switch to English',
+    switchFlag: 'gb',
+    switchAlt: 'English',
+  },
+  en: {
+    labels: {
+      name: 'Name <span class="form-required">*</span>',
+      company: 'Company',
+      email: 'Email <span class="form-required">*</span>',
+      phone: 'Phone',
+      model: 'Model <span class="form-required">*</span>',
+      quantity: 'Quantity <span class="form-required">*</span>',
+      message: 'Message <span class="form-required">*</span>',
+    },
+    placeholders: {
+      name: 'John Smith',
+      company: 'Company name',
+      email: 'john@company.com',
+      phone: '+31 6 1234 5678',
+      quantity: 'For example 10',
+      message: 'What do you need a quote for?',
+    },
+    submit: 'Submit quote request',
+    sending: 'Sending...',
+    successTitle: 'Quote request sent',
+    successDesc: 'Thank you for your interest. A specialist will contact you within one business day.',
+    legal: 'By submitting this form, you agree to our privacy policy and terms of use.',
+    serverError: 'Something went wrong. Please try again.',
+    connectionError: 'Connection error. Check your internet connection and try again.',
+    switchHref: '?lang=nl',
+    switchTitle: 'Naar de Nederlandse versie',
+    switchFlag: 'nl',
+    switchAlt: 'Nederlands',
+  },
+};
+
+const activeCopy = languageCopy[selectedLanguage];
+window.RAFI_LANGUAGE_COPY = activeCopy;
+
+const applyLanguageChrome = () => {
+  Object.entries(activeCopy.labels).forEach(([name, labelText]) => {
+    const input = document.querySelector(`[name="${name}"]`);
+    const label = input?.closest('.form-group')?.querySelector('.form-label');
+    if (label) label.innerHTML = labelText;
+  });
+
+  Object.entries(activeCopy.placeholders).forEach(([name, placeholder]) => {
+    const input = document.querySelector(`[name="${name}"]`);
+    if (input) input.placeholder = placeholder;
+  });
+
+  setTextContent('#submit-label', activeCopy.submit);
+  setTextContent('#success-title', activeCopy.successTitle);
+  setTextContent('#success-desc', activeCopy.successDesc);
+  setTextContent('.form-legal', activeCopy.legal);
+
+  const languageSwitch = document.querySelector('.lang-switch');
+  const flag = languageSwitch?.querySelector('img');
+  if (languageSwitch) {
+    languageSwitch.href = activeCopy.switchHref;
+    languageSwitch.title = activeCopy.switchTitle;
+  }
+  if (flag) {
+    flag.src = `https://flagcdn.com/w40/${activeCopy.switchFlag}.png`;
+    flag.alt = activeCopy.switchAlt;
+  }
 };
 
 const docIcon = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/></svg>';
@@ -291,11 +393,12 @@ const renderDownloads = (block) => {
 const renderQuote = (block) => {
   const fields = block?.fields || [];
   const fieldNameAliases = {
-    first_name: 'firstName',
-    last_name: 'lastName',
-    job_role: 'jobTitle',
+    first_name: 'name',
+    full_name: 'name',
+    product: 'model',
     estimated_quantity: 'quantity',
-    additional_requirements: 'notes',
+    additional_requirements: 'message',
+    notes: 'message',
   };
 
   setTextContent('#quote .section-label', getFieldValue(fields, ['badge_text', 'section_label']));
@@ -489,5 +592,6 @@ window.setTab = setTab;
 window.setHeroImg = setHeroImg;
 window.closeMobile = closeMobile;
 
+applyLanguageChrome();
 renderSpecTable();
 void loadCmsContent();

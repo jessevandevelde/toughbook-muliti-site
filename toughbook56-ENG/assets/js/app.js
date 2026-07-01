@@ -371,7 +371,7 @@
         id: 'contact-phone',
         type: 'tel',
         span: 1,
-        label: pick(fields, 'form_phone_label', 'Telefoon'),
+        label: pick(fields, 'form_phone_label', 'Phone'),
         placeholder: pick(fields, 'form_phone_placeholder', '+31 6 1234 5678'),
       },
       {
@@ -387,8 +387,8 @@
         id: 'contact-quantity',
         type: 'number',
         span: 1,
-        label: pick(fields, 'form_quantity_label', 'Aantal'),
-        placeholder: pick(fields, 'form_quantity_placeholder', 'Bijv. 10'),
+        label: pick(fields, 'form_quantity_label', 'Quantity'),
+        placeholder: pick(fields, 'form_quantity_placeholder', 'For example 10'),
         min: '1',
         required: true,
       },
@@ -793,13 +793,13 @@
       const message = form.querySelector('#contact-message')?.value?.trim() || '';
 
       if (!name || !email || !model || !quantity || !message) {
-        statusEl.textContent = 'Vul naam, e-mail, model, aantal en bericht in.';
+        statusEl.textContent = 'Please fill in your name, email, model, quantity and message.';
         statusEl.className = 'form-status form-status--error';
         return;
       }
 
       btn.disabled = true;
-      statusEl.textContent = 'Verzenden...';
+      statusEl.textContent = 'Sending...';
       statusEl.className = 'form-status form-status--info';
 
       try {
@@ -810,13 +810,13 @@
           body: JSON.stringify({ name, company, email, phone, model, quantity, message }),
         });
         const data = await res.json();
-        if (!res.ok) throw new Error(data.error || 'Serverfout');
-        statusEl.textContent = data.message || 'Verzonden!';
+        if (!res.ok) throw new Error(data.error || 'Server error');
+        statusEl.textContent = data.message || 'Sent!';
         statusEl.className = 'form-status form-status--success';
         form.querySelectorAll('.input-control').forEach((el) => { el.value = ''; });
       }
       catch (err) {
-        statusEl.textContent = 'Verzenden mislukt. Probeer het later opnieuw.';
+        statusEl.textContent = 'Sending failed. Please try again later.';
         statusEl.className = 'form-status form-status--error';
       }
       finally {
