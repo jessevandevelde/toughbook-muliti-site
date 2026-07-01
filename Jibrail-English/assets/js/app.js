@@ -10,6 +10,7 @@
     ? `${apiBase}/api/content/websites/${websiteId}`
     : '';
   const endpoints = [byDomainEndpoint, byIdEndpoint].filter(Boolean);
+  const sharedFooterEndpoint = apiBase ? `${apiBase}/api/content/by-domain/shared-footer` : '';
 
   const elements = {
     loading: document.getElementById('loading'),
@@ -516,6 +517,41 @@
     const description = pick(fields, 'description');
     // CMS uses copyright_text; fall back to copyright for older setups
     const copyright = pick(fields, 'copyright_text', pick(fields, 'copyright'));
+    const sharedColumns = items.filter(item => item.itemType === 'footer_column');
+    const sharedLinks = items.filter(item => item.itemType === 'footer_link');
+
+    if (sharedColumns.length) {
+      const columnMarkup = sharedColumns.map((column) => {
+        const links = sharedLinks
+          .filter(link => Math.floor((link.sortOrder || 0) / 10) === (column.sortOrder || 0))
+          .map(link => `<li><a href="${safeUrl(link.url || '#')}">${escapeHtml(link.text || link.title || '')}</a></li>`)
+          .join('');
+
+        return `
+          <div>
+            <div class="footer-col-title">${escapeHtml(column.title || '')}</div>
+            <ul class="footer-links">${links}</ul>
+          </div>
+        `;
+      }).join('');
+
+      elements.footer.innerHTML = `
+        <div class="footer-grid">
+          <div>
+            ${brandText ? `<div class="footer-brand">${escapeHtml(brandText)}</div>` : ''}
+            ${description ? `<p class="footer-text">${escapeHtml(description)}</p>` : ''}
+          </div>
+          ${columnMarkup}
+        </div>
+        <div class="footer-bottom">
+          ${copyright ? `<span>${escapeHtml(copyright)}</span>` : ''}
+          ${pick(fields, 'disclaimer') ? `<span>${escapeHtml(pick(fields, 'disclaimer'))}</span>` : ''}
+        </div>
+      `;
+
+      showSection(elements.footer);
+      return;
+    }
 
     const navLinks = items
       .filter((item) => item.itemType === 'nav_link')
@@ -604,28 +640,6 @@
     showSection(elements.footer);
   };
 
-  const ensureFooterFromWebsite = (website) => {
-    if (!elements.footer || elements.footer.innerHTML.trim()) {
-      return;
-    }
-    if (!website) {
-      return;
-    }
-
-    const brandText = String(website.name || '').trim();
-    const domain = String(website.domain || '').trim();
-    const year = new Date().getFullYear();
-
-    const description = domain ? `Bezoek ons op ${domain}` : '';
-    const copyright = brandText ? `(c) ${year} ${brandText}.` : `(c) ${year}`;
-
-    renderFooter({
-      logo_text: brandText,
-      description,
-      copyright,
-    }, []);
-  };
-
   const renderers = {
     navbar_block: renderNavbar,
     hero_block: renderHero,
@@ -633,7 +647,6 @@
     text_block: renderSpecifications,
     contact_block: renderContactBlock,
     cta_block: renderCta,
-    footer_block: renderFooter,
   };
 
   const startReveal = () => {
@@ -701,7 +714,23 @@
         }
       });
 
-      ensureFooterFromWebsite(payload.website);
+      if (sharedFooterEndpoint) {
+        const footerResponse = await fetch(sharedFooterEndpoint, {
+          credentials: 'include',
+          cache: 'no-store',
+          headers: {
+            'Cache-Control': 'no-cache',
+          },
+        });
+
+        if (footerResponse.ok) {
+          const footerPayload = await footerResponse.json();
+          const sharedFooterBlock = footerPayload.footer || footerPayload.website?.blocks?.find(block => block.blockTypeName === 'footer_block');
+          if (sharedFooterBlock) {
+            renderFooter(mapFields(sharedFooterBlock.fields || []), mapItems(sharedFooterBlock.items || []));
+          }
+        }
+      }
 
       if (elements.loading) {
         elements.loading.style.display = 'none';

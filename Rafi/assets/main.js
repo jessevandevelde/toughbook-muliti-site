@@ -22,6 +22,7 @@ const apiBase = String(config.apiBase || (
 const defaultDomain = window.location.pathname.includes('/Rafi-English/') ? 'toughbook-g2-english.nl' : 'toughbook-g2-dutch.nl';
 const websiteDomain = config.websiteDomain || defaultDomain;
 const cmsApiUrl = `${apiBase}/api/content/by-domain/${encodeURIComponent(websiteDomain)}`;
+const sharedFooterApiUrl = `${apiBase}/api/content/by-domain/shared-footer`;
 
 let specData = fallbackSpecData;
 let activeTab = 'overview';
@@ -372,11 +373,12 @@ const renderFooter = (block) => {
         ${columnHtml}
       </div>
       <div class="footer-bottom">
-        <span class="footer-copy">${escapeHtml(getFieldValue(fields, ['copyright']))}</span>
+        <span class="footer-copy">${escapeHtml(getFieldValue(fields, ['copyright_text', 'copyright']))}</span>
         <span class="footer-note">${escapeHtml(getFieldValue(fields, ['disclaimer']))}</span>
       </div>
     </div>
   `;
+  footer.classList.add('footer-loaded');
 };
 
 const applyCmsContent = (website) => {
@@ -387,7 +389,6 @@ const applyCmsContent = (website) => {
   renderDownloads(getBlockByName(website, ['downloads_block']));
   renderQuote(getBlockByName(website, ['quote_form_block']));
   renderContact(getBlockByName(website, ['contact_block']));
-  renderFooter(getBlockByName(website, ['footer_block']));
 };
 
 const loadCmsContent = async () => {
@@ -405,6 +406,17 @@ const loadCmsContent = async () => {
 
     const payload = await response.json();
     applyCmsContent(payload.website || payload);
+
+    const footerResponse = await fetch(sharedFooterApiUrl, {
+      cache: 'no-store',
+      headers: {
+        'Cache-Control': 'no-cache',
+      },
+    });
+    if (footerResponse.ok) {
+      const footerPayload = await footerResponse.json();
+      renderFooter(footerPayload.footer || getBlockByName(footerPayload.website, ['footer_block']));
+    }
   } catch (error) {
     console.warn('Failed to load CMS content for the Rafi page.', error);
   }

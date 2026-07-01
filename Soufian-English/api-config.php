@@ -71,6 +71,12 @@ function getBlocksFromBackend($domain) {
     return $content['website']['blocks'] ?? [];
 }
 
+function getSharedFooterFromBackend() {
+    $content = getContentFromAPI('content/by-domain/shared-footer');
+
+    return $content['footer'] ?? getBlockByType($content, 'footer');
+}
+
 /**
  * Get block content by type and website
  * 

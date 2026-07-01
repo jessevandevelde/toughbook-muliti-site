@@ -12,6 +12,7 @@
 // Website ID 4 = Saymon's website in de database
 const WEBSITE_ID = 4;
 const API_URL = `http://127.0.0.1:3000/api/content/websites/${WEBSITE_ID}`;
+const SHARED_FOOTER_URL = 'http://127.0.0.1:3000/api/content/by-domain/shared-footer';
 
 // Afbeeldingen die we lokaal hebben opgeslagen
 const IMAGES = {
@@ -29,7 +30,12 @@ const IMAGES = {
 
 // fetch() haalt data op van de backend
 // .then() voert iets uit als de data klaar is
-fetch(API_URL)
+fetch(API_URL, {
+  cache: 'no-store',
+  headers: {
+    'Cache-Control': 'no-cache',
+  },
+})
   .then(response => response.json())
   .then(data => {
     const blocks = data.website.blocks;
@@ -57,9 +63,32 @@ fetch(API_URL)
         case 'specifications_block': buildSpecs(fields, items); break;
         case 'downloads_block':      buildDownloads(fields, items); break;
         case 'cta_block':            buildCTA(fields, items); break;
-        case 'footer_block':         buildFooter(fields, items); break;
       }
     });
+
+    return fetch(SHARED_FOOTER_URL, {
+      cache: 'no-store',
+      headers: {
+        'Cache-Control': 'no-cache',
+      },
+    });
+  })
+  .then(response => response.ok ? response.json() : null)
+  .then(payload => {
+    const sharedFooter = payload?.footer || payload?.website?.blocks?.find(block => block.blockTypeName === 'footer_block');
+
+    if (sharedFooter) {
+      const fields = {};
+      sharedFooter.fields.forEach(f => fields[f.fieldName] = f.fieldValue);
+
+      const items = sharedFooter.items.map(item => {
+        const itemFields = {};
+        item.fields.forEach(f => itemFields[f.fieldName] = f.fieldValue);
+        return { ...item, ...itemFields };
+      });
+
+      buildFooter(fields, items);
+    }
 
     // Laadscherm verbergen
     document.getElementById('loading').style.display = 'none';
@@ -406,15 +435,32 @@ function buildCTA(fields, items) {
 
 // --- FOOTER ---
 function buildFooter(fields, items) {
-  const navLinks = items
-    .filter(i => i.itemType === 'nav_link')
-    .map(i => `<li><a href="${i.url}">${i.text}</a></li>`)
-    .join('');
+  const columns = items.filter(i => i.itemType === 'footer_column');
+  const footerLinks = items.filter(i => i.itemType === 'footer_link');
+  const columnMarkup = columns.length
+    ? columns.map(column => {
+      const columnLinks = footerLinks
+        .filter(link => Math.floor((link.sortOrder || 0) / 10) === (column.sortOrder || 0))
+        .map(link => `<li><a href="${link.url || '#'}">${link.text || link.title || ''}</a></li>`)
+        .join('');
 
-  const productLinks = items
-    .filter(i => i.itemType === 'product_link')
-    .map(i => `<li><a href="${i.url}">${i.text}</a></li>`)
-    .join('');
+      return `
+        <div>
+          <div class="footer-col-title">${column.title || ''}</div>
+          <ul class="footer-links">${columnLinks}</ul>
+        </div>
+      `;
+    }).join('')
+    : `
+      <div>
+        <div class="footer-col-title">Navigation</div>
+        <ul class="footer-links">${items.filter(i => i.itemType === 'nav_link').map(i => `<li><a href="${i.url}">${i.text}</a></li>`).join('')}</ul>
+      </div>
+      <div>
+        <div class="footer-col-title">Products</div>
+        <ul class="footer-links">${items.filter(i => i.itemType === 'product_link').map(i => `<li><a href="${i.url}">${i.text}</a></li>`).join('')}</ul>
+      </div>
+    `;
 
   const footer = document.getElementById('footer');
   footer.innerHTML = `
@@ -443,44 +489,12 @@ function buildFooter(fields, items) {
             </a>
           </div>
         </div>
-        <div>
-          <div class="footer-col-title">Navigation</div>
-          <ul class="footer-links">${navLinks}</ul>
-        </div>
-        <div>
-          <div class="footer-col-title">Products</div>
-          <ul class="footer-links">${productLinks}</ul>
-        </div>
-        <div>
-          <div class="footer-col-title">Contact</div>
-          <ul class="footer-links">
-            <li>
-              <div class="footer-contact-item">
-                <svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
-                <a href="mailto:${fields.contact_email}">${fields.contact_email}</a>
-              </div>
-            </li>
-            <li>
-              <div class="footer-contact-item">
-                <svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z"/></svg>
-                <a href="tel:${fields.contact_phone}">${fields.contact_phone}</a>
-              </div>
-            </li>
-            <li>
-              <div class="footer-contact-item">
-                <svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"/><path stroke-linecap="round" stroke-linejoin="round" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"/></svg>
-                <span>${fields.contact_location}</span>
-              </div>
-            </li>
-          </ul>
-        </div>
+        ${columnMarkup}
       </div>
       <div class="footer-bottom">
-        <span class="footer-copy">${fields.copyright}</span>
+        <span class="footer-copy">${fields.copyright_text || fields.copyright}</span>
         <div class="footer-bottom-links">
-          <a href="${fields.privacy_policy_url}">Privacy Policy</a>
-          <a href="${fields.terms_url}">Terms of Service</a>
-          <a href="${fields.cookies_url}">Cookie Policy</a>
+          ${footerLinks.filter(link => Math.floor((link.sortOrder || 0) / 10) === 4).map(link => `<a href="${link.url || '#'}">${link.text || link.title || ''}</a>`).join('')}
         </div>
       </div>
     </div>

@@ -86,3 +86,7 @@ export const getWebsiteContentByDomain = async (domain: string): Promise<Website
 
   return websites.find(website => website.domain === domain) ?? null;
 };
+
+export const getSharedFooterContent = async (): Promise<WebsiteContent | null> => {
+  return getWebsiteContentByDomain('shared-footer');
+};

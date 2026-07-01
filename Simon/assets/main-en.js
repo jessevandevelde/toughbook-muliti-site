@@ -2,6 +2,9 @@
 // main-en.js — English homepage content
 // ============================================
 
+const API_BASE = 'http://127.0.0.1:3000';
+const SHARED_FOOTER_URL = `${API_BASE}/api/content/by-domain/shared-footer`;
+
 const IMAGES = {
   hero:              '../assets/images/wow/Panasonic_Toughbook_in_a_tech_storm.png',
   featureRobust:     '../assets/images/Product gallery/Ruwe_kracht_in_modderige_omstandigheden.png',
@@ -28,6 +31,20 @@ function escHtml(value) {
 function escUrl(url) {
   if (!url || /^javascript:/i.test(String(url).trim())) return '#';
   return escHtml(url);
+}
+
+function fieldsToObject(fields = []) {
+  return fields.reduce((result, field) => {
+    result[field.fieldName] = field.fieldValue;
+    return result;
+  }, {});
+}
+
+function itemsToObjects(items = []) {
+  return items.map(item => ({
+    ...item,
+    ...fieldsToObject(item.fields || []),
+  }));
 }
 
 function gradientWord(safeTitle, word) {
@@ -559,6 +576,86 @@ function buildFooter() {
   footer.style.display = 'block';
 }
 
+function buildSharedFooter(fields, items) {
+  const columns = items.filter(item => item.itemType === 'footer_column');
+  const footerLinks = items.filter(item => item.itemType === 'footer_link');
+  const columnMarkup = columns.map(column => {
+    const columnLinks = footerLinks
+      .filter(link => Math.floor((link.sortOrder || 0) / 10) === (column.sortOrder || 0))
+      .map(link => `<li><a href="${escUrl(link.url || '#')}">${escHtml(link.text || link.title || '')}</a></li>`)
+      .join('');
+
+    return `
+      <div>
+        <div class="footer-col-title">${escHtml(column.title || '')}</div>
+        <ul class="footer-links">${columnLinks}</ul>
+      </div>
+    `;
+  }).join('');
+
+  const legalLinks = footerLinks
+    .filter(link => Math.floor((link.sortOrder || 0) / 10) === 4)
+    .map(link => `<a href="${escUrl(link.url || '#')}">${escHtml(link.text || link.title || '')}</a>`)
+    .join('');
+
+  const footer = document.getElementById('footer');
+  footer.innerHTML = `
+    <div class="footer-glow-1"></div>
+    <div class="footer-glow-2"></div>
+    <div class="footer-inner">
+      <div class="footer-top">
+        <div>
+          <div class="footer-logo">
+            <div class="footer-logo-icon">P</div>
+            <span class="footer-logo-text">${escHtml(fields.logo_text || 'Panasonic Toughbook')}</span>
+          </div>
+          <p class="footer-desc">${escHtml(fields.description || '')}</p>
+          <div class="footer-socials">
+            <a href="https://www.linkedin.com/company/panasonic-connect-europe/" target="_blank" rel="noopener noreferrer" class="social-btn" aria-label="LinkedIn">
+              <svg fill="currentColor" viewBox="0 0 24 24" aria-hidden="true"><path d="M16 8a6 6 0 016 6v7h-4v-7a2 2 0 00-2-2 2 2 0 00-2 2v7h-4v-7a6 6 0 016-6zM2 9h4v12H2z"/><circle cx="4" cy="4" r="2"/></svg>
+            </a>
+            <a href="https://www.youtube.com/@PanasonicConnectEurope" target="_blank" rel="noopener noreferrer" class="social-btn" aria-label="YouTube">
+              <svg fill="currentColor" viewBox="0 0 24 24" aria-hidden="true"><path d="M22.54 6.42a2.78 2.78 0 00-1.95-1.96C18.88 4 12 4 12 4s-6.88 0-8.59.46A2.78 2.78 0 001.46 6.42 29 29 0 001 12a29 29 0 00.46 5.58 2.78 2.78 0 001.95 1.96C5.12 20 12 20 12 20s6.88 0 8.59-.46a2.78 2.78 0 001.95-1.96A29 29 0 0023 12a29 29 0 00-.46-5.58z"/><polygon fill="#fff" points="9.75,15.02 15.5,12 9.75,8.98 9.75,15.02"/></svg>
+            </a>
+          </div>
+        </div>
+        ${columnMarkup}
+      </div>
+      <div class="footer-bottom">
+        <span class="footer-copy">${escHtml(fields.copyright_text || fields.copyright || '')}</span>
+        <div class="footer-bottom-links">${legalLinks}</div>
+      </div>
+    </div>
+  `;
+  footer.style.display = 'block';
+}
+
+async function loadSharedFooter() {
+  try {
+    const response = await fetch(SHARED_FOOTER_URL, {
+      cache: 'no-store',
+      headers: {
+        'Cache-Control': 'no-cache',
+      },
+    });
+
+    if (!response.ok) {
+      throw new Error('Shared footer request failed');
+    }
+
+    const payload = await response.json();
+    const footer = payload.footer || payload.website?.blocks?.find(block => block.blockTypeName === 'footer_block');
+
+    if (!footer) {
+      throw new Error('Shared footer missing');
+    }
+
+    buildSharedFooter(fieldsToObject(footer.fields || []), itemsToObjects(footer.items || []));
+  } catch (error) {
+    console.error(error);
+  }
+}
+
 const GALLERY_SLIDES = [
   { img: '../assets/images/wow/Panasonic_Toughbook_in_a_tech_storm.png',                           title: 'Tech Storm',        desc: 'The TOUGHBOOK 33 conquers the most powerful technology storms — always connected, always on.' },
   { img: '../assets/images/wow/Nachtmissie_met_tactisch_laptop_en_helikopter.png',                  title: 'Night Mission',     desc: 'Deployed on night missions and tactical operations — where reliability is non-negotiable.' },
@@ -755,14 +852,14 @@ function initQuoteForm() {
   });
 }
 
-function initPage() {
+async function initPage() {
   buildNavbar();
   buildHero();
   buildFeatures();
   buildSpecs();
   buildDownloads();
   buildCTA();
-  buildFooter();
+  await loadSharedFooter();
   document.getElementById('loading').style.display = 'none';
   startScrollEffects();
   startScrollAnimations();

@@ -20,6 +20,7 @@ $ctaBlock = getBlockByType($blocks, 'cta');
 $footerBlock = getBlockByType($blocks, 'footer');
 $navbarBlock = getBlockByType($blocks, 'navbar');
 $specSheetButtonBlock = getBlockByType($blocks, 'spec_sheet_button');
+$sharedFooterBlock = getSharedFooterFromBackend();
 
 // Hero section data
 $page_title = getBlockFieldValue($heroBlock, 'page_title', 'Panasonic Toughbook 40 MK2');
@@ -266,8 +267,24 @@ $heroStats = getBlockItems($heroBlock);
  
 <!-- FOOTER -->
 <footer>
-  <div class="footer-brand"><?php echo htmlspecialchars(getBlockFieldValue($footerBlock, 'logo_text', 'TOUGHBOOK')); ?> <span>// <?php echo htmlspecialchars(getBlockFieldValue($footerBlock, 'model_text', '40 MK2')); ?></span></div>
-  <div class="footer-copy"><?php echo htmlspecialchars(getBlockFieldValue($footerBlock, 'copyright', '© ' . date('Y') . ' PANASONIC CONNECT • ALLE RECHTEN VOORBEHOUDEN')); ?></div>
+  <div class="footer-brand"><?php echo htmlspecialchars(getBlockFieldValue($sharedFooterBlock, 'logo_text', 'TOUGHBOOK')); ?> <span>// NETWORK</span></div>
+  <div class="footer-columns">
+    <?php
+    $footerItems = getBlockItems($sharedFooterBlock);
+    foreach ($footerItems as $column):
+      if (($column['itemType'] ?? '') !== 'footer_column') continue;
+      $columnSort = (int) ($column['sortOrder'] ?? 0);
+    ?>
+    <div class="footer-col">
+      <div class="footer-col-title"><?php echo htmlspecialchars(getItemFieldValue($column, 'title')); ?></div>
+      <?php foreach ($footerItems as $link): ?>
+        <?php if (($link['itemType'] ?? '') !== 'footer_link' || (int) floor(((int) ($link['sortOrder'] ?? 0)) / 10) !== $columnSort) continue; ?>
+        <a href="<?php echo htmlspecialchars(getItemFieldValue($link, 'url', '#')); ?>"><?php echo htmlspecialchars(getItemFieldValue($link, 'text')); ?></a>
+      <?php endforeach; ?>
+    </div>
+    <?php endforeach; ?>
+  </div>
+  <div class="footer-copy"><?php echo htmlspecialchars(getBlockFieldValue($sharedFooterBlock, 'copyright', date('Y') . ' Panasonic. All rights reserved.')); ?></div>
 </footer>
  
 </body>

@@ -2,6 +2,7 @@ import type { Request, Response } from 'express';
 import {
   getWebsiteContentByDomain,
   getWebsiteContentById,
+  getSharedFooterContent,
   getWebsiteContentTree,
 } from './content.service.js';
 
@@ -108,6 +109,36 @@ export const getWebsiteContentByDomainHandler = async (req: Request, res: Respon
 
     res.status(internalServerErrorStatus).json({
       message: 'Failed to load website by domain.',
+    });
+  }
+};
+
+export const getSharedFooterContentHandler = async (_req: Request, res: Response): Promise<void> => {
+  preventResponseCaching(res);
+
+  try {
+    const website = await getSharedFooterContent();
+    const footer = website?.blocks.find(block => block.blockTypeName === 'footer_block');
+
+    if (!website || !footer) {
+      res.status(notFoundStatus).json({
+        message: 'Shared footer not found.',
+      });
+
+      return;
+    }
+
+    res.json({
+      website,
+      footer,
+    });
+  }
+  catch (error) {
+    console.error('Failed to load shared footer.');
+    console.error(error);
+
+    res.status(internalServerErrorStatus).json({
+      message: 'Failed to load shared footer.',
     });
   }
 };
