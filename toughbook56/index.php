@@ -37,6 +37,10 @@ $apiBase = rtrim($apiBase, '/');
 
     <footer id="footer" class="site-footer" hidden></footer>
 
+    <a href="../toughbook56-ENG/" class="lang-switch" title="Switch to English">
+        <img src="https://flagcdn.com/w40/gb.png" width="28" height="20" alt="English" />
+    </a>
+
     <script>
         window.APP_CONFIG = <?php echo json_encode([
                                 'websiteId' => $websiteId,

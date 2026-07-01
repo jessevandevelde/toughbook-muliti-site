@@ -1,3 +1,16 @@
+﻿.lang-switch {
+  position: fixed;
+  top: 18px;
+  right: 32px;
+  z-index: 1100;
+  line-height: 1;
+  text-decoration: none;
+  opacity: 0.85;
+  transition: opacity 0.2s, transform 0.2s;
+  filter: drop-shadow(0 1px 4px rgba(0,0,0,0.5));
+}
+.lang-switch:hover { opacity: 1; transform: scale(1.15); }
+.lang-switch img { display: block; border-radius: 2px; }
 /* ============================================
    style.css — Toughbook 33 Website Styling
 
@@ -539,3 +552,8 @@ footer { position: relative; overflow: hidden; margin-top: 72px; background: lin
   .badge-dot, .gradient-text, .hero-glow-1, .hero-glow-2 { animation: none; }
   * { transition-duration: 0.01ms !important; animation-duration: 0.01ms !important; }
 }
+
+
+/* ruimte voor taalwisselaar */
+nav { padding-right: 72px !important; }
+

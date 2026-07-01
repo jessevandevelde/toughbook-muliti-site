@@ -1,3 +1,16 @@
+﻿.lang-switch {
+  position: fixed;
+  top: 18px;
+  right: 32px;
+  z-index: 1100;
+  line-height: 1;
+  text-decoration: none;
+  opacity: 0.85;
+  transition: opacity 0.2s, transform 0.2s;
+  filter: drop-shadow(0 1px 4px rgba(0,0,0,0.5));
+}
+.lang-switch:hover { opacity: 1; transform: scale(1.15); }
+.lang-switch img { display: block; border-radius: 2px; }
  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
  
   :root {
@@ -455,3 +468,5 @@
     .hero-stats { flex-wrap: wrap; gap: 1rem; }
     .stat { border-right: none; }
   }
+/* ruimte voor taalwisselaar */
+nav { padding-right: 72px !important; }
