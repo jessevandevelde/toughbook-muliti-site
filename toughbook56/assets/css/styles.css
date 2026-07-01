@@ -46,6 +46,23 @@ body::before {
   z-index: -2;
 }
 
+.lang-switch {
+  position: fixed;
+  top: 18px;
+  right: 32px;
+  z-index: 1100;
+  font-size: 22px;
+  line-height: 1;
+  text-decoration: none;
+  opacity: 0.85;
+  transition: opacity 0.2s, transform 0.2s;
+  filter: drop-shadow(0 1px 4px rgba(0,0,0,0.5));
+}
+.lang-switch:hover {
+  opacity: 1;
+  transform: scale(1.15);
+}
+
 .noise {
   position: fixed;
   inset: 0;

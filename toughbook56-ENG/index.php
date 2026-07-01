@@ -37,6 +37,8 @@ $apiBase = rtrim($apiBase, '/');
 
     <footer id="footer" class="site-footer" hidden></footer>
 
+    <a href="../toughbook56/" class="lang-switch" title="Naar de Nederlandse versie">🇳🇱</a>
+
     <script>
         window.APP_CONFIG = <?php echo json_encode([
                                 'websiteId' => $websiteId,
