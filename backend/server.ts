@@ -4,7 +4,6 @@ import dotenv from 'dotenv';
 import dotenvExpand from 'dotenv-expand';
 import express, { json } from 'express';
 import http from 'node:http';
-import nodemailer from 'nodemailer';
 import cmsRoutes from './cms/index.js';
 import contactRoutes from './contact/index.js';
 import contentRoutes from './content/index.js';
@@ -30,6 +29,9 @@ const allowedOrigins = [
   'http://127.0.0.1:3000',
   'http://127.0.0.1:8080',
   'http://localhost:3000',
+  'http://localhost:8000',
+  'http://127.0.0.1:5501',
+  'file://', // For local file:// protocol
 ];
 
 const app = express();
