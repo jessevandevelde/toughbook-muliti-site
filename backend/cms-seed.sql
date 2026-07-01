@@ -14,7 +14,8 @@ INSERT INTO block_types (name, description) VALUES
   ('gallery', 'Image gallery'),
   ('cta', 'Call-to-action section'),
   ('testimonials', 'Customer testimonials'),
-  ('faq', 'Frequently asked questions');
+  ('faq', 'Frequently asked questions'),
+  ('spec_sheet_button_block', 'Hero spec sheet download button');
 
 -- Get IDs for block types
 SET @block_type_hero_id = 1;
@@ -412,6 +413,17 @@ INSERT INTO block_fields (block_id, field_name, field_value) VALUES
   (@cta_block_id, 'description', 'Vraag een offerte aan of neem contact op met onze rugged specialist. Onze rugged specialisten reageren binnen 24 uur.'),
   (@cta_block_id, 'cta_text', 'Vraag Offerte Aan →'),
   (@cta_block_id, 'cta_url', 'mailto:info@toughbook.nl');
+
+-- === SPEC SHEET BUTTON BLOCK ===
+INSERT INTO website_blocks (website_id, block_type_id, sort_order)
+VALUES (@website_id, (SELECT id FROM block_types WHERE name='spec_sheet_button_block'), 8);
+SET @spec_sheet_button_block_id = LAST_INSERT_ID();
+
+INSERT INTO block_fields (block_id, field_name, field_value) VALUES
+  (@spec_sheet_button_block_id, 'text', 'Download Spec Sheet'),
+  (@spec_sheet_button_block_id, 'url', 'https://eu.connect.panasonic.com/sites/default/files/media/document/2022-05/TOUGHBOOK_40_Spec_Sheet_English_May_2022%20%281%29.pdf'),
+  (@spec_sheet_button_block_id, 'target', '_blank'),
+  (@spec_sheet_button_block_id, 'download', 'true');
 
 -- === FOOTER BLOCK ===
 INSERT INTO website_blocks (website_id, block_type_id, sort_order) 

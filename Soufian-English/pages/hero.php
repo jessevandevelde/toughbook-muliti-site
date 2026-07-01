@@ -3,7 +3,7 @@
 require_once __DIR__ . '/../api-config.php';
 
 // Fetch CMS blocks from backend
-$blocks = getBlocksFromBackend('souf.nl');
+$blocks = getBlocksFromBackend('copy-souf.nl');
 
 // Extract all blocks
 $heroBlock = getBlockByType($blocks, 'hero');
@@ -23,22 +23,22 @@ $hero_badge = getBlockFieldValue($heroBlock, 'badge', 'MISSION CRITICAL // MK-2 
 $hero_h1_main = getBlockFieldValue($heroBlock, 'heading_main', 'ENGINEERED FOR');
 $hero_h1_accent = getBlockFieldValue($heroBlock, 'heading_accent', 'EXTREME');
 $hero_h1_secondary = getBlockFieldValue($heroBlock, 'heading_secondary', 'FRONTIERS');
-$hero_description = getBlockFieldValue($heroBlock, 'description', 'De Toughbook 40 MK2 &mdash; het meest veelzijdige 14" volledig robuuste werkstation ooit gebouwd.');
-$hero_cta_primary = getBlockFieldValue($heroBlock, 'cta_primary_text', 'Vraag Offerte Aan');
-$hero_cta_secondary = getBlockFieldValue($heroBlock, 'cta_secondary_text', 'Bekijk Specs');
+$hero_description = getBlockFieldValue($heroBlock, 'description', 'The Toughbook 40 MK2 &mdash; the most versatile 14" fully rugged workstation ever built.');
+$hero_cta_primary = getBlockFieldValue($heroBlock, 'cta_primary_text', 'Request a Quote');
+$hero_cta_secondary = getBlockFieldValue($heroBlock, 'cta_secondary_text', 'View Specs');
 $hero_image = getAssetUrl(getBlockFieldValue($heroBlock, 'image_url'), '../images/toughbook-40-hero.jpg');
 $spec_sheet_url = getBlockFieldValue($specSheetButtonBlock, 'url');
 $spec_sheet_text = getBlockFieldValue($specSheetButtonBlock, 'text');
 $spec_sheet_target = getBlockFieldValue($specSheetButtonBlock, 'target', '_blank');
 $spec_sheet_download = getBlockFieldValue($specSheetButtonBlock, 'download', 'true');
-$price_old = getBlockFieldValue($heroBlock, 'price_old', '€ 4.885,00');
-$price_new = getBlockFieldValue($heroBlock, 'price_new', '€ 4.640,75');
+$price_old = getBlockFieldValue($heroBlock, 'price_old', 'EUR 4,885.00');
+$price_new = getBlockFieldValue($heroBlock, 'price_new', 'EUR 4,640.75');
 
 // Get hero stats from items
 $heroStats = getBlockItems($heroBlock);
 ?>
 <!DOCTYPE html>
-<html lang="nl">
+<html lang="en">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -54,12 +54,12 @@ $heroStats = getBlockItems($heroBlock);
   <a href="#hero" class="nav-brand"><?php echo htmlspecialchars(getBlockFieldValue($navbarBlock, 'logo_text', 'TOUGHBOOK // 40')); ?></a>
   <ul class="nav-links">
     <li><a href="#features">01_FEATURES</a></li>
-    <li><a href="#sectoren">02_SECTOREN</a></li>
+    <li><a href="#sectoren">02_SECTORS</a></li>
     <li><a href="#specs">03_SPECS</a></li>
     <li><a href="#gallery">04_GALLERY</a></li>
     <li><a href="#downloads">05_DOWNLOADS</a></li>
   </ul>
-  <a href="<?php echo htmlspecialchars(getBlockFieldValue($navbarBlock, 'button_url', '#offerte')); ?>" class="nav-cta"><?php echo htmlspecialchars(getBlockFieldValue($navbarBlock, 'button_text', 'OFFERTE')); ?></a>
+  <a href="<?php echo htmlspecialchars(getBlockFieldValue($navbarBlock, 'button_url', '#offerte')); ?>" class="nav-cta"><?php echo htmlspecialchars(getBlockFieldValue($navbarBlock, 'button_text', 'QUOTE')); ?></a>
 </nav>
  
 <!-- HERO -->
@@ -101,7 +101,7 @@ $heroStats = getBlockItems($heroBlock);
     <div class="hero-price">
       <span class="price-old"><?php echo htmlspecialchars($price_old); ?></span>
       <span class="price-new"><?php echo htmlspecialchars($price_new); ?></span>
-      <span class="price-note">EXCL. BTW • ONLINE PRIJS</span>
+      <span class="price-note">EXCL. VAT &bull; ONLINE PRICE</span>
     </div>
   </div>
 </section>
@@ -110,10 +110,10 @@ $heroStats = getBlockItems($heroBlock);
 <section id="features">
   <div class="features-intro">
     <span class="section-label">01 // Features</span>
-    <h2 class="section-title"><?php echo getBlockFieldValue($featuresBlock, 'title', 'GEBOUWD VOOR ZWAARSTE OMSTANDIGHEDEN'); ?></h2>
+    <h2 class="section-title"><?php echo getBlockFieldValue($featuresBlock, 'title', 'BUILT FOR THE TOUGHEST CONDITIONS'); ?></h2>
     <div class="divider"></div>
     <p style="color:var(--text);font-size:.9rem;line-height:1.7;">
-      <?php echo getBlockFieldValue($featuresBlock, 'description', 'De Toughbook 40 MK2 combineert militaire robuustheid met enterprise performance. Elk onderdeel is ontworpen om te overleven waar andere laptops falen.'); ?>
+      <?php echo getBlockFieldValue($featuresBlock, 'description', 'The Toughbook 40 MK2 combines military-grade ruggedness with enterprise performance. Every component is designed to survive where other laptops fail.'); ?>
     </p>
   </div>
   <div class="features-grid">
@@ -134,10 +134,10 @@ $heroStats = getBlockItems($heroBlock);
   </div>
 </section>
  
-<!-- SECTOREN -->
+<!-- SECTORS -->
 <section id="sectoren">
-  <span class="section-label"><?php echo getBlockFieldValue($sectorsBlock, 'section_label', '02 // Sectoren'); ?></span>
-  <h2 class="section-title"><?php echo getBlockFieldValue($sectorsBlock, 'title', 'INGEZET IN ELKE SECTOR'); ?></h2>
+  <span class="section-label"><?php echo getBlockFieldValue($sectorsBlock, 'section_label', '02 // Sectors'); ?></span>
+  <h2 class="section-title"><?php echo getBlockFieldValue($sectorsBlock, 'title', 'DEPLOYED ACROSS EVERY SECTOR'); ?></h2>
   <div class="divider"></div>
   <div class="sectoren-grid">
     <?php 
@@ -155,8 +155,8 @@ $heroStats = getBlockItems($heroBlock);
  
 <!-- SPECS -->
 <section id="specs">
-  <span class="section-label"><?php echo getBlockFieldValue($specsBlock, 'section_label', '03 // Specificaties'); ?></span>
-  <h2 class="section-title"><?php echo getBlockFieldValue($specsBlock, 'title', 'TECHNISCHE SPECIFICATIES'); ?></h2>
+  <span class="section-label"><?php echo getBlockFieldValue($specsBlock, 'section_label', '03 // Specifications'); ?></span>
+  <h2 class="section-title"><?php echo getBlockFieldValue($specsBlock, 'title', 'TECHNICAL SPECIFICATIONS'); ?></h2>
   <div class="divider"></div>
   <div class="specs-layout">
     <div>
@@ -170,7 +170,7 @@ $heroStats = getBlockItems($heroBlock);
       $connectivitySpecs = [];
       ?>
       <div class="spec-group">
-        <div class="spec-group-title">// Specificaties</div>
+        <div class="spec-group-title">// Specifications</div>
         <?php foreach ($processorSpecs as $spec): ?>
         <div class="spec-row">
           <span class="spec-key"><?php echo htmlspecialchars(getItemFieldValue($spec, 'label', 'N/A')); ?></span>
@@ -190,7 +190,7 @@ $heroStats = getBlockItems($heroBlock);
     </div>
     <div>
       <div class="spec-group">
-        <div class="spec-group-title">// Specificaties</div>
+        <div class="spec-group-title">// Specifications</div>
         <?php foreach ($ruggedSpecs as $spec): ?>
         <div class="spec-row">
           <span class="spec-key"><?php echo htmlspecialchars(getItemFieldValue($spec, 'label', 'N/A')); ?></span>
@@ -199,7 +199,7 @@ $heroStats = getBlockItems($heroBlock);
         <?php endforeach; ?>
       </div>
       <div class="spec-group">
-        <div class="spec-group-title">// Connectiviteit &amp; Batterij</div>
+        <div class="spec-group-title">// Connectivity &amp; Battery</div>
         <?php foreach ($connectivitySpecs as $spec): ?>
         <div class="spec-row">
           <span class="spec-key"><?php echo htmlspecialchars(getItemFieldValue($spec, 'label', 'N/A')); ?></span>
@@ -214,7 +214,7 @@ $heroStats = getBlockItems($heroBlock);
 <!-- GALLERY -->
 <section id="gallery">
   <span class="section-label"><?php echo getBlockFieldValue($galleryBlock, 'section_label', '04 // Gallery'); ?></span>
-  <h2 class="section-title"><?php echo getBlockFieldValue($galleryBlock, 'title', 'IN HET VELD GETEST'); ?></h2>
+  <h2 class="section-title"><?php echo getBlockFieldValue($galleryBlock, 'title', 'FIELD-TESTED PRODUCT GALLERY'); ?></h2>
   <div class="divider"></div>
   <div class="gallery-grid">
     <?php 
@@ -233,7 +233,7 @@ $heroStats = getBlockItems($heroBlock);
 <!-- DOWNLOADS -->
 <section id="downloads">
   <span class="section-label"><?php echo getBlockFieldValue($downloadsBlock, 'section_label', '05 // Downloads'); ?></span>
-  <h2 class="section-title"><?php echo getBlockFieldValue($downloadsBlock, 'title', 'DOCUMENTEN & DOWNLOADS'); ?></h2>
+  <h2 class="section-title"><?php echo getBlockFieldValue($downloadsBlock, 'title', 'DOCUMENTS & DOWNLOADS'); ?></h2>
   <div class="divider"></div>
   <div class="downloads-grid">
     <?php 
@@ -251,19 +251,19 @@ $heroStats = getBlockItems($heroBlock);
   </div>
 </section>
  
-<!-- OFFERTE CTA -->
+<!-- QUOTE CTA -->
 <section id="offerte">
   <div class="offerte-text">
-    <h2><?php echo htmlspecialchars(getBlockFieldValue($ctaBlock, 'title', 'KLAAR VOOR DEPLOYMENT?')); ?></h2>
-    <p><?php echo htmlspecialchars(getBlockFieldValue($ctaBlock, 'subtitle', 'Vraag een offerte aan of neem contact op.')); ?></p>
+    <h2><?php echo htmlspecialchars(getBlockFieldValue($ctaBlock, 'title', 'READY FOR DEPLOYMENT?')); ?></h2>
+    <p><?php echo htmlspecialchars(getBlockFieldValue($ctaBlock, 'subtitle', 'Request a quote or contact us.')); ?></p>
   </div>
-  <a href="mailto:<?php echo htmlspecialchars(getBlockFieldValue($ctaBlock, 'email_value', 'info@toughbook.nl')); ?>" class="btn-dark"><?php echo htmlspecialchars(getBlockFieldValue($ctaBlock, 'button_text', 'Vraag Offerte Aan →')); ?></a>
+  <a href="mailto:<?php echo htmlspecialchars(getBlockFieldValue($ctaBlock, 'email_value', 'info@toughbook.nl')); ?>" class="btn-dark"><?php echo htmlspecialchars(getBlockFieldValue($ctaBlock, 'button_text', 'Request a Quote ->')); ?></a>
 </section>
  
 <!-- FOOTER -->
 <footer>
   <div class="footer-brand"><?php echo htmlspecialchars(getBlockFieldValue($footerBlock, 'logo_text', 'TOUGHBOOK')); ?> <span>// <?php echo htmlspecialchars(getBlockFieldValue($footerBlock, 'model_text', '40 MK2')); ?></span></div>
-  <div class="footer-copy"><?php echo htmlspecialchars(getBlockFieldValue($footerBlock, 'copyright', '© ' . date('Y') . ' PANASONIC CONNECT • ALLE RECHTEN VOORBEHOUDEN')); ?></div>
+  <div class="footer-copy"><?php echo htmlspecialchars(getBlockFieldValue($footerBlock, 'copyright', date('Y') . ' Panasonic. All rights reserved.')); ?></div>
 </footer>
  
 </body>
