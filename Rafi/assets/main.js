@@ -203,7 +203,12 @@
 
   const loadCmsContent = async () => {
     try {
-      const response = await fetch(cmsApiUrl);
+      const response = await fetch(cmsApiUrl, {
+        cache: 'no-store',
+        headers: {
+          'Cache-Control': 'no-cache',
+        },
+      });
       if (!response.ok) {
         throw new Error(`CMS request failed with status ${response.status}`);
       }

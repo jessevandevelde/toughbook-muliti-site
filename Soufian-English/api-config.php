@@ -5,32 +5,14 @@
 
 // Backend API base URL
 define('API_BASE_URL', 'http://localhost:3000/api');
-define('CACHE_DIR', __DIR__ . '/cache');
-
-// Ensure cache directory exists
-if (!is_dir(CACHE_DIR)) {
-    mkdir(CACHE_DIR, 0755, true);
-}
 
 /**
- * Fetch content from CMS API with caching
+ * Fetch fresh content from CMS API.
  * 
  * @param string $endpoint API endpoint (e.g., 'content/by-domain/toughbook')
- * @param int $cacheTTL Cache time to live in seconds (0 = no cache)
  * @return array|null Content data or null on failure
  */
-function getContentFromAPI($endpoint, $cacheTTL = 0) {
-    $cacheFile = CACHE_DIR . '/' . md5($endpoint) . '.json';
-    
-    // Try to get from cache
-    if ($cacheTTL > 0 && file_exists($cacheFile)) {
-        $cacheTime = filemtime($cacheFile);
-        if ((time() - $cacheTime) < $cacheTTL) {
-            return json_decode(file_get_contents($cacheFile), true);
-        }
-    }
-    
-    // Fetch from API
+function getContentFromAPI($endpoint) {
     $url = API_BASE_URL . '/' . $endpoint;
     
     if (function_exists('curl_init')) {
@@ -41,6 +23,10 @@ function getContentFromAPI($endpoint, $cacheTTL = 0) {
             CURLOPT_TIMEOUT => 5,
             CURLOPT_FOLLOWLOCATION => true,
             CURLOPT_SSL_VERIFYPEER => false,
+            CURLOPT_HTTPHEADER => [
+                'Cache-Control: no-cache',
+                'Pragma: no-cache',
+            ],
         ]);
 
         $response = curl_exec($ch);
@@ -51,6 +37,7 @@ function getContentFromAPI($endpoint, $cacheTTL = 0) {
             'http' => [
                 'timeout' => 5,
                 'ignore_errors' => true,
+                'header' => "Cache-Control: no-cache\r\nPragma: no-cache\r\n",
             ],
         ]);
         $response = @file_get_contents($url, false, $context);
@@ -69,25 +56,17 @@ function getContentFromAPI($endpoint, $cacheTTL = 0) {
         return null;
     }
     
-    $data = json_decode($response, true);
-    
-    // Cache the response
-    if ($cacheTTL > 0 && $data) {
-        file_put_contents($cacheFile, json_encode($data));
-    }
-    
-    return $data;
+    return json_decode($response, true);
 }
 
 /**
  * Request the CMS blocks for a website domain from the backend.
  *
  * @param string $domain Website domain
- * @param int $cacheTTL Cache time to live in seconds (0 = no cache)
  * @return array Website blocks
  */
-function getBlocksFromBackend($domain, $cacheTTL = 0) {
-    $content = getContentFromAPI('content/by-domain/' . $domain, $cacheTTL);
+function getBlocksFromBackend($domain) {
+    $content = getContentFromAPI('content/by-domain/' . $domain);
 
     return $content['website']['blocks'] ?? [];
 }

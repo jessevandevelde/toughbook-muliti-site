@@ -1,4 +1,8 @@
 <?php
+header('Cache-Control: no-store, no-cache, must-revalidate, proxy-revalidate');
+header('Pragma: no-cache');
+header('Expires: 0');
+
 // Load CMS API helpers
 require_once __DIR__ . '/../api-config.php';
 

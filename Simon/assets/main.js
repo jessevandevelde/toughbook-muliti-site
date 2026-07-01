@@ -14,7 +14,8 @@
 
 const RAW_LANG = new URLSearchParams(window.location.search).get('lang');
 const SITE_LANGS = { en: 4, nl: 9 };
-const CURRENT_LANG = SITE_LANGS[RAW_LANG] ? RAW_LANG : 'en';
+const PATH_LANG = /\/Simon\/en(\/|$)/.test(window.location.pathname) ? 'en' : 'nl';
+const CURRENT_LANG = SITE_LANGS[RAW_LANG] ? RAW_LANG : PATH_LANG;
 const WEBSITE_ID = SITE_LANGS[CURRENT_LANG];
 
 // Werkt zowel lokaal (localhost/127.0.0.1) als in productie (zelfde origin).
@@ -71,7 +72,12 @@ const IMAGES = {
 
 // ===== 2. DATA OPHALEN =====
 
-fetch(API_URL)
+fetch(API_URL, {
+  cache: 'no-store',
+  headers: {
+    'Cache-Control': 'no-cache',
+  },
+})
   .then(response => {
     if (!response.ok) throw new Error(`HTTP ${response.status}`);
     return response.json();
