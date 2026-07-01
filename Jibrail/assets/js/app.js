@@ -37,6 +37,9 @@
     if (!raw) {
       return '#';
     }
+    if (raw.startsWith('/images/')) {
+      return `assets/Images/${raw.split('/').pop()}`;
+    }
     if (raw.startsWith('#') || raw.startsWith('/') || raw.startsWith('./') || raw.startsWith('../')) {
       return raw;
     }
