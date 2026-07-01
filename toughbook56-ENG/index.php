@@ -37,7 +37,9 @@ $apiBase = rtrim($apiBase, '/');
 
     <footer id="footer" class="site-footer" hidden></footer>
 
-    <a href="../toughbook56/" class="lang-switch" title="Naar de Nederlandse versie">🇳🇱</a>
+    <a href="../toughbook56/" class="lang-switch" title="Naar de Nederlandse versie">
+        <img src="https://flagcdn.com/w40/nl.png" width="28" height="20" alt="Nederlands" />
+    </a>
 
     <script>
         window.APP_CONFIG = <?php echo json_encode([
